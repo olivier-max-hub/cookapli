@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6b78">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cookapli">
+<title>Cookapli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<style>
+/* Layout: teal frame en haut, assiette appétissante + recherche « J'ai… », puis les 6 outils en tuiles pastel, puis idées et batch cooking. Thème clair unique, comme le design system Mes recettes. */
+:root{
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef8fb;--wash1:#f1fafc;--wash2:#e6f6f7;--wash3:#eaf5fb;
+  --card:#ffffff;--veil:rgba(255,255,255,.78);--box:#eef8fb;
+  --ink:#1f2a24;--mute:#5d6f73;--line:#d3e6ea;
+  --acc:#0f6b78;--acc-deep:#0b4f59;--acc-pale:#e3f6f8;--on:#ffffff;--on-soft:rgba(255,255,255,.88);
+  --band:#d9f0f3;
+  --c-aperitif-1:#bfe8ee;--c-aperitif-2:#8fd3dd;
+  --c-entree-1:#ffd9c7;--c-entree-2:#ffb899;
+  --c-plat-1:#d9d0f5;--c-plat-2:#b9a8ee;
+  --c-unique-1:#fff1b8;--c-unique-2:#f8d96b;
+  --c-veg-1:#cdeccb;--c-veg-2:#9fd89a;
+  --c-acc-1:#ffd0e0;--c-acc-2:#f6a6c3;
+  --c-salee-1:#c9e1fb;--c-salee-2:#9cc6f2;
+  --c-dessert-1:#ffe0b3;--c-dessert-2:#fbc16b;
+  --sh-card:0 2px 8px rgba(0,0,0,.1);--sh-tile:0 3px 10px rgba(0,0,0,.12);--sh-hero:0 3px 10px rgba(0,0,0,.08);--sh-header:0 2px 10px rgba(0,0,0,.15);
+  --font:Economica,"Arial Narrow",Arial,sans-serif;
+  color-scheme:light;
+}
+html{font-size:112.5%}
+*,*::before,*::after{box-sizing:border-box}
+body{
+  margin:0;color:var(--ink);font:1rem/1.5 var(--font);
+  background:
+    url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='260'%20height='260'%20viewBox='0%200%20260%20260'%20fill='none'%20stroke-width='3'%20stroke-linecap='round'%20stroke-linejoin='round'%20opacity='.6'%3E%3Cg%20transform='translate%2840%2050%29%20rotate%28-30%29'%20stroke='%237fc4cf'%3E%3Cellipse%20rx='11'%20ry='16'/%3E%3Cpath%20d='M0%2016V62'/%3E%3C/g%3E%3Cg%20transform='translate%28150%2040%29%20rotate%2825%29'%20stroke='%23f0b09c'%3E%3Cpath%20d='M-9-16v14q0%208%209%208t9-8v-14M0-16v22M0%206v46'/%3E%3C/g%3E%3Cg%20transform='translate%28222%20125%29%20rotate%28-15%29'%20stroke='%23efcf72'%3E%3Cpath%20d='M0%200C-18%2020-18%2048%200%2058C18%2048%2018%2020%200%200ZM0%200C-7%2020-7%2048%200%2058C7%2048%207%2020%200%200M0-28V0'/%3E%3C/g%3E%3Cg%20transform='translate%2878%20140%29'%20stroke='%239ccf92'%3E%3Cpath%20d='M-24%2022h48v14h-48zM-24%2022C-42%2018-40-8-18-6C-14-24%2014-24%2018-6C40-8%2042%2018%2024%2022'/%3E%3C/g%3E%3Cg%20transform='translate%28175%20215%29'%20stroke='%23b7a6e0'%3E%3Cpath%20d='M-24%200h48v26h-48zM-24%208h-10M24%208h10M-14-6h28'/%3E%3C/g%3E%3Cg%20transform='translate%2852%20222%29%20rotate%2820%29'%20stroke='%23f0a8c4'%3E%3Crect%20x='-22'%20y='-8'%20width='44'%20height='16'%20rx='6'/%3E%3Cpath%20d='M-34%200h12M22%200h12'/%3E%3C/g%3E%3Cg%20transform='translate%28120%20100%29%20rotate%2840%29'%20stroke='%238fd0b8'%3E%3Cpath%20d='M0-24v30M-6-24h12M0%206v22'/%3E%3Cpath%20d='M-5%206h10'/%3E%3C/g%3E%3C/svg%3E") 0 0/260px 260px fixed,
+    linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,
+    var(--bg);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--acc);z-index:10}
+.wrap{max-width:1100px;margin:0 auto}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:where(a,button,input):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+
+/* Header */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--acc);color:var(--on);box-shadow:var(--sh-header);padding-block:10px}
+.hdr .wrap{display:flex;align-items:center;gap:12px}
+.logo{width:44px;height:44px;flex:none}
+.brand{display:flex;flex-direction:column;min-width:0}
+.brand b{font-size:1.9rem;line-height:1;letter-spacing:.01em}
+.brand small{color:var(--on-soft);font-size:.85rem;line-height:1.3}
+.hdr-nav{margin-left:auto;display:flex;gap:8px}
+.hdr-nav button,.hdr-nav a{text-decoration:none;border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.12);color:var(--on);font:inherit;font-size:.95rem;padding:6px 14px;border-radius:99px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.hdr-nav button:focus-visible,.hdr-nav a:focus-visible{outline-color:var(--on)}
+@media (max-width:520px){.hdr-nav .lbl{display:none}.hdr-nav button,.hdr-nav a{padding:6px 10px}}
+
+main{padding-block:18px 28px;display:grid;gap:26px}
+
+/* Hero */
+.hero>*{min-width:0}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:12px;align-items:center;background:var(--veil);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-radius:26px;box-shadow:var(--sh-hero);padding:26px 28px;overflow:hidden}
+.hello{margin:0;color:var(--mute);font-size:1.05rem}
+.hero h1{margin:2px 0 6px;color:var(--acc);font-size:clamp(2.4rem,6vw,3.6rem);line-height:1;letter-spacing:-.01em;text-wrap:balance}
+.lead{margin:0 0 16px;font-size:1.15rem;max-width:34ch;text-wrap:pretty}
+.have{display:flex;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 5px 5px 18px;box-shadow:var(--sh-card);max-width:520px}
+.have label{align-self:center;font-weight:700;color:var(--acc);white-space:nowrap}
+.have input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;color:var(--ink);padding:8px 4px}
+.have input::placeholder{color:var(--mute)}
+.have input:focus-visible{outline:none}
+.have:focus-within{outline:3px solid var(--acc);outline-offset:2px}
+.btn{border:1px solid var(--acc);background:var(--acc);color:var(--on);padding:9px 20px;border-radius:99px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn.alt{background:var(--card);color:var(--acc)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;max-width:520px}
+.qc{border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:.95rem;padding:4px 12px;border-radius:99px;cursor:pointer}
+.qc[aria-pressed="true"]{background:var(--acc-pale);border-color:var(--acc);color:var(--acc-deep);font-weight:700}
+
+/* Assiette */
+.stage{position:relative;width:100%;max-width:400px;aspect-ratio:1;margin-inline:auto;container-type:inline-size}
+.plate{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,var(--card) 0 54%,var(--band) 54.5% 58%,var(--card) 58.5% 100%);box-shadow:0 14px 30px rgba(15,107,120,.18),inset 0 -6px 14px rgba(15,107,120,.06)}
+.plate::after{content:"";position:absolute;inset:-7%;border-radius:50%;border:2px dashed var(--c-aperitif-2);opacity:.7}
+.dish{position:absolute;inset:0;display:grid;place-items:center;font-size:26cqi;line-height:1;filter:drop-shadow(0 6px 6px rgba(0,0,0,.12))}
+.ing{position:absolute;font-size:11cqi;line-height:1;filter:drop-shadow(0 3px 3px rgba(0,0,0,.12))}
+.steam{position:absolute;left:50%;top:21%;width:22cqi;height:12cqi;transform:translateX(-50%)}
+.steam path{fill:none;stroke:var(--c-aperitif-2);stroke-width:3;stroke-linecap:round;opacity:.9}
+@media (prefers-reduced-motion:no-preference){
+  .ing{animation:bob 5s ease-in-out infinite}
+  .ing:nth-child(2n){animation-duration:6.5s;animation-delay:-2s}
+  .ing:nth-child(3n){animation-duration:5.8s;animation-delay:-1s}
+  .steam path{animation:rise 3.2s ease-in-out infinite}
+  .steam path:nth-child(2){animation-delay:-1.1s}.steam path:nth-child(3){animation-delay:-2.2s}
+}
+@keyframes bob{50%{transform:translateY(-6%) rotate(-6deg)}}
+@keyframes rise{0%,100%{transform:translateY(0);opacity:.2}50%{transform:translateY(-12%);opacity:.9}}
+
+/* Section headings */
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 10px}
+.label{display:inline-block;margin:0;padding:4px 14px;border-left:6px solid var(--cat,var(--acc));border-radius:6px;background:var(--card);font-size:1.25rem;font-weight:700}
+.sec-h a{color:var(--acc);font-weight:700;text-underline-offset:3px}
+
+/* Tuiles outils */
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tile{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:118px;padding:16px 20px;border-radius:24px;box-shadow:var(--sh-tile);color:var(--acc-deep);text-decoration:none;border:0;font:inherit;text-align:left;cursor:pointer;width:100%}
+.tile b{display:block;font-size:1.6rem;line-height:1.05}
+.tile small{display:block;font-size:1rem;line-height:1.3;margin-top:4px;color:var(--acc-deep)}
+.tile .ill{font-size:3.2rem;line-height:1;flex:none}
+.tile:focus-visible{outline-color:var(--acc-deep)}
+.tile.main{grid-column:span 1}
+@media (prefers-reduced-motion:no-preference){.tile{transition:transform .15s,box-shadow .15s}.tile:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.14)}}
+.g-recettes{background:linear-gradient(135deg,var(--c-aperitif-1),var(--c-aperitif-2))}
+.g-have{background:linear-gradient(135deg,var(--c-veg-1),var(--c-veg-2))}
+.g-scan{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
+.g-courses{background:linear-gradient(135deg,var(--c-unique-1),var(--c-unique-2))}
+.g-batch{background:linear-gradient(135deg,var(--c-entree-1),var(--c-entree-2))}
+.g-occasion{background:linear-gradient(135deg,var(--c-acc-1),var(--c-acc-2))}
+.count{position:absolute;top:10px;right:12px;background:var(--card);color:var(--acc-deep);font-size:.8rem;font-weight:700;padding:1px 9px;border-radius:99px;box-shadow:var(--sh-card)}
+
+/* Saison */
+.season{display:flex;flex-wrap:wrap;gap:8px}
+.sp{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 14px 4px 8px;display:inline-flex;gap:6px;align-items:center;font-size:1rem}
+.sp span{font-size:1.2rem}
+
+/* Idées recettes */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh-card);border-radius:12px;overflow:hidden;text-decoration:none;color:inherit}
+.thumb{aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;font-size:3.4rem}
+.card .t{padding:10px 12px 12px}
+.card b{display:block;font-size:1.05rem;line-height:1.25}
+.card small{color:var(--mute);font-size:.9rem}
+@media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-3px)}}
+
+/* Batch cooking */
+.batch{background:var(--acc);color:var(--on);border-radius:26px;padding:24px 26px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:24px;align-items:center;box-shadow:var(--sh-hero)}
+.batch h2{margin:0 0 6px;font-size:2rem;line-height:1.05}
+.batch p{margin:0 0 14px;color:var(--on-soft);font-size:1.1rem;max-width:40ch}
+.batch .btn{background:var(--card);color:var(--acc);border-color:var(--card)}
+.batch .btn:focus-visible{outline-color:var(--on)}
+.timeline{display:grid;gap:8px}
+.tl-head{display:flex;justify-content:space-between;font-size:.85rem;color:var(--on-soft);font-variant-numeric:tabular-nums}
+.tl-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:14px;overflow:hidden}
+.tl-bar div{padding:10px 12px;color:var(--acc-deep);min-width:0}
+.tl-bar b{display:block;font-size:1.05rem;line-height:1.15}
+.tl-bar small{display:block;font-size:.85rem;line-height:1.25}
+.tl-bar div:nth-child(1){background:var(--c-entree-1)}
+.tl-bar div:nth-child(2){background:var(--c-veg-1)}
+.tl-bar div:nth-child(3){background:var(--c-unique-1)}
+.week{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;font-size:.85rem;text-align:center}
+.week span{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:4px 0}
+
+footer{padding-block:6px 30px}
+.legal{max-width:70ch;margin:0 auto;text-align:center;background:var(--veil);padding:10px 14px;border-radius:10px;font-size:.95rem}
+
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--on);padding:9px 18px;border-radius:99px;font-size:1rem;opacity:0;pointer-events:none;transition:opacity .2s;z-index:30;max-width:calc(100% - 32px);text-align:center}
+#toast.on{opacity:1}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+
+/* Responsive */
+@media (max-width:899px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr;padding:20px 18px;position:relative}
+  .stage{position:absolute;top:10px;right:6px;width:132px;max-width:132px;margin:0}
+  .hero .hello,.hero h1{padding-right:128px}
+  .quick{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+  .qc{flex:none}
+  .sec-h{flex-wrap:wrap}
+  .batch{grid-template-columns:1fr;padding:20px 18px}
+}
+@media (max-width:480px){
+  .tools{gap:10px}
+  .tile{flex-direction:column-reverse;align-items:flex-start;justify-content:flex-end;min-height:0;padding:14px 14px 16px;gap:6px}
+  .tile b{font-size:1.35rem}
+  .tile small{font-size:.9rem}
+  .tile .ill{font-size:2.4rem}
+  .have{padding-left:14px}
+  .have .btn{padding:9px 14px}
+  .have .long{display:none}
+  .lead{font-size:1.05rem;margin-bottom:12px}
+  .hero h1{font-size:2.2rem}
+  .brand small{font-size:.75rem}
+  .brand b{font-size:1.6rem}
+  .tl-bar small{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hdr gut">
+  <div class="wrap">
+    <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#ffffff" fill-opacity=".14"/><circle cx="24" cy="25" r="14" fill="#ffffff"/><circle cx="24" cy="25" r="9.5" fill="#d9f0f3"/><rect x="5.5" y="12" width="3" height="26" rx="1.5" fill="#ffffff"/><rect x="39.5" y="12" width="3" height="26" rx="1.5" fill="#ffffff"/><path d="M20 22c1.5-3 6.5-3 8 0" fill="none" stroke="#0f6b78" stroke-width="2" stroke-linecap="round"/></svg>
+    <div class="brand"><b>Cookapli</b><small>De vraies recettes, avec ce que tu as</small></div>
+    <nav class="hdr-nav" aria-label="Raccourcis">
+      <a href="../friscan/#scan" id="nav-scan"><span aria-hidden="true">📷</span><span class="lbl">Scanner</span></a>
+      <a href="courses.html" id="nav-courses"><span aria-hidden="true">🛒</span><span class="lbl">Courses</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="gut">
+  <div class="wrap" style="display:grid;gap:26px">
+
+    <section class="hero" aria-labelledby="h-hero">
+      <div>
+        <p class="hello" id="hello">Bonsoir</p>
+        <h1 id="h-hero">Qu'est-ce qu'on mange&nbsp;?</h1>
+        <p class="lead">Dis-moi ce qu'il y a dans ton frigo et ton placard. Cookapli te trouve une vraie recette, déjà testée en cuisine.</p>
+        <form class="have" id="have-form">
+          <label for="have-input">J'ai…</label>
+          <input id="have-input" type="text" autocomplete="off" placeholder="des œufs, une courgette, de la feta">
+          <button class="btn" type="submit">Trouver<span class="long">&nbsp;une recette</span></button>
+        </form>
+        <div class="quick" id="quick" aria-label="Ajouter un ingrédient">
+          <button type="button" class="qc" id="q-oeufs" data-v="œufs">🥚 Œufs</button>
+          <button type="button" class="qc" id="q-pates" data-v="pâtes">🍝 Pâtes</button>
+          <button type="button" class="qc" id="q-riz" data-v="riz">🍚 Riz</button>
+          <button type="button" class="qc" id="q-tomates" data-v="tomates">🍅 Tomates</button>
+          <button type="button" class="qc" id="q-fromage" data-v="fromage">🧀 Fromage</button>
+          <button type="button" class="qc" id="q-poulet" data-v="poulet">🍗 Poulet</button>
+          <button type="button" class="qc" id="q-courge" data-v="courge butternut">🎃 Butternut</button>
+        </div>
+      </div>
+      <div class="stage" aria-hidden="true">
+        <div class="plate"></div>
+        <svg class="steam" viewBox="0 0 60 30"><path d="M14 28c-6-8 6-12 0-22"/><path d="M30 28c-6-8 6-12 0-22"/><path d="M46 28c-6-8 6-12 0-22"/></svg>
+        <div class="dish">🥘</div>
+        <span class="ing" style="left:2%;top:8%">🍅</span>
+        <span class="ing" style="left:42%;top:-1%">🌿</span>
+        <span class="ing" style="right:2%;top:10%">🧄</span>
+        <span class="ing" style="right:-2%;top:44%">🥕</span>
+        <span class="ing" style="right:6%;bottom:4%">🧀</span>
+        <span class="ing" style="left:40%;bottom:-2%">🍋</span>
+        <span class="ing" style="left:2%;bottom:8%">🥖</span>
+        <span class="ing" style="left:-3%;top:44%">🫑</span>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-tools">
+      <div class="sec-h"><h2 class="label" id="h-tools">Tes outils</h2></div>
+      <div class="tools">
+        <a class="tile g-recettes" id="t-recettes" href="../recettes/">
+          <span><b>Mes recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
+          <span class="count">149</span>
+        </a>
+        <a class="tile g-have" id="t-have" href="../friscan/#frigo">
+          <span><b>Ce que j'ai</b><small>Ton frigo et ton placard, et les recettes qui vont avec</small></span><span class="ill" aria-hidden="true">🥕</span>
+        </a>
+        <a class="tile g-scan" id="t-scan" href="../friscan/#scan">
+          <span><b>Scanner du frigo</b><small>Friscan fait l'inventaire en quelques secondes</small></span><span class="ill" aria-hidden="true">📷</span>
+        </a>
+        <a class="tile g-courses" id="t-courses" href="courses.html">
+          <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
+        </a>
+        <button type="button" class="tile g-batch" id="t-batch" data-tool="batch">
+          <span><b>Batch cooking 3h</b><small>Les repas équilibrés de la semaine, cuisinés d'un coup</small></span><span class="ill" aria-hidden="true">🍲</span>
+        </button>
+        <button type="button" class="tile g-occasion" id="t-occasion" data-tool="occasion">
+          <span><b>Pour une occasion</b><small>Anniversaire, repas de fête, invités du dimanche</small></span><span class="ill" aria-hidden="true">🥂</span>
+        </button>
+      </div>
+    </section>
+
+    <section aria-labelledby="h-season">
+      <div class="sec-h"><h2 class="label" id="h-season" style="--cat:var(--c-veg-2)">De saison en <span id="month">novembre</span></h2></div>
+      <div class="season" id="season"></div>
+    </section>
+
+    <section aria-labelledby="h-ideas">
+      <div class="sec-h">
+        <h2 class="label" id="h-ideas" style="--cat:var(--c-dessert-2)">Envie de cuisiner&nbsp;?</h2>
+        <a href="../recettes/">Voir les 149 recettes →</a>
+      </div>
+      <div class="grid">
+        <a class="card" href="../recettes/#crackers-au-butternut-et-parmesan">
+          <div class="thumb" style="background:var(--c-unique-1)" aria-hidden="true">🎃</div>
+          <div class="t"><b>Crackers au Butternut et Parmesan</b><small>Apéritif · végétarien</small></div>
+        </a>
+        <a class="card" href="../recettes/#caviar-d-aubergines">
+          <div class="thumb" style="background:var(--c-plat-1)" aria-hidden="true">🍆</div>
+          <div class="t"><b>Caviar d’Aubergines</b><small>Apéritif · légumes</small></div>
+        </a>
+        <a class="card" href="../recettes/#houmous-butternut-et-noix">
+          <div class="thumb" style="background:var(--c-aperitif-1)" aria-hidden="true">🥣</div>
+          <div class="t"><b>Houmous Butternut et Noix</b><small>Apéritif · Proche-Orient</small></div>
+        </a>
+        <a class="card" href="../recettes/#cake-butternut-et-feta">
+          <div class="thumb" style="background:var(--c-veg-1)" aria-hidden="true">🧀</div>
+          <div class="t"><b>Cake Butternut et Feta</b><small>Apéritif · végétarien</small></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="batch" aria-labelledby="h-batch">
+      <div>
+        <h2 id="h-batch">Batch cooking 3h</h2>
+        <p>Trois heures en cuisine le week-end, et des repas équilibrés prêts du lundi au vendredi. Les ingrédients partent directement dans ta liste de courses.</p>
+        <button type="button" class="btn" id="b-batch" data-tool="batch">Préparer ma semaine</button>
+      </div>
+      <div class="timeline" aria-label="Déroulé d'une séance de 3 heures">
+        <div class="tl-head"><span>0 h</span><span>1 h</span><span>2 h</span><span>3 h</span></div>
+        <div class="tl-bar">
+          <div><b>Au four</b><small>Les cuissons longues partent en premier</small></div>
+          <div><b>Légumes et féculents</b><small>On épluche, on coupe, on cuit</small></div>
+          <div><b>En boîtes</b><small>Sauces, portions, étiquettes</small></div>
+        </div>
+        <div class="week" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer class="gut">
+  <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="../friscan/data.js?v=9"></script>
+<script>
+(function(){
+  if(typeof ING==="undefined")return;
+  var norm=function(s){return " "+String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/œ/g,"oe").replace(/[^a-z0-9]+/g," ").trim()+" "};
+  window.cookGuess=function(name){var txt=norm(name),best=null,bi=1e9,bl=0;
+    Object.keys(ING).forEach(function(id){ING[id].k.forEach(function(k){var pat=" "+norm(k).trim()+(k.slice(-1)===" "?" ":"");var i=txt.indexOf(pat);if(i>=0&&(i<bi||(i===bi&&pat.length>bl))){best=id;bi=i;bl=pat.length}})});
+    return best};
+  // nombre réel de recettes, si la liste de courses les a déjà chargées
+  try{var c=JSON.parse(localStorage.getItem("cookapli.recettes")||"null");if(c&&c.list&&c.list.length){var n=c.list.length;document.querySelector("#t-recettes .count").textContent=n}}catch(e){}
+})();
+</script>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"Les recettes d'occasion"};
+
+  function toast(m){var t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2800)}
+
+  // Salutation selon l'heure
+  var h=new Date().getHours();
+  $("hello").textContent=h<5?"Bonne nuit":h<11?"Bonjour":h<14?"Bon appétit":h<18?"Bon après-midi":"Bonsoir";
+
+  // Produits de saison (France), par mois
+  var SEASON=[
+    [["🥬","Poireau"],["🥬","Chou"],["🥕","Carotte"],["🥗","Endive"],["🍊","Orange"],["🍎","Pomme"],["🥝","Kiwi"]],
+    [["🥗","Endive"],["🥬","Poireau"],["🥕","Panais"],["🥔","Topinambour"],["🍊","Orange"],["🍐","Poire"]],
+    [["🥬","Poireau"],["🌿","Épinard"],["🔴","Radis"],["🥦","Chou-fleur"],["🍎","Pomme"],["🥝","Kiwi"]],
+    [["🌱","Asperge"],["🔴","Radis"],["🌿","Épinard"],["🫛","Petits pois"],["🌸","Rhubarbe"],["🌼","Artichaut"]],
+    [["🌱","Asperge"],["🍓","Fraise"],["🫛","Petits pois"],["🔴","Radis"],["🌸","Rhubarbe"],["🌼","Artichaut"]],
+    [["🥒","Courgette"],["🍓","Fraise"],["🍒","Cerise"],["🫛","Haricot vert"],["🍑","Abricot"],["🫛","Petits pois"]],
+    [["🍅","Tomate"],["🥒","Courgette"],["🍆","Aubergine"],["🫑","Poivron"],["🍈","Melon"],["🍑","Pêche"]],
+    [["🍅","Tomate"],["🍆","Aubergine"],["🫑","Poivron"],["🌽","Maïs"],["🍈","Melon"],["🟣","Prune"]],
+    [["🍅","Tomate"],["🎃","Courge"],["🍄","Champignons"],["🍇","Raisin"],["🟣","Figue"],["🫑","Poivron"]],
+    [["🎃","Potiron"],["🍄","Champignons"],["🌰","Châtaigne"],["🍎","Pomme"],["🍐","Poire"],["🍇","Raisin"]],
+    [["🎃","Butternut"],["🎃","Potiron"],["🥬","Poireau"],["🥬","Chou"],["🥕","Panais"],["🌰","Châtaigne"],["🍎","Pomme"],["🍊","Clémentine"]],
+    [["🥬","Chou"],["🥬","Poireau"],["🥔","Céleri"],["🥗","Endive"],["🥕","Panais"],["🍊","Clémentine"],["🍊","Orange"]]
+  ];
+  var MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+  var m=new Date().getMonth();
+  $("month").textContent=MONTHS[m];
+  var box=$("season");
+  SEASON[m].forEach(function(p){var s=document.createElement("span");s.className="sp";var e=document.createElement("span");e.setAttribute("aria-hidden","true");e.textContent=p[0];s.appendChild(e);s.appendChild(document.createTextNode(p[1]));box.appendChild(s)});
+
+  // « J'ai… » : champ + raccourcis
+  var input=$("have-input");
+  function items(){return input.value.split(",").map(function(s){return s.trim()}).filter(Boolean)}
+  function syncChips(){var list=items().map(function(s){return s.toLowerCase()});
+    Array.prototype.forEach.call(document.querySelectorAll(".qc"),function(b){b.setAttribute("aria-pressed",list.indexOf(b.dataset.v)>=0?"true":"false")})}
+  function save(){try{localStorage.setItem("cookapli-have",input.value)}catch(e){}}
+  try{var saved=localStorage.getItem("cookapli-have");if(saved)input.value=saved}catch(e){}
+  syncChips();
+  document.getElementById("quick").addEventListener("click",function(e){
+    var b=e.target.closest(".qc");if(!b)return;
+    var list=items(),v=b.dataset.v,i=list.map(function(s){return s.toLowerCase()}).indexOf(v);
+    if(i>=0)list.splice(i,1);else list.push(v);
+    input.value=list.join(", ");syncChips();save();
+  });
+  input.addEventListener("input",function(){syncChips();save()});
+  $("have-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var list=items();
+    if(!list.length){toast("Ajoute au moins un ingrédient");input.focus();return}
+    // Les ingrédients tapés partent dans le frigo Friscan (même site), puis on ouvre ses recettes
+    var f=[];try{f=JSON.parse(localStorage.getItem("friscan.fridge")||"[]")}catch(err){}
+    if(!Array.isArray(f))f=[];
+    list.forEach(function(name){
+      var id=window.cookGuess?window.cookGuess(name):null;
+      var already=id&&f.some(function(x){return x.ing===id});
+      if(!already)f.unshift({uid:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:id?ING[id].n:name,ing:id,other:!id,added:Date.now()});
+    });
+    try{localStorage.setItem("friscan.fridge",JSON.stringify(f));localStorage.removeItem("cookapli-have")}catch(err){}
+    location.href="../friscan/#recettes";
+  });
+
+  // Outils pas encore branchés
+  document.addEventListener("click",function(e){
+    var b=e.target.closest("[data-tool]");if(!b)return;
+    toast(NAMES[b.dataset.tool]+" arrive bientôt dans Cookapli");
+  });
+})();
+</script>
+</body>
+</html>
