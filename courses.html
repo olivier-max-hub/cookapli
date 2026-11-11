@@ -420,13 +420,13 @@ function renderPresque() {
   const nb = $('#n-presque'); nb.hidden = !res.length; nb.textContent = res.length;
   $('#p-list').innerHTML = res.map((x, i) => `<div class="pcard"><div class="txt"><b>${esc(x.r.n)}</b><small>${esc(x.r.sub)}${x.used ? ` · utilise ${x.used} produit${x.used > 1 ? 's' : ''} de tes réserves` : ''}</small>
       <div class="miss">${x.miss.map(id => `<span>${IG[id].e} ${esc(IG[id].n)}</span>`).join('')}</div></div>
-      <button class="btn small" type="button" data-p="${i}">Ajouter ${x.miss.length > 1 ? 'les 2' : 'à ma liste'}</button></div>`).join('')
+      <button class="btn small" type="button" data-p="${i}">🛒 Ajouter ${x.miss.length > 1 ? 'les 2 manquants' : 'le manquant'} à ma liste</button></div>`).join('')
     || '<div class="empty"><b>Aucune recette à 1 ou 2 ingrédients près</b>Scanne ou ajoute des produits dans Friscan, la liste se mettra à jour.</div>';
   $('#p-list').onclick = e => {
     const b = e.target.closest('[data-p]'); if (!b) return;
     const x = res[+b.dataset.p];
     x.miss.forEach(id => addEntry({ name: IG[id].n, ing: id, qty: x.r.qty(id), src: x.r.n }));
-    save(); renderList(); b.disabled = true; b.textContent = 'Ajouté ✓';
+    save(); renderList(); b.disabled = true; b.textContent = '✓ Ajouté à ta liste de courses';
     toast(`${x.miss.map(id => IG[id].n).join(' et ')} ajouté${x.miss.length > 1 ? 's' : ''} pour « ${x.r.n} »`);
   };
 }
