@@ -15,7 +15,7 @@
   padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
   --bg:#eef8fb;--wash1:#f1fafc;--wash2:#e6f6f7;--wash3:#eaf5fb;
   --card:#ffffff;--veil:rgba(255,255,255,.78);--box:#eef8fb;
-  --ink:#1f2a24;--mute:#1f2a24;--line:#d3e6ea;
+  --ink:#1f2a24;--mute:#000;--line:#d3e6ea;
   --acc:#0f6b78;--acc-deep:#0b4f59;--acc-pale:#e3f6f8;--on:#ffffff;--on-soft:rgba(255,255,255,.88);
   --band:#d9f0f3;
   --c-aperitif-1:#bfe8ee;--c-aperitif-2:#8fd3dd;
@@ -32,6 +32,9 @@
 }
 html{font-size:112.5%}
 *,*::before,*::after{box-sizing:border-box}
+/* Petits textes : noirs et en gras (Economica fin est trop pâle en petit) */
+small,.hint,.note,.sub,.meta{font-weight:700}
+
 body{
   margin:0;color:var(--ink);font:1rem/1.5 var(--font);
   background:
@@ -68,7 +71,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .have{display:flex;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:5px 5px 5px 18px;box-shadow:var(--sh-card);max-width:520px}
 .have label{align-self:center;font-weight:700;color:var(--acc);white-space:nowrap}
 .have input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;color:var(--ink);padding:8px 4px}
-.have input::placeholder{color:var(--mute)}
+.have input::placeholder{color:#5d6f73}
 .have input:focus-visible{outline:none}
 .have:focus-within{outline:3px solid var(--acc);outline-offset:2px}
 .btn{border:1px solid var(--acc);background:var(--acc);color:var(--on);padding:9px 20px;border-radius:99px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
@@ -128,7 +131,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .thumb{aspect-ratio:4/3;max-width:100%;display:grid;place-items:center;font-size:3.4rem}
 .card .t{padding:10px 12px 12px}
 .card b{display:block;font-size:1.05rem;line-height:1.25}
-.card small{color:var(--mute);font-size:.9rem}
+.card small{color:var(--mute);font-size:.95rem}
 @media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-3px)}}
 
 /* Batch cooking */
