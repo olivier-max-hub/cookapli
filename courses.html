@@ -41,6 +41,9 @@ button,input{font:inherit;color:inherit}
 /* Header */
 .hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--acc);color:var(--on);box-shadow:var(--sh-header);padding-block:10px 0}
 .hdr .top{display:flex;align-items:center;gap:12px}
+.reset{flex:none;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.14);color:#fff;font-weight:700;font-size:.95rem;padding:6px 12px;border-radius:99px;cursor:pointer}
+.reset:focus-visible{outline-color:#fff}
+@media (max-width:420px){.hdr h1{font-size:1.5rem}.reset{padding:5px 10px;font-size:.9rem}}
 .back{color:var(--on);text-decoration:none;font-size:1.5rem;line-height:1;width:40px;height:40px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.12);flex:none}
 .back:focus-visible,.tabs a:focus-visible{outline-color:var(--on)}
 .hdr h1{margin:0;font-size:1.8rem;line-height:1.05}
@@ -131,7 +134,8 @@ main{padding-block:16px 40px}
   <div class="wrap">
     <div class="top">
       <a class="back" href="./" aria-label="Retour à l'accueil Cookapli">←</a>
-      <div><h1>Liste de courses</h1><p id="sub">Chargement…</p></div>
+      <div style="min-width:0;flex:1"><h1>Liste de courses</h1><p id="sub">Chargement…</p></div>
+      <button type="button" class="reset" id="b-reset" hidden>↺ Réinitialiser</button>
     </div>
     <nav class="tabs" aria-label="Sections">
       <a href="#liste" id="tab-liste">Ma liste<span class="n" id="n-liste">0</span></a>
@@ -254,6 +258,7 @@ function renderList() {
   $('#n-liste').textContent = todo;
   $('#sub').textContent = list.length ? `${todo} à prendre${done ? `, ${done} dans le panier` : ''}` : 'Ta liste est vide';
   $('#list-actions').hidden = !list.length;
+  $('#b-reset').hidden = !list.length;
   $('#b-ranger').disabled = $('#b-clear').disabled = !done;
   if (!list.length) {
     box.innerHTML = `<div class="empty"><b>Rien à acheter pour l'instant</b>Ajoute un article ci-dessus, ou pioche les ingrédients d'une recette.
@@ -301,6 +306,13 @@ $('#add-form').addEventListener('submit', e => {
   toast(`${it.name} ajouté${warn}`);
 });
 
+/* tout effacer d'un coup (récupérable avec « Annuler » pendant quelques secondes) */
+$('#b-reset').onclick = () => {
+  if (!list.length) return;
+  const before = list.slice(), n = before.length;
+  list = []; save(); renderList();
+  toast(`Liste réinitialisée (${pl(n, 'article retiré', 'articles retirés')})`, () => { list = before; save(); renderList(); });
+};
 $('#b-clear').onclick = () => {
   const before = list.slice(); list = list.filter(x => !x.done); save(); renderList();
   toast(`${pl(before.length - list.length, 'article retiré', 'articles retirés')}`, () => { list = before; save(); renderList(); });
