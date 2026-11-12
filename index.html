@@ -129,6 +129,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .g-courses{background:linear-gradient(135deg,var(--c-unique-1),var(--c-unique-2))}
 .g-batch{background:linear-gradient(135deg,var(--c-entree-1),var(--c-entree-2))}
 .g-occasion{background:linear-gradient(135deg,var(--c-acc-1),var(--c-acc-2))}
+.g-chrono{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .count{position:absolute;top:10px;right:12px;background:var(--card);color:var(--acc-deep);font-size:.8rem;font-weight:700;padding:1px 9px;border-radius:99px;box-shadow:var(--sh-card)}
 
 /* Saison */
@@ -262,11 +263,14 @@ footer{padding-block:6px 30px}
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
         </a>
         <a class="tile g-recettes" id="t-recettes" href="../recettes/">
-          <span><b>Mes recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
+          <span><b>Livre de recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
           <span class="count">149</span>
         </a>
         <button type="button" class="tile g-occasion" id="t-occasion" data-tool="occasion">
           <span><b>Pour une occasion</b><small>Anniversaire, repas de fête, invités du dimanche</small></span><span class="ill" aria-hidden="true">🥂</span>
+        </button>
+        <button type="button" class="tile g-chrono" id="t-chrono" data-tool="chrono">
+          <span><b>30 minutes chrono</b><small>Des recettes rapides, prêtes en 30 minutes maximum</small></span><span class="ill" aria-hidden="true">⏱️</span>
         </button>
       </div>
     </section>
@@ -344,7 +348,7 @@ footer{padding-block:6px 30px}
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
-  var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"Les recettes d'occasion"};
+  var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"Les recettes d'occasion",chrono:"Le 30 minutes chrono"};
 
   function toast(m){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);t.classList.toggle("warn",/impossible|refus|indisponible|échou|Ajoute au moins/i.test(m));t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2800)}
 
