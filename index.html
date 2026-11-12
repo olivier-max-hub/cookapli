@@ -108,8 +108,14 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .sec-h a{color:var(--acc);font-weight:700;text-underline-offset:3px}
 
 /* Tuiles outils */
-.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px} /* 2 × 2 : Réserves, Courses / Recettes, Occasion */
-.tile{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:118px;padding:16px 20px;border-radius:24px;box-shadow:var(--sh-tile);color:var(--acc-deep);text-decoration:none;border:0;font:inherit;text-align:left;cursor:pointer;width:100%}
+.tools{display:grid;grid-template-columns:minmax(0,1fr);gap:12px} /* une tuile par ligne, sur toute la largeur */
+.tile.have-tile{display:block}
+.have-tile .tile-link{display:flex;align-items:center;justify-content:space-between;gap:12px;color:inherit;text-decoration:none;border-radius:16px}
+.have-tile .tile-link:focus-visible{outline:3px solid var(--acc-deep);outline-offset:2px}
+.have-tile .have{margin-top:12px;max-width:none}
+.have-tile .quick{max-width:none}
+@media (prefers-reduced-motion:no-preference){.tile.have-tile:hover{transform:none;box-shadow:var(--sh-tile)}} /* tuile avec champ de saisie : elle ne bouge pas au survol */
+.tile{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:96px;padding:16px 20px;border-radius:24px;box-shadow:var(--sh-tile);color:var(--acc-deep);text-decoration:none;border:0;font:inherit;text-align:left;cursor:pointer;width:100%}
 .tile b{display:block;font-size:1.6rem;line-height:1.05}
 .tile small{display:block;font-size:1rem;line-height:1.3;margin-top:4px;color:var(--acc-deep)}
 .tile .ill{font-size:3.2rem;line-height:1;flex:none}
@@ -181,7 +187,7 @@ footer{padding-block:6px 30px}
 }
 @media (max-width:480px){
   .tools{gap:10px}
-  .tile{flex-direction:column-reverse;align-items:flex-start;justify-content:flex-end;min-height:0;padding:14px 14px 16px;gap:6px}
+  .tile{min-height:0;padding:14px 16px}
   .tile b{font-size:1.35rem}
   .tile small{font-size:.9rem}
   .tile .ill{font-size:2.4rem}
@@ -213,20 +219,6 @@ footer{padding-block:6px 30px}
         <p class="hello" id="hello">Bonsoir</p>
         <h1 id="h-hero">Qu'est-ce qu'on mange&nbsp;?</h1>
         <p class="lead">Dis-moi ce qu'il y a dans ton frigo et ton placard. Cookapli te trouve une vraie recette, déjà testée en cuisine.</p>
-        <form class="have" id="have-form">
-          <label for="have-input">J'ai…</label>
-          <input id="have-input" type="text" autocomplete="off" placeholder="des œufs, une courgette, de la feta">
-          <button class="btn" type="submit">Trouver<span class="long">&nbsp;une recette</span></button>
-        </form>
-        <div class="quick" id="quick" aria-label="Ajouter un ingrédient">
-          <button type="button" class="qc" id="q-oeufs" data-v="œufs">🥚 Œufs</button>
-          <button type="button" class="qc" id="q-pates" data-v="pâtes">🍝 Pâtes</button>
-          <button type="button" class="qc" id="q-riz" data-v="riz">🍚 Riz</button>
-          <button type="button" class="qc" id="q-tomates" data-v="tomates">🍅 Tomates</button>
-          <button type="button" class="qc" id="q-fromage" data-v="fromage">🧀 Fromage</button>
-          <button type="button" class="qc" id="q-poulet" data-v="poulet">🍗 Poulet</button>
-          <button type="button" class="qc" id="q-courge" data-v="courge butternut">🎃 Butternut</button>
-        </div>
       </div>
       <div class="stage" aria-hidden="true">
         <div class="plate"></div>
@@ -246,11 +238,25 @@ footer{padding-block:6px 30px}
     <section aria-labelledby="h-tools">
       <div class="sec-h"><h2 class="label" id="h-tools">Tes outils</h2></div>
       <div class="tools">
-        <a class="tile g-cook wide" id="t-cook" href="../friscan/#recettes">
+        <div class="tile g-have have-tile" id="t-have">
+          <a class="tile-link" href="../friscan/#frigo"><span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span></a>
+          <form class="have" id="have-form">
+            <label for="have-input">J'ai…</label>
+            <input id="have-input" type="text" autocomplete="off" placeholder="des œufs, une courgette, de la feta">
+            <button class="btn" type="submit">Trouver<span class="long">&nbsp;une recette</span></button>
+          </form>
+          <div class="quick" id="quick" aria-label="Ajouter un ingrédient">
+            <button type="button" class="qc" id="q-oeufs" data-v="œufs">🥚 Œufs</button>
+            <button type="button" class="qc" id="q-pates" data-v="pâtes">🍝 Pâtes</button>
+            <button type="button" class="qc" id="q-riz" data-v="riz">🍚 Riz</button>
+            <button type="button" class="qc" id="q-tomates" data-v="tomates">🍅 Tomates</button>
+            <button type="button" class="qc" id="q-fromage" data-v="fromage">🧀 Fromage</button>
+            <button type="button" class="qc" id="q-poulet" data-v="poulet">🍗 Poulet</button>
+            <button type="button" class="qc" id="q-courge" data-v="courge butternut">🎃 Butternut</button>
+          </div>
+        </div>
+        <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner avec mes réserves ?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
-        </a>
-        <a class="tile g-have" id="t-have" href="../friscan/#frigo">
-          <span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span>
         </a>
         <a class="tile g-courses" id="t-courses" href="courses.html">
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
