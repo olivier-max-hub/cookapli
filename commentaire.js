@@ -13,7 +13,7 @@
   if (!URL_) return;
   var CTX = ds.context || document.title || "Cookapli";
   var TOQUE = '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g stroke="#0f6b78" stroke-width="3" stroke-linejoin="round"><circle cx="30" cy="27" r="16" fill="#fff"/><circle cx="50" cy="19" r="19" fill="#fff"/><circle cx="70" cy="27" r="16" fill="#fff"/><circle cx="50" cy="66" r="28" fill="#fbd9b5"/><rect x="25" y="36" width="50" height="14" rx="5" fill="#d9f0f3"/></g><circle cx="40" cy="65" r="3.2" fill="#1f2a24"/><circle cx="60" cy="65" r="3.2" fill="#1f2a24"/><circle cx="33" cy="73" r="4" fill="#f6a6a0" opacity=".75"/><circle cx="67" cy="73" r="4" fill="#f6a6a0" opacity=".75"/><path d="M38 75Q50 89 62 75" fill="none" stroke="#1f2a24" stroke-width="3" stroke-linecap="round"/></svg><span>Commentaire</span>';
-  var PRIV = "Confidentialité : ton commentaire et ton adresse e-mail restent privés, aucun autre visiteur ne les voit. Ton adresse sert uniquement à te répondre et à t’envoyer un e-mail de remerciement, puis elle est supprimée après 24 heures. Tu peux demander la suppression de ton message à tout moment en écrivant à ";
+  var PRIV = "Confidentialité : ton commentaire et ton adresse e-mail restent privés, aucun autre visiteur ne les voit. Ton adresse sert uniquement à te répondre et à t’envoyer un e-mail de remerciement, puis elle est supprimée après 24 heures. Tu peux demander la suppression de ton message à tout moment." + (ds.extra ? " " + ds.extra : "") + " Pour toute autre question, tu peux envoyer un message à ";
 
   var css = document.createElement("style");
   css.textContent =
@@ -54,7 +54,7 @@
   var hp = el("input", "hp"); hp.type = "text"; hp.tabIndex = -1; hp.autocomplete = "off"; hp.setAttribute("aria-hidden", "true");
   var b = el("button", "send", "Envoyer"); b.type = "submit";
   var s = el("p", "st"); s.setAttribute("role", "status");
-  var p = el("p", "cm-privacy", PRIV); var ml = el("a", null, "contact@cookapli.com"); ml.href = "mailto:contact@cookapli.com"; p.appendChild(ml); p.appendChild(document.createTextNode("." + (ds.extra ? " " + ds.extra : "")));
+  var p = el("p", "cm-privacy", PRIV); var ml = el("a", null, "contact@cookapli.com"); ml.href = "mailto:contact@cookapli.com"; p.appendChild(ml); p.appendChild(document.createTextNode("."));
   [e, t, hp, b, s, p].forEach(function (x) { body.appendChild(x); });
   f.appendChild(tg); f.appendChild(body); wrap.appendChild(f);
   function setOpen(o) { body.hidden = !o; f.classList.toggle("open", o); tg.setAttribute("aria-expanded", String(o)); }
