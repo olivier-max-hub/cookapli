@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0f6b78">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Courses">
+<meta name="apple-mobile-web-app-title" content="Cookapli">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="application-name" content="Cookapli">
 <title>Liste de courses · Cookapli</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400&display=swap">
@@ -472,5 +476,6 @@ $('#toast-undo').onclick = () => { if (undoFn) undoFn(); undoFn = null; $('#toas
 $('#ing-list').innerHTML = Object.values(IG).map(d => `<option value="${esc(d.n)}"></option>`).join('');
 renderList(); route(); loadMine();
 </script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
 </body>
 </html>
