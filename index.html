@@ -108,14 +108,13 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .sec-h a{color:var(--acc);font-weight:700;text-underline-offset:3px}
 
 /* Tuiles outils */
-.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tools{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px} /* 2 × 2 : Réserves, Courses / Recettes, Occasion */
 .tile{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:118px;padding:16px 20px;border-radius:24px;box-shadow:var(--sh-tile);color:var(--acc-deep);text-decoration:none;border:0;font:inherit;text-align:left;cursor:pointer;width:100%}
 .tile b{display:block;font-size:1.6rem;line-height:1.05}
 .tile small{display:block;font-size:1rem;line-height:1.3;margin-top:4px;color:var(--acc-deep)}
 .tile .ill{font-size:3.2rem;line-height:1;flex:none}
 .tile:focus-visible{outline-color:var(--acc-deep)}
 .tile.wide{grid-column:1/-1}
-#t-occasion{grid-column:span 2} /* dernière tuile sur toute la largeur restante (pas de trou dans la grille) */
 .g-cook{background:linear-gradient(135deg,var(--c-plat-1),var(--c-plat-2))}
 @media (prefers-reduced-motion:no-preference){.tile{transition:transform .15s,box-shadow .15s}.tile:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.14)}}
 .g-recettes{background:linear-gradient(135deg,var(--c-aperitif-1),var(--c-aperitif-2))}
@@ -170,7 +169,7 @@ footer{padding-block:6px 30px}
 @media (prefers-reduced-motion:reduce){#toast{transition:none;transform:translate(-50%,0)}}
 
 /* Responsive */
-@media (max-width:899px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:899px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;padding:20px 18px;position:relative}
   .stage{position:absolute;top:10px;right:6px;width:132px;max-width:132px;margin:0}
@@ -250,22 +249,36 @@ footer{padding-block:6px 30px}
         <a class="tile g-cook wide" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner avec mes réserves ?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
-        <a class="tile g-recettes" id="t-recettes" href="../recettes/">
-          <span><b>Mes recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
-          <span class="count">149</span>
-        </a>
         <a class="tile g-have" id="t-have" href="../friscan/#frigo">
           <span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span>
         </a>
         <a class="tile g-courses" id="t-courses" href="courses.html">
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
         </a>
-        <button type="button" class="tile g-batch" id="t-batch" data-tool="batch">
-          <span><b>Batch cooking 3h</b><small>Les repas équilibrés de la semaine, cuisinés d'un coup</small></span><span class="ill" aria-hidden="true">🍲</span>
-        </button>
+        <a class="tile g-recettes" id="t-recettes" href="../recettes/">
+          <span><b>Mes recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
+          <span class="count">149</span>
+        </a>
         <button type="button" class="tile g-occasion" id="t-occasion" data-tool="occasion">
           <span><b>Pour une occasion</b><small>Anniversaire, repas de fête, invités du dimanche</small></span><span class="ill" aria-hidden="true">🥂</span>
         </button>
+      </div>
+    </section>
+
+    <section class="batch" aria-labelledby="h-batch">
+      <div>
+        <h2 id="h-batch">Batch cooking 3h</h2>
+        <p>Trois heures en cuisine le week-end, et des repas équilibrés prêts du lundi au vendredi. Les ingrédients partent directement dans ta liste de courses.</p>
+        <button type="button" class="btn" id="b-batch" data-tool="batch">Préparer ma semaine</button>
+      </div>
+      <div class="timeline" aria-label="Déroulé d'une séance de 3 heures">
+        <div class="tl-head"><span>0 h</span><span>1 h</span><span>2 h</span><span>3 h</span></div>
+        <div class="tl-bar">
+          <div><b>Au four</b><small>Les cuissons longues partent en premier</small></div>
+          <div><b>Légumes et féculents</b><small>On épluche, on coupe, on cuit</small></div>
+          <div><b>En boîtes</b><small>Sauces, portions, étiquettes</small></div>
+        </div>
+        <div class="week" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span></div>
       </div>
     </section>
 
@@ -299,22 +312,6 @@ footer{padding-block:6px 30px}
       </div>
     </section>
 
-    <section class="batch" aria-labelledby="h-batch">
-      <div>
-        <h2 id="h-batch">Batch cooking 3h</h2>
-        <p>Trois heures en cuisine le week-end, et des repas équilibrés prêts du lundi au vendredi. Les ingrédients partent directement dans ta liste de courses.</p>
-        <button type="button" class="btn" id="b-batch" data-tool="batch">Préparer ma semaine</button>
-      </div>
-      <div class="timeline" aria-label="Déroulé d'une séance de 3 heures">
-        <div class="tl-head"><span>0 h</span><span>1 h</span><span>2 h</span><span>3 h</span></div>
-        <div class="tl-bar">
-          <div><b>Au four</b><small>Les cuissons longues partent en premier</small></div>
-          <div><b>Légumes et féculents</b><small>On épluche, on coupe, on cuit</small></div>
-          <div><b>En boîtes</b><small>Sauces, portions, étiquettes</small></div>
-        </div>
-        <div class="week" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span></div>
-      </div>
-    </section>
 
   </div>
 </main>
