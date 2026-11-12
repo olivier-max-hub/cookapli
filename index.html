@@ -115,6 +115,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .tile .ill{font-size:3.2rem;line-height:1;flex:none}
 .tile:focus-visible{outline-color:var(--acc-deep)}
 .tile.wide{grid-column:1/-1}
+#t-occasion{grid-column:span 2} /* dernière tuile sur toute la largeur restante (pas de trou dans la grille) */
 .g-cook{background:linear-gradient(135deg,var(--c-plat-1),var(--c-plat-2))}
 @media (prefers-reduced-motion:no-preference){.tile{transition:transform .15s,box-shadow .15s}.tile:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.14)}}
 .g-recettes{background:linear-gradient(135deg,var(--c-aperitif-1),var(--c-aperitif-2))}
@@ -255,9 +256,6 @@ footer{padding-block:6px 30px}
         </a>
         <a class="tile g-have" id="t-have" href="../friscan/#frigo">
           <span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span>
-        </a>
-        <a class="tile g-scan" id="t-scan" href="../friscan/#scan">
-          <span><b>Scanner du frigo</b><small>Friscan fait l'inventaire en quelques secondes</small></span><span class="ill" aria-hidden="true">📷</span>
         </a>
         <a class="tile g-courses" id="t-courses" href="courses.html">
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
