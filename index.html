@@ -246,19 +246,13 @@ footer{padding-block:6px 30px}
             <input id="have-input" type="text" autocomplete="off" placeholder="des œufs, une courgette, de la feta">
             <button class="btn" type="submit">Trouver<span class="long">&nbsp;une recette</span></button>
           </form>
-          <div class="quick" id="quick" aria-label="Ajouter un ingrédient">
-            <button type="button" class="qc" id="q-oeufs" data-v="œufs">🥚 Œufs</button>
-            <button type="button" class="qc" id="q-pates" data-v="pâtes">🍝 Pâtes</button>
-            <button type="button" class="qc" id="q-riz" data-v="riz">🍚 Riz</button>
-            <button type="button" class="qc" id="q-tomates" data-v="tomates">🍅 Tomates</button>
-            <button type="button" class="qc" id="q-fromage" data-v="fromage">🧀 Fromage</button>
-            <button type="button" class="qc" id="q-poulet" data-v="poulet">🍗 Poulet</button>
-            <button type="button" class="qc" id="q-courge" data-v="courge butternut">🎃 Butternut</button>
-          </div>
         </div>
         <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
-          <span><b>Que cuisiner avec mes réserves ?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
+          <span><b>Que cuisiner avec mes réserves&nbsp;?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
+        <button type="button" class="tile g-chrono" id="t-chrono" data-tool="chrono">
+          <span><b>30 minutes chrono</b><small>Des recettes rapides, prêtes en 30 minutes</small></span><span class="ill" aria-hidden="true">⏱️</span>
+        </button>
         <a class="tile g-courses" id="t-courses" href="courses.html">
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
         </a>
@@ -268,9 +262,6 @@ footer{padding-block:6px 30px}
         </a>
         <button type="button" class="tile g-occasion" id="t-occasion" data-tool="occasion">
           <span><b>Pour une occasion</b><small>Anniversaire, repas de fête, invités du dimanche</small></span><span class="ill" aria-hidden="true">🥂</span>
-        </button>
-        <button type="button" class="tile g-chrono" id="t-chrono" data-tool="chrono">
-          <span><b>30 minutes chrono</b><small>Des recettes rapides, prêtes en 30 minutes maximum</small></span><span class="ill" aria-hidden="true">⏱️</span>
         </button>
       </div>
     </section>
@@ -385,7 +376,7 @@ footer{padding-block:6px 30px}
   function save(){try{localStorage.setItem("cookapli-have",input.value)}catch(e){}}
   try{var saved=localStorage.getItem("cookapli-have");if(saved)input.value=saved}catch(e){}
   syncChips();
-  document.getElementById("quick").addEventListener("click",function(e){
+  var qk=document.getElementById("quick");if(qk)qk.addEventListener("click",function(e){
     var b=e.target.closest(".qc");if(!b)return;
     var list=items(),v=b.dataset.v,i=list.map(function(s){return s.toLowerCase()}).indexOf(v);
     if(i>=0)list.splice(i,1);else list.push(v);
