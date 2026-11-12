@@ -148,6 +148,20 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .card .t{padding:10px 12px 12px}
 .card b{display:block;font-size:1.05rem;line-height:1.25}
 .card small{color:var(--mute);font-size:.95rem}
+/* Carrousel « Besoin d'inspiration ? » : défilement au doigt, arrêt sur une recette */
+.carou-wrap{position:relative}
+.carou{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:2px;padding:4px 2px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.carou::-webkit-scrollbar{display:none}
+.carou:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:12px}
+.carou .slide{flex:0 0 calc((100% - 28px) / 3);scroll-snap-align:start}
+.carou .thumb{position:relative;overflow:hidden}
+.carou .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.carou .card b{font-weight:700}
+.carou-btn{position:absolute;top:calc(50% - 30px);z-index:2;width:42px;height:42px;border-radius:50%;border:2px solid var(--acc);background:var(--card);color:var(--acc);font:700 1.8rem/1 var(--font);cursor:pointer;box-shadow:var(--sh-card);display:grid;place-items:center;padding:0 0 4px}
+.carou-btn.prev{left:-12px}.carou-btn.next{right:-12px}
+.carou-btn[disabled]{opacity:0;pointer-events:none}
+@media (max-width:899px){.carou .slide{flex-basis:calc((100% - 14px) / 2)}}
+@media (max-width:600px){.carou .slide{flex-basis:78%}.carou-btn{display:none}}
 @media (prefers-reduced-motion:no-preference){.card{transition:transform .15s}.card:hover{transform:translateY(-3px)}}
 
 /* Batch cooking */
@@ -296,26 +310,17 @@ footer{padding-block:6px 30px}
 
     <section aria-labelledby="h-ideas">
       <div class="sec-h">
-        <h2 class="label" id="h-ideas" style="--cat:var(--c-dessert-2)">Envie de cuisiner&nbsp;?</h2>
+        <h2 class="label" id="h-ideas" style="--cat:var(--c-dessert-2)">Besoin d'inspiration&nbsp;?</h2>
         <a href="../recettes/">Voir les 149 recettes →</a>
       </div>
-      <div class="grid">
-        <a class="card" href="../recettes/#crackers-au-butternut-et-parmesan">
-          <div class="thumb" style="background:var(--c-unique-1)" aria-hidden="true">🎃</div>
-          <div class="t"><b>Crackers au Butternut et Parmesan</b><small>Apéritif · végétarien</small></div>
-        </a>
-        <a class="card" href="../recettes/#caviar-d-aubergines">
-          <div class="thumb" style="background:var(--c-plat-1)" aria-hidden="true">🍆</div>
-          <div class="t"><b>Caviar d’Aubergines</b><small>Apéritif · légumes</small></div>
-        </a>
-        <a class="card" href="../recettes/#houmous-butternut-et-noix">
-          <div class="thumb" style="background:var(--c-aperitif-1)" aria-hidden="true">🥣</div>
-          <div class="t"><b>Houmous Butternut et Noix</b><small>Apéritif · Proche-Orient</small></div>
-        </a>
-        <a class="card" href="../recettes/#cake-butternut-et-feta">
-          <div class="thumb" style="background:var(--c-veg-1)" aria-hidden="true">🧀</div>
-          <div class="t"><b>Cake Butternut et Feta</b><small>Apéritif · végétarien</small></div>
-        </a>
+      <div class="carou-wrap">
+        <button type="button" class="carou-btn prev" id="carou-prev" aria-label="Recette précédente">‹</button>
+        <div class="carou" id="carou" tabindex="0" aria-label="Recettes à découvrir : fais défiler avec le doigt">
+          <a class="card slide" href="../recettes/#crackers-au-butternut-et-parmesan"><div class="thumb" style="background:var(--c-unique-1)" aria-hidden="true">🎃</div><div class="t"><b>Crackers au Butternut et Parmesan</b><small>Apéritif · Végétarien</small></div></a>
+          <a class="card slide" href="../recettes/#caviar-d-aubergines"><div class="thumb" style="background:var(--c-plat-1)" aria-hidden="true">🍆</div><div class="t"><b>Caviar d’Aubergines</b><small>Apéritif · Légumes</small></div></a>
+          <a class="card slide" href="../recettes/#houmous-butternut-et-noix"><div class="thumb" style="background:var(--c-aperitif-1)" aria-hidden="true">🥣</div><div class="t"><b>Houmous Butternut et Noix</b><small>Apéritif · Végétarien</small></div></a>
+        </div>
+        <button type="button" class="carou-btn next" id="carou-next" aria-label="Recette suivante">›</button>
       </div>
     </section>
 
@@ -410,6 +415,41 @@ footer{padding-block:6px 30px}
     var b=e.target.closest("[data-tool]");if(!b)return;
     toast(NAMES[b.dataset.tool]+" arrive bientôt dans Cookapli");
   });
+})();
+</script>
+<script>
+/* Carrousel « Besoin d'inspiration ? » (démo) : recettes Apéritif et Entrée du Livre de recettes, avec photo */
+(function(){
+  var box=document.getElementById("carou"),prev=document.getElementById("carou-prev"),next=document.getElementById("carou-next");
+  if(!box)return;
+  var SITE="../recettes/",CATS=["Apéritif","Entrée"],KEY="cookapli.carrousel";
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+  function slug(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
+  function rows(t){var R=[],r=[],f="",q=false;for(var i=0;i<t.length;i++){var c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==","){r.push(f);f=""}else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;r.push(f);f="";R.push(r);r=[]}else f+=c}if(f||r.length){r.push(f);R.push(r)}return R}
+  function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
+  function render(list){
+    if(!list||!list.length)return;
+    box.innerHTML=shuffle(list.slice()).map(function(r){
+      return '<a class="card slide" href="'+SITE+'#'+esc(r.s)+'"><div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="t"><b>'+esc(r.n)+'</b><small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small></div></a>';
+    }).join("");
+    box.scrollLeft=0;arrows();
+  }
+  function arrows(){prev.disabled=box.scrollLeft<8;next.disabled=box.scrollLeft+box.clientWidth>=box.scrollWidth-8}
+  function step(d){var s=box.querySelector(".slide");var w=s?s.getBoundingClientRect().width+14:box.clientWidth;box.scrollBy({left:d*w,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})}
+  prev.addEventListener("click",function(){step(-1)});next.addEventListener("click",function(){step(1)});
+  box.addEventListener("scroll",function(){window.requestAnimationFrame(arrows)},{passive:true});
+  box.addEventListener("keydown",function(e){if(e.key==="ArrowRight"){e.preventDefault();step(1)}if(e.key==="ArrowLeft"){e.preventDefault();step(-1)}});
+  try{var c=JSON.parse(localStorage.getItem(KEY)||"null");if(c&&c.list)render(c.list)}catch(e){}
+  arrows();
+  var url=(typeof MES_RECETTES!=="undefined"&&MES_RECETTES.csv)||"";if(!url)return;
+  fetch(url+"&t="+Date.now()).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+    var out=[],cur="";
+    rows(t).slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var img=(r[6]||"").trim();
+      if(CATS.indexOf(cur)>=0&&img)out.push({n:n,s:slug(n),c:cur,t:(r[3]||"").trim(),i:img})});
+    if(!out.length)return;
+    try{localStorage.setItem(KEY,JSON.stringify({list:out,t:Date.now()}))}catch(e){}
+    render(out);
+  }).catch(function(){});
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
