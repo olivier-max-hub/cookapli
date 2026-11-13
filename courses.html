@@ -244,15 +244,20 @@ const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 
 const emojiOf = it => (it.ing && IG[it.ing] ? IG[it.ing].e : '🛒');
 const rayonOf = it => (it.ing && IG[it.ing] ? IG[it.ing].g : 'autre');
 
-/* ajoute un article ; fusionne avec le même ingrédient encore à prendre */
-function addEntry({ name, ing = null, qty = '', src = '' }) {
-  const same = list.find(x => !x.done && ((ing && x.ing === ing) || (!ing && !x.ing && norm(x.name) === norm(name))));
+/* ajoute un article.
+   - saisie à la main : le nom tapé est gardé tel quel (« Sardines à la tomate », « Huile d'olive ») ;
+     on ne regroupe que si le même nom est déjà dans la liste ;
+   - depuis une recette : on regroupe le même ingrédient, sans toucher aux articles tapés à la main
+     qui portent un autre nom. */
+function addEntry({ name, ing = null, qty = '', src = '', manual = false }) {
+  const label = manual && !qty ? name.charAt(0).toUpperCase() + name.slice(1) : (ing && IG[ing] ? IG[ing].n : name);
+  const same = list.find(x => !x.done && (norm(x.name) === norm(label) || (!manual && !x.manual && ing && x.ing === ing)));
   if (same) {
     if (qty && !same.qty.includes(qty)) same.qty.push(qty);
     if (src && !same.src.includes(src)) same.src.push(src);
     return same;
   }
-  const it = { id: uid(), name: ing && IG[ing] ? IG[ing].n : name, raw: name, ing, qty: qty ? [qty] : [], src: src ? [src] : [], done: false, added: Date.now() };
+  const it = { id: uid(), name: label, raw: name, ing, qty: qty ? [qty] : [], src: src ? [src] : [], done: false, added: Date.now(), manual };
   list.push(it);
   return it;
 }
@@ -279,7 +284,7 @@ function renderList() {
     return `<section class="rayon" style="border-top:6px solid ${r.c}">
       <h2 style="background:${r.c}33">${esc(r.n)}<small>${left ? left + ' à prendre' : 'tout est pris'}</small></h2>
       <ul class="items">${items.map(it => {
-        const det = [it.qty.filter(q => norm(q) !== norm(it.name)).join(' + '), it.src.length ? 'pour ' + it.src.join(', ') : '', it.raw && it.raw !== it.name && !it.qty.length ? it.raw : ''].filter(Boolean).join(' · ');
+        const det = [it.qty.filter(q => norm(q) !== norm(it.name)).join(' + '), it.src.length ? 'pour ' + it.src.join(', ') : '', it.raw && norm(it.raw) !== norm(it.name) && !it.qty.length ? it.raw : ''].filter(Boolean).join(' · ');
         return `<li class="item${it.done ? ' done' : ''}">
           <label><input type="checkbox" data-id="${it.id}" ${it.done ? 'checked' : ''} aria-label="${esc(it.name)} pris"><span class="e" aria-hidden="true">${emojiOf(it)}</span>
           <span class="txt"><b>${esc(it.name)}</b>${det ? `<small>${esc(det)}</small>` : ''}</span></label>
@@ -305,8 +310,10 @@ $('#add-form').addEventListener('submit', e => {
   const id = guessIng(v);
   /* « 6 œufs », « 1 kg de pommes » : on garde la quantité tapée */
   const qty = /^\s*[\d½¼¾]/.test(v) && id ? v : '';
-  const it = addEntry({ name: v, ing: id, qty });
+  const before = list.length;
+  const it = addEntry({ name: v, ing: id, qty, manual: true });
   save(); renderList(); $('#add-input').value = '';
+  if (list.length === before) { toast(qty ? `Quantité ajoutée à ${it.name}` : `${it.name} est déjà dans ta liste`); return; }
   const warn = id && have(id) ? ` (tu en as déjà${inPlacard(id) ? ' dans le placard' : ' au frigo'})` : '';
   toast(`${it.name} ajouté${warn}`);
 });
