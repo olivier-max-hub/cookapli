@@ -85,6 +85,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .qc[aria-pressed="true"]{background:var(--acc-pale);border-color:var(--acc);color:var(--acc-deep);font-weight:700}
 
 /* Assiette */
+.hero-ill{display:block;width:100%;max-width:440px;height:auto;margin-inline:auto;filter:drop-shadow(0 6px 10px rgba(15,107,120,.18))}
 .stage{position:relative;width:100%;max-width:400px;aspect-ratio:1;margin-inline:auto;container-type:inline-size}
 .plate{position:absolute;inset:14%;border-radius:50%;background:radial-gradient(circle,var(--card) 0 54%,var(--band) 54.5% 58%,var(--card) 58.5% 100%);box-shadow:0 14px 30px rgba(15,107,120,.18),inset 0 -6px 14px rgba(15,107,120,.06)}
 .plate::after{content:"";position:absolute;inset:-7%;border-radius:50%;border:2px dashed var(--c-aperitif-2);opacity:.7}
@@ -219,7 +220,8 @@ footer{padding-block:6px 30px}
 @media (max-width:899px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){
   .hero{grid-template-columns:1fr;padding:20px 18px;position:relative}
-  .stage{position:absolute;top:10px;right:6px;width:132px;max-width:132px;margin:0}
+  .hero-ill{position:absolute;top:14px;right:4px;width:142px;max-width:142px;margin:0}
+  .hero h1 .nw{white-space:nowrap}
   .hero .hello,.hero h1{padding-right:128px}
   .quick{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
   .qc{flex:none}
@@ -242,6 +244,8 @@ footer{padding-block:6px 30px}
   .tl-bar small{display:none}
   #t-cook b{font-size:min(1.35rem,calc((100cqi - 12px - 2.8rem) / 11))}
 }
+@media (max-width:400px){.hero h1#h-hero{font-size:2.08rem}}
+@media (max-width:370px){.hero h1#h-hero{font-size:1.86rem}.hero .hero-ill{width:128px;top:16px}.hero .lead{margin-top:10px}}
 </style>
 </head>
 <body>
@@ -259,22 +263,10 @@ footer{padding-block:6px 30px}
     <section class="hero" aria-labelledby="h-hero">
       <div>
         <p class="hello" id="hello">Bonsoir</p>
-        <h1 id="h-hero">Qu'est-ce qu'on mange&nbsp;?</h1>
+        <h1 id="h-hero"><span class="nw">Qu'est-ce</span> qu'on mange&nbsp;?</h1>
         <p class="lead">Dis-moi ce qu'il y a dans ton frigo et ton placard. Cookapli te trouve une vraie recette, déjà testée en cuisine.</p>
       </div>
-      <div class="stage" aria-hidden="true">
-        <div class="plate"></div>
-        <svg class="steam" viewBox="0 0 60 30"><path d="M14 28c-6-8 6-12 0-22"/><path d="M30 28c-6-8 6-12 0-22"/><path d="M46 28c-6-8 6-12 0-22"/></svg>
-        <div class="dish">🥘</div>
-        <span class="ing" style="left:2%;top:8%">🍅</span>
-        <span class="ing" style="left:42%;top:-1%">🌿</span>
-        <span class="ing" style="right:2%;top:10%">🧄</span>
-        <span class="ing" style="right:-2%;top:44%">🥕</span>
-        <span class="ing" style="right:6%;bottom:4%">🧀</span>
-        <span class="ing" style="left:40%;bottom:-2%">🍋</span>
-        <span class="ing" style="left:2%;bottom:8%">🥖</span>
-        <span class="ing" style="left:-3%;top:44%">🫑</span>
-      </div>
+      <img class="hero-ill" src="mascotte/accueil-miroir.webp" alt="" width="688" height="600">
     </section>
 
     <section aria-labelledby="h-tools">
@@ -358,7 +350,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 20</p>
+  <p class="legal ver">Cookapli · version 21</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
