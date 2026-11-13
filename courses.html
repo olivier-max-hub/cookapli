@@ -95,6 +95,7 @@ main{padding-block:16px 40px}
 .empty{background:var(--veil);border-radius:18px;padding:22px 18px;text-align:center;color:var(--mute)}
 .empty b{display:block;color:var(--ink);font-size:1.2rem;margin-bottom:4px}
 .empty .actions{justify-content:center;margin-top:12px}
+.mz-empty{display:block;height:170px;width:auto;margin:0 auto 10px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.2))}
 
 /* Recettes */
 .search{width:100%;padding:11px 16px;border:1px solid var(--line);border-radius:99px;background:var(--card);font-size:1.05rem;box-shadow:var(--sh-card)}
@@ -271,7 +272,7 @@ function renderList() {
   $('#b-reset').hidden = !list.length;
   $('#b-ranger').disabled = $('#b-clear').disabled = !done;
   if (!list.length) {
-    box.innerHTML = `<div class="empty"><b>Rien à acheter pour l'instant</b>Ajoute un article ci-dessus, ou pioche les ingrédients d'une recette.
+    box.innerHTML = `<div class="empty"><img class="mz-empty" src="mascotte/caddie.webp" alt="" width="429" height="509"><b>Rien à acheter pour l'instant</b>Ajoute un article ci-dessus, ou pioche les ingrédients d'une recette.
       <div class="actions"><a class="btn" href="#recette">Depuis une recette</a><a class="btn alt" href="#presque">Recettes presque prêtes</a></div></div>`;
     return;
   }

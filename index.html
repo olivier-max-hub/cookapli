@@ -177,6 +177,20 @@ main .wrap>*{min-width:0} /* une section ne peut pas élargir la page */
 .batch p{margin:0 0 14px;color:var(--on-soft);font-size:1.1rem;max-width:40ch}
 .batch .btn{background:var(--card);color:var(--acc);border-color:var(--card)}
 .batch .btn:focus-visible{outline-color:var(--on)}
+.batch-txt{display:flex;align-items:center;gap:16px}
+.mz-batch{order:2;flex:0 0 auto;height:190px;width:auto;margin:-14px 0 -18px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+@media (max-width:520px){.mz-batch{height:150px}}
+/* mascotte : coucou à la première ouverture de la journée */
+.mz{position:fixed;right:max(6px,env(safe-area-inset-right,0px));bottom:0;z-index:60;width:min(34vw,150px);pointer-events:none;transform:translateY(105%);transition:transform .7s cubic-bezier(.2,1.3,.4,1)}
+.mz.on{transform:translateY(6%)}
+.mz.off{transform:translateY(105%);transition:transform .5s ease-in}
+.mz img{display:block;width:100%;height:auto;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25));transform-origin:50% 100%}
+.mz.on img{animation:mzSalut 1.6s ease-in-out .7s 2}
+@keyframes mzSalut{0%,100%{transform:rotate(0)}25%{transform:rotate(-4deg)}60%{transform:rotate(2deg)}}
+.mz-bulle{position:absolute;right:78%;top:2%;width:max-content;max-width:min(58vw,250px);background:#fff;color:#000;font-weight:700;font-size:1.05rem;line-height:1.25;padding:.55em .8em;border-radius:16px 16px 4px 16px;box-shadow:0 3px 12px rgba(0,0,0,.18);border-left:4px solid var(--acc);opacity:0;transform:scale(.6);transform-origin:100% 100%;transition:opacity .3s,transform .3s}
+.mz.on .mz-bulle{opacity:1;transform:scale(1);transition-delay:.6s}
+.mz-bulle b{color:var(--acc)}
+@media (prefers-reduced-motion:reduce){.mz,.mz.off{transition:none}.mz.on img{animation:none}}
 .timeline{display:grid;gap:8px}
 .tl-head{display:flex;justify-content:space-between;font-size:.85rem;color:var(--on-soft);font-variant-numeric:tabular-nums}
 .tl-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:14px;overflow:hidden}
@@ -298,10 +312,13 @@ footer{padding-block:6px 30px}
     </section>
 
     <section class="batch" aria-labelledby="h-batch">
-      <div>
+      <div class="batch-txt">
+        <img class="mz-batch" src="mascotte/boites.webp" alt="" width="283" height="501" loading="lazy">
+        <div>
         <h2 id="h-batch">Batch cooking 3h</h2>
         <p>Trois heures en cuisine le week-end, et des repas équilibrés prêts du lundi au vendredi. Les ingrédients partent directement dans ta liste de courses.</p>
         <button type="button" class="btn" id="b-batch" data-tool="batch">Préparer ma semaine</button>
+      </div>
       </div>
       <div class="timeline" aria-label="Déroulé d'une séance de 3 heures">
         <div class="tl-head"><span>0 h</span><span>1 h</span><span>2 h</span><span>3 h</span></div>
@@ -341,7 +358,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 19</p>
+  <p class="legal ver">Cookapli · version 20</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -477,6 +494,13 @@ footer{padding-block:6px 30px}
     render(out);
   }).catch(function(){});
 })();
+</script>
+<div class="mz" id="mz" aria-hidden="true"><div class="mz-bulle">Coucou ! <b>Qu'est-ce qu'on cuisine aujourd'hui ?</b></div><img alt="" src="mascotte/pouce.webp" width="251" height="502"></div>
+<script>
+(function(){var m=document.getElementById("mz");if(!m)return;var k="cookapli-coucou",d=new Date().toISOString().slice(0,10),last=null;
+  try{last=localStorage.getItem(k)}catch(e){}
+  if(last===d)return;try{localStorage.setItem(k,d)}catch(e){}
+  setTimeout(function(){m.classList.add("on");setTimeout(function(){m.classList.remove("on");m.classList.add("off")},4500)},900)})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
 </body>

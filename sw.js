@@ -1,6 +1,6 @@
 /* Cookapli — service worker : rend l'appli installable et utilisable hors ligne */
-const V = 'cookapli-v19';
-const SHELL = ['./', 'index.html', 'courses.html', 'commentaire.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable.png', 'icon.svg'];
+const V = 'cookapli-v20';
+const SHELL = ['./', 'index.html', 'courses.html', 'commentaire.js', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable.png', 'icon.svg', 'mascotte/pouce.webp', 'mascotte/caddie.webp', 'mascotte/boites.webp'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith('cookapli-') && k !== V).map(k => caches.delete(k)))));
