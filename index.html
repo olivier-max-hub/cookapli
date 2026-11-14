@@ -264,6 +264,7 @@ footer{padding-block:6px 30px}
   <div class="wrap">
     <svg class="logo" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="12" fill="#ffffff" fill-opacity=".14"/><circle cx="24" cy="25" r="14" fill="#ffffff"/><circle cx="24" cy="25" r="9.5" fill="#d9f0f3"/><rect x="5.5" y="12" width="3" height="26" rx="1.5" fill="#ffffff"/><rect x="39.5" y="12" width="3" height="26" rx="1.5" fill="#ffffff"/><path d="M20 22c1.5-3 6.5-3 8 0" fill="none" stroke="#0f6b78" stroke-width="2" stroke-linecap="round"/></svg>
     <div class="brand"><b>Cookapli</b><small>De vraies recettes, avec ce que tu as</small></div>
+    <nav class="hdr-nav"><button type="button" id="shareBtn" aria-label="Partager Cookapli"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span class="lbl">Partager</span></button></nav>
   </div>
 </header>
 
@@ -364,7 +365,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 30</p>
+  <p class="legal ver">Cookapli · version 31</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -388,6 +389,16 @@ footer{padding-block:6px 30px}
   var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"La rubrique Célébrations",chrono:"Le 30 minutes chrono",gaspi:"La rubrique Idées Anti gaspi",equilibre:"La rubrique Équilibre alimentaire"};
 
   function toast(m){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);t.classList.toggle("warn",/impossible|refus|indisponible|échou|Ajoute au moins/i.test(m));t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2800)}
+
+  (function(){var b=$("shareBtn");if(!b)return;var url="https://olivier-max-hub.github.io/cookapli/";
+    var data={title:"Cookapli",text:"Cookapli : de vraies recettes, avec ce que tu as dans ton frigo et ton placard.",url:url};
+    b.addEventListener("click",function(){
+      if(navigator.share){navigator.share(data).catch(function(){});return}
+      var done=function(){toast("Lien copié : tu peux le coller où tu veux")};
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done,function(){toast("Copie impossible : "+url)})}
+      else{toast("Copie impossible : "+url)}
+    });
+  })();
 
   // Salutation selon l'heure
   var h=new Date().getHours();
