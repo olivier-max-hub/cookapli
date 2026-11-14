@@ -198,6 +198,10 @@ main .wrap>*{min-width:0} /* une section ne peut pas élargir la page */
 .mz.on .mz-bulle{opacity:1;transform:scale(1);transition-delay:.6s}
 .mz-bulle b{color:var(--acc)}
 @media (prefers-reduced-motion:reduce){.mz,.mz.off{transition:none}.mz.on img{animation:none}}
+/* mascotte « fête » : apparaît quand on touche la tuile Célébrations, puis repart (comme le coucou) */
+.mz.fete{right:auto;left:max(6px,env(safe-area-inset-left,0px));width:min(40vw,170px)}
+.mz.fete .mz-bulle{right:auto;left:38%;top:auto;bottom:98%;border-radius:16px 16px 16px 4px;border-left:4px solid #d9ab3a;transform-origin:0 100%}
+.mz.fete .mz-bulle b{color:#9a6b12}
 .timeline{display:grid;gap:8px}
 .tl-head{display:flex;justify-content:space-between;font-size:.85rem;color:var(--on-soft);font-variant-numeric:tabular-nums}
 .tl-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;border-radius:14px;overflow:hidden}
@@ -360,7 +364,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 29</p>
+  <p class="legal ver">Cookapli · version 30</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -444,6 +448,7 @@ footer{padding-block:6px 30px}
   // Outils pas encore branchés
   document.addEventListener("click",function(e){
     var b=e.target.closest("[data-tool]");if(!b)return;
+    if(b.dataset.tool==="occasion"&&window.feteMascotte){window.feteMascotte();return}
     toast(NAMES[b.dataset.tool]+" arrive bientôt dans Cookapli");
   });
 })();
@@ -497,12 +502,17 @@ footer{padding-block:6px 30px}
   }).catch(function(){});
 })();
 </script>
+<div class="mz fete" id="mzFete" aria-hidden="true"><div class="mz-bulle">C’est la fête ! <b>Les Célébrations arrivent bientôt dans Cookapli</b></div><img alt="" src="mascotte/fete.webp" width="396" height="520"></div>
 <div class="mz" id="mz" aria-hidden="true"><div class="mz-bulle">Coucou ! <b>Qu'est-ce qu'on cuisine aujourd'hui ?</b></div><img alt="" src="mascotte/pouce.webp" width="251" height="502"></div>
 <script>
 (function(){var m=document.getElementById("mz");if(!m)return;var k="cookapli-coucou",d=new Date().toISOString().slice(0,10),last=null;
   try{last=localStorage.getItem(k)}catch(e){}
   if(last===d)return;try{localStorage.setItem(k,d)}catch(e){}
   setTimeout(function(){m.classList.add("on");setTimeout(function(){m.classList.remove("on");m.classList.add("off")},4500)},900)})();
+/* tuile Célébrations : le personnage en fête apparaît 4,5 s puis repart */
+(function(){var f=document.getElementById("mzFete"),t=null;if(!f)return;
+  window.feteMascotte=function(){clearTimeout(t);var c=document.getElementById("mz");if(c){c.classList.remove("on");c.classList.add("off")}
+    f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
 </body>
