@@ -4,13 +4,15 @@
    - Un seul texte de confidentialité, sous le bouton « Envoyer ».
    À ajouter en bas de chaque nouvelle page, après friscan/data.js (qui fournit l'adresse MES_RECETTES.comment) :
      <script src="../cookapli/commentaire.js" data-context="Cookapli · Nom de la page" data-extra="Phrase de confidentialité propre à la page (facultatif)"></script>
-   Options : data-header="sélecteur" (où placer le bouton du haut), data-after="sélecteur" (où placer la section). */
+   Options : data-header="sélecteur" (où placer le bouton du haut), data-after="sélecteur" (où placer la section),
+   data-mode="tete" (seulement la tête avec la toque dans data-header, sans bouton flottant ; un appui ouvre une bulle avec le lien vers le commentaire). */
 (function () {
   "use strict";
   var me = document.currentScript || {};
   var ds = me.dataset || {};
   var URL_ = ""; try { URL_ = (typeof MES_RECETTES !== "undefined" && MES_RECETTES.comment) || ""; } catch (x) {}
   if (!URL_) return;
+  var TETE = ds.mode === "tete";
   var CTX = ds.context || document.title || "Cookapli";
   var TOQUE = '<svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g stroke="#0f6b78" stroke-width="3" stroke-linejoin="round"><circle cx="30" cy="27" r="16" fill="#fff"/><circle cx="50" cy="19" r="19" fill="#fff"/><circle cx="70" cy="27" r="16" fill="#fff"/><circle cx="50" cy="66" r="28" fill="#fbd9b5"/><rect x="25" y="36" width="50" height="14" rx="5" fill="#d9f0f3"/></g><circle cx="40" cy="65" r="3.2" fill="#1f2a24"/><circle cx="60" cy="65" r="3.2" fill="#1f2a24"/><circle cx="33" cy="73" r="4" fill="#f6a6a0" opacity=".75"/><circle cx="67" cy="73" r="4" fill="#f6a6a0" opacity=".75"/><path d="M38 75Q50 89 62 75" fill="none" stroke="#1f2a24" stroke-width="3" stroke-linecap="round"/></svg><span>Commentaire</span>';
   var PRIV = "Confidentialité : ton commentaire et ton adresse e-mail restent privés, aucun autre visiteur ne les voit. Ton adresse sert uniquement à te répondre et à t’envoyer un e-mail de remerciement, puis elle est supprimée après 24 heures. Tu peux demander la suppression de ton message à tout moment." + (ds.extra ? " " + ds.extra : "") + " Pour toute autre question, tu peux envoyer un message à ";
@@ -37,7 +39,15 @@
     ".ckc-fab{display:flex;position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:15;align-items:center;gap:6px;padding:4px 12px 4px 6px;background:#fff;color:#0f6b78;font:700 1rem/1 Economica,'Arial Narrow',Arial,sans-serif;text-decoration:none;border-radius:99px;border:2px solid #0f6b78;box-shadow:0 3px 8px rgba(0,0,0,.35);touch-action:none;user-select:none;-webkit-user-select:none;-webkit-user-drag:none;cursor:grab}" +
     ".ckc-fab svg{width:38px;height:38px;flex:none}" +
     "@media (min-width:700px){.ckc-toque{display:flex}.ckc-fab{display:none}}" +
-    "#commentaire{scroll-margin-top:150px}";
+    "#commentaire{scroll-margin-top:150px}" +
+    ".ckc-tete{position:relative;display:flex}" +
+    ".ckc-tete>button{width:38px;height:34px;padding:0!important;justify-content:center}" +
+    ".ckc-tete>button svg{width:30px;height:30px}" +
+    ".ckc-pop{position:absolute;top:calc(100% + 10px);right:0;z-index:20;width:max-content;max-width:min(260px,80vw);display:grid;gap:6px;padding:12px 14px;background:#fff;color:#1f2a24;border-radius:16px;box-shadow:0 4px 14px rgba(0,0,0,.25);font:1rem/1.35 Economica,'Arial Narrow',Arial,sans-serif;text-align:left}" +
+    ".ckc-pop[hidden]{display:none}" +
+    ".ckc-pop::before{content:'';position:absolute;top:-7px;right:14px;width:14px;height:14px;background:#fff;transform:rotate(45deg)}" +
+    ".ckc-pop b{font-size:1.15rem;color:#0f6b78}" +
+    ".ckc-pop a{color:#0f6b78;font-weight:700;text-decoration:underline;text-underline-offset:3px}";
   document.head.appendChild(css);
 
   function deviceType() { var ua = navigator.userAgent || ""; return (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) || matchMedia("(max-width:699px)").matches) ? "Mobile" : "PC"; }
@@ -80,6 +90,27 @@
     var calm = matchMedia("(prefers-reduced-motion:reduce)").matches;
     f.scrollIntoView({ behavior: calm ? "auto" : "smooth", block: "start" });
     if (matchMedia("(min-width:700px)").matches) setTimeout(function () { e.focus({ preventScroll: true }); }, 500);
+  }
+
+  /* ---- mode « tête » : petit bouton dans l'en-tête + bulle ---- */
+  if (TETE) {
+    var zone = ds.header && document.querySelector(ds.header);
+    if (zone) {
+      var bx = el("div", "ckc-tete");
+      var bt = el("button"); bt.type = "button"; bt.setAttribute("aria-label", "Commentaire"); bt.setAttribute("aria-expanded", "false"); bt.setAttribute("aria-controls", "ckcPop");
+      bt.innerHTML = TOQUE.replace(/<span>.*<\/span>/, "");
+      var pop = el("div", "ckc-pop"); pop.id = "ckcPop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Commentaire");
+      pop.appendChild(el("b", null, "Commentaire"));
+      var lk = el("a", null, "Laisser un commentaire en bas de la page"); lk.href = "#commentaire"; pop.appendChild(lk);
+      bx.appendChild(bt); bx.appendChild(pop); zone.insertBefore(bx, zone.firstChild);
+      function showPop(o) { pop.hidden = !o; bt.setAttribute("aria-expanded", String(o)); }
+      bt.addEventListener("click", function (ev) { ev.stopPropagation(); showPop(pop.hidden); });
+      lk.addEventListener("click", function (ev) { showPop(false); goComment(ev); });
+      document.addEventListener("click", function (ev) { if (!bx.contains(ev.target)) showPop(false); });
+      document.addEventListener("keydown", function (ev) { if (ev.key === "Escape") showPop(false); });
+    }
+    if (location.hash === "#commentaire") setTimeout(function () { goComment({ preventDefault: function () {} }); }, 300);
+    return;
   }
 
   /* ---- bouton du haut (grand écran) ---- */
