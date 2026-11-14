@@ -133,7 +133,10 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .g-scan{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .g-courses{background:linear-gradient(135deg,var(--c-unique-1),var(--c-unique-2))}
 .g-batch{background:linear-gradient(135deg,var(--c-entree-1),var(--c-entree-2))}
-.g-occasion{background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='170' height='110'><rect x='14' y='12' width='9' height='4' rx='1.5' fill='%23e8505b' transform='rotate(25 18 14)'/><circle cx='52' cy='22' r='3' fill='%2314a3c7'/><rect x='88' y='8' width='8' height='4' rx='1.5' fill='%23f6c026' transform='rotate(-30 92 10)'/><circle cx='126' cy='30' r='2.6' fill='%237c4dff'/><rect x='150' y='14' width='9' height='4' rx='1.5' fill='%2333b679' transform='rotate(50 154 16)'/><rect x='30' y='52' width='8' height='4' rx='1.5' fill='%23ff8a3d' transform='rotate(-45 34 54)'/><circle cx='70' cy='60' r='2.8' fill='%23e8505b'/><rect x='104' y='48' width='9' height='4' rx='1.5' fill='%2314a3c7' transform='rotate(15 108 50)'/><circle cx='142' cy='66' r='3' fill='%23f6c026'/><rect x='8' y='86' width='8' height='4' rx='1.5' fill='%237c4dff' transform='rotate(60 12 88)'/><circle cx='46' cy='96' r='2.6' fill='%2333b679'/><rect x='80' y='88' width='9' height='4' rx='1.5' fill='%23e8505b' transform='rotate(-20 84 90)'/><circle cx='118' cy='98' r='2.8' fill='%23ff8a3d'/><rect x='156' y='90' width='8' height='4' rx='1.5' fill='%2314a3c7' transform='rotate(35 160 92)'/></svg>") 0 0/170px 110px repeat,linear-gradient(135deg,var(--c-acc-1),var(--c-acc-2))}
+.g-occasion{background:linear-gradient(135deg,#fff0f5,var(--c-acc-2));border:3px solid #d9ab3a}
+.g-occasion>span{position:relative;z-index:1}
+.g-occasion b{background:linear-gradient(90deg,#9a6b12,#d9ab3a 45%,#8a5d0c);-webkit-background-clip:text;background-clip:text;color:transparent}
+.g-occasion .stars{position:absolute;right:8px;top:6px;width:96px;height:84px;pointer-events:none}
 .g-chrono{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .g-gaspi{background:linear-gradient(135deg,var(--c-veg-1),var(--c-veg-2))}
 .g-equilibre{background:linear-gradient(135deg,var(--c-dessert-1),var(--c-dessert-2))}
@@ -302,6 +305,7 @@ footer{padding-block:6px 30px}
           <span class="count">149</span>
         </a>
         <button type="button" class="tile g-occasion" id="t-occasion" data-tool="occasion">
+          <svg class="stars" viewBox="0 0 96 84" aria-hidden="true" focusable="false"><g fill="#d9ab3a"><path d="M10 10 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z"/><path d="M84 8 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z"/><path d="M88 62 l2.5 6 6 2.5 -6 2.5 -2.5 6 -2.5 -6 -6 -2.5 6 -2.5z"/><path d="M8 66 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z"/><circle cx="50" cy="4" r="2"/><circle cx="94" cy="38" r="1.8"/></g></svg>
           <span><b>Célébrations</b><small>Anniversaire, repas de fête, invités du dimanche</small></span><span class="ill" aria-hidden="true">🥂</span>
         </button>
       </div>
@@ -354,7 +358,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 26</p>
+  <p class="legal ver">Cookapli · version 27</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
