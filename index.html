@@ -136,6 +136,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .g-occasion{background:linear-gradient(135deg,var(--c-acc-1),var(--c-acc-2))}
 .g-chrono{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .g-gaspi{background:linear-gradient(135deg,var(--c-veg-1),var(--c-veg-2))}
+.g-equilibre{background:linear-gradient(135deg,var(--c-dessert-1),var(--c-dessert-2))}
 .count{position:absolute;top:10px;right:12px;background:var(--card);color:var(--acc-deep);font-size:.8rem;font-weight:700;padding:1px 9px;border-radius:99px;box-shadow:var(--sh-card)}
 
 /* Saison */
@@ -293,6 +294,9 @@ footer{padding-block:6px 30px}
         <a class="tile g-courses" id="t-courses" href="courses.html">
           <span><b>Liste de courses</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
         </a>
+        <button type="button" class="tile g-equilibre" id="t-equilibre" data-tool="equilibre">
+          <span><b>Équilibre alimentaire</b><small>Des repas variés pour bien manger toute la semaine</small></span><span class="ill" aria-hidden="true">⚖️</span>
+        </button>
         <a class="tile g-recettes" id="t-recettes" href="../recettes/">
           <span><b>Livre de recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
           <span class="count">149</span>
@@ -350,7 +354,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 21</p>
+  <p class="legal ver">Cookapli · version 23</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -371,7 +375,7 @@ footer{padding-block:6px 30px}
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
-  var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"Les recettes d'occasion",chrono:"Le 30 minutes chrono",gaspi:"La rubrique Idées Anti gaspi"};
+  var NAMES={have:"Ce que j'ai",scan:"Le scanner du frigo",courses:"La liste de courses",batch:"Le batch cooking 3h",occasion:"Les recettes d'occasion",chrono:"Le 30 minutes chrono",gaspi:"La rubrique Idées Anti gaspi",equilibre:"La rubrique Équilibre alimentaire"};
 
   function toast(m){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);t.classList.toggle("warn",/impossible|refus|indisponible|échou|Ajoute au moins/i.test(m));t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},2800)}
 

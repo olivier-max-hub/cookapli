@@ -72,6 +72,9 @@ main{padding-block:16px 40px}
 .btn.small{padding:5px 12px;font-size:.95rem}
 .btn:disabled{opacity:.5;cursor:default}
 .hint{margin:0;color:var(--mute);font-size:1rem}
+.scanbox{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--veil);border:1px solid var(--line);border-radius:16px;padding:10px 12px}
+.scanbox .btn{font-size:1.05rem}
+.scanbox small{flex:1 1 180px;color:#000;font-weight:700;font-size:.95rem;line-height:1.25}
 
 /* Rayons */
 .rayon{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-card);overflow:hidden}
@@ -92,6 +95,7 @@ main{padding-block:16px 40px}
 .del:hover{background:var(--acc-pale)}
 
 .actions{display:flex;flex-wrap:wrap;gap:8px}
+.actions .btn{white-space:normal;text-align:left;max-width:100%}
 .empty{background:var(--veil);border-radius:18px;padding:22px 18px;text-align:center;color:var(--mute)}
 .empty b{display:block;color:var(--ink);font-size:1.2rem;margin-bottom:4px}
 .empty .actions{justify-content:center;margin-top:12px}
@@ -159,6 +163,7 @@ main{padding-block:16px 40px}
         <button class="btn" type="submit">Ajouter</button>
       </form>
       <datalist id="ing-list"></datalist>
+      <div class="scanbox"><a class="btn" id="b-scan" href="../friscan/?depuis=courses#scan">📷 Scanner un article en magasin</a><small>Il va dans tes réserves et se coche dans ta liste. Tu reviens ici en fermant le scanner.</small></div>
       <div id="groups"></div>
       <div class="actions" id="list-actions" hidden>
         <button class="btn" type="button" id="b-ranger">🧺 Ranger les articles pris dans mes réserves</button>
@@ -333,7 +338,7 @@ $('#b-clear').onclick = () => {
 $('#b-ranger').onclick = () => {
   const taken = list.filter(x => x.done); if (!taken.length) return;
   const f = fridge(), beforeF = f.slice(), beforeL = list.slice();
-  for (const it of taken) f.unshift({ uid: uid(), name: it.ing ? IG[it.ing].n : it.name, ing: it.ing || null, other: !it.ing, added: Date.now() });
+  for (const it of taken.filter(x => !x.stocked)) f.unshift({ uid: uid(), name: it.ing ? IG[it.ing].n : it.name, ing: it.ing || null, other: !it.ing, added: Date.now() });
   store.set('friscan.fridge', f);
   list = list.filter(x => !x.done); save(); renderList(); renderPresque();
   toast(`${pl(taken.length, 'article rangé', 'articles rangés')} dans tes réserves Friscan`, () => { store.set('friscan.fridge', beforeF); list = beforeL; save(); renderList(); renderPresque(); });
@@ -480,6 +485,13 @@ function toast(msg, undo) {
   $('#toast').classList.add('on'); clearTimeout(tT); tT = setTimeout(() => $('#toast').classList.remove('on'), undo ? 5000 : 2600);
 }
 $('#toast-undo').onclick = () => { if (undoFn) undoFn(); undoFn = null; $('#toast').classList.remove('on'); };
+
+/* retour du scanner Friscan : la liste a pu changer (articles cochés) */
+function retourScan() {
+  let n = 0; try { n = +sessionStorage.getItem('cookapli-scan-coches') || 0; sessionStorage.removeItem('cookapli-scan-coches'); } catch (e) {}
+  if (n) toast(`${pl(n, 'article scanné coché', 'articles scannés cochés')} dans ta liste`);
+}
+window.addEventListener('pageshow', e => { if (e.persisted) { list = store.get('cookapli.courses', []); if (!Array.isArray(list)) list = []; renderList(); renderPresque(); } retourScan(); });
 
 /* ---------- démarrage ---------- */
 $('#ing-list').innerHTML = Object.values(IG).map(d => `<option value="${esc(d.n)}"></option>`).join('');
