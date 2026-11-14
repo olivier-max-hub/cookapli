@@ -165,6 +165,8 @@ main .wrap>*{min-width:0} /* une section ne peut pas élargir la page */
 .carou .thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .carou .card b{font-weight:700;font-size:1.25rem}
 .carou .slide{border-top:4px solid var(--top,#0f6b78)}
+.carou .vegrow{display:flex;justify-content:center;padding:6px 8px;background:#fff}
+.carou .vegtag{background:#1f7a43;color:#fff;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;line-height:1;padding:5px 16px;border-radius:7px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
 .cinfo{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
 .cinfo .ci{border-radius:12px;padding:6px 6px 7px;text-align:center;color:#0b4f59;display:flex;flex-direction:column;gap:1px;min-width:0}
 .cinfo .k{font-size:.72rem;text-transform:uppercase;line-height:1.1;color:#000;font-weight:700}
@@ -358,7 +360,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 28</p>
+  <p class="legal ver">Cookapli · version 29</p>
 </footer>
 
 <div id="toast" role="status" aria-live="polite"></div>
@@ -468,7 +470,7 @@ footer{padding-block:6px 30px}
   function render(list){
     if(!list||!list.length)return;
     box.innerHTML=shuffle(list.slice()).map(function(r){
-      return '<a class="card slide" style="--top:hsl('+hue(r.c)+' 65% 55%)" href="'+SITE+'#'+esc(r.s)+'"><div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="t"><b>'+esc(r.n)+'</b>'+(r.m?pills(r.m):'<small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small>')+'</div></a>';
+      return '<a class="card slide" style="--top:hsl('+hue(r.c)+' 65% 55%)" href="'+SITE+'#'+esc(r.s)+'">'+(/vegetarien|vegan/.test(slug((r.c||"")+" "+(r.t||"")+" "+(r.n||"")))?'<div class="vegrow"><span class="vegtag">Végétarien</span></div>':'')+'<div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="t"><b>'+esc(r.n)+'</b>'+(r.m?pills(r.m):'<small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small>')+'</div></a>';
     }).join("");
     box.scrollLeft=0;arrows();
   }
