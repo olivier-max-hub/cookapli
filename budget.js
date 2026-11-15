@@ -43,7 +43,7 @@
     [/^(?:c\.? ?a\.? ?s\.?|cs|cuill?eres? a soupe|c\. a soupe)/, 15], [/^(?:c\.? ?a\.? ?c\.?|cc|cuill?eres? a cafe|c\. a cafe)/, 5],
     [/^(?:petites? )?boites?\b/, 0, 'boite'], [/^poignees?\b/, 30], [/^noix\b/, 10], [/^noisettes?\b/, 5], [/^portions?\b/, 20], [/^steaks?\b/, 120],
     [/^(?:cotes?|escalopes?)\b/, 150], [/^cm\b/, 5], [/^tranches?\b/, 0, 'tranche'], [/^tasses?\b/, 150], [/^verres?\b/, 200], [/^boudoirs?\b/, 6], [/^sachets?\b/, 10], [/^bottes?\b/, 150],
-    [/^bouquets?\b/, 20], [/^brins?\b/, 1], [/^pots?\b/, 125], [/^briques?\b/, 200]];
+    [/^bouquets?\b/, 20], [/^brins?\b/, 1], [/^feuilles?\b/, 1], [/^dizaines?\b/, 0, 'dizaine'], [/^pots?\b/, 125], [/^briques?\b/, 200]];
   var BOITE = { thon: 140, sardines: 100, maquereau: 120, mais: 140, haricots_rouges: 250, haricots_blancs: 250, pois_chiches: 250, lentilles: 250, sauce_tomate: 400, lait_coco: 400 };
   function norm(s) { return String(s || '').toLowerCase().replace(/½/g, ' 1/2').replace(/¼/g, ' 1/4').replace(/¾/g, ' 3/4').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/œ/g, 'oe').replace(/\s+/g, ' ').trim(); }
   function nombre(s) {
@@ -65,7 +65,7 @@
       var n = nombre(parts[i]);
       if (!n) { if (cond) continue; return { g: 0, st: 'nq' }; }
       var r = n.reste.replace(/^(?:de |d')/, ''), v = n.v, g = null;
-      for (var j = 0; j < UNITES.length && g == null; j++) if (UNITES[j][0].test(r)) g = UNITES[j][2] === 'boite' ? v * (BOITE[id] || 250) : UNITES[j][2] === 'tranche' ? v * (d && d.pu || 25) : v * UNITES[j][1];
+      for (var j = 0; j < UNITES.length && g == null; j++) if (UNITES[j][0].test(r)) g = UNITES[j][2] === 'boite' ? v * (BOITE[id] || 250) : UNITES[j][2] === 'tranche' ? v * (d && d.pu || 25) : UNITES[j][2] === 'dizaine' ? v * 10 * (d && d.pu || 5) : v * UNITES[j][1];
       if (g == null) g = d && d.pu ? v * d.pu : (d && d.u === 'p') ? v * 100 : v >= 20 ? v : null;
       if (g == null) return { g: 0, st: 'nq' };
       tot += g;

@@ -1,5 +1,5 @@
 /* Cookapli — service worker : rend l'appli installable et utilisable hors ligne */
-const V = 'cookapli-v49';
+const V = 'cookapli-v50';
 const SHELL = ['./', 'index.html', 'courses.html', 'perso.html', 'commentaire.js', 'accueil.js', 'budget.js', 'prix.json', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable.png', 'icon.svg', 'mascotte/pouce.webp', 'mascotte/caddie.webp', 'mascotte/boites.webp', 'mascotte/accueil-miroir.webp', 'mascotte/fete.webp'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener('activate', e => {
