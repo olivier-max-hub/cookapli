@@ -1,0 +1,31 @@
+name: Mise à jour des prix
+
+on:
+  schedule:
+    - cron: '17 3 2 * *'   # le 2 de chaque mois vers 4 h du matin (heure de Paris)
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/maj-prix.mjs'
+      - '.github/workflows/prix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  prix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Récupérer les prix Open Prices
+        run: node scripts/maj-prix.mjs
+      - name: Enregistrer prix.json s'il a changé
+        run: |
+          git config user.name "cookapli-prix"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add prix.json
+          git diff --cached --quiet || (git commit -m "Prix mis à jour avec Open Prices" && git push)

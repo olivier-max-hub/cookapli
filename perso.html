@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6b78">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Personnaliser mon accueil · Cookapli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<style>
+:root{
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef8fb;--wash1:#f1fafc;--wash2:#e6f6f7;--wash3:#eaf5fb;--card:#fff;--line:#d3e6ea;--ink:#1f2a24;
+  --acc:#0f6b78;--acc-deep:#0b4f59;--acc-pale:#e3f6f8;--on:#fff;--sh-card:0 2px 8px rgba(0,0,0,.1);--sh-header:0 2px 10px rgba(0,0,0,.15);
+  --font:Economica,"Arial Narrow",Arial,sans-serif;color-scheme:light;
+}
+html{font-size:112.5%}
+*,*::before,*::after{box-sizing:border-box}
+small,.note{font-weight:700;color:#000}
+body{margin:0;color:var(--ink);font:1rem/1.5 var(--font);background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--acc);z-index:10}
+.wrap{max-width:700px;margin:0 auto}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:where(a,button):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--acc);color:var(--on);box-shadow:var(--sh-header);padding-block:10px 14px}
+.hdr a.back{display:inline-flex;align-items:center;min-height:44px;color:var(--on);font-weight:700;font-size:1.1rem;text-underline-offset:3px}
+.hdr a.back:focus-visible{outline-color:var(--on)}
+.hdr h1{margin:0;font-size:1.9rem;line-height:1.1}
+main{padding-block:16px 40px}
+section{display:grid;gap:10px;margin-bottom:22px}
+h2{margin:0;font-size:1.45rem;color:var(--acc)}
+p{margin:0}
+.profils{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.prof{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-height:84px;padding:12px;border-radius:20px;border:1px solid var(--line);background:var(--card);font:inherit;text-align:left;cursor:pointer;color:#000;box-shadow:var(--sh-card)}
+.prof b{font-size:1.15rem;line-height:1.1}
+.prof[aria-pressed="true"]{background:var(--acc-pale);border:3px solid var(--acc)}
+.blocs{display:grid;gap:6px}
+.bl{display:flex;align-items:center;gap:6px;padding:4px 8px 4px 4px;border-radius:16px;background:var(--card);box-shadow:var(--sh-card)}
+.bl.off{background:#e4ecee;box-shadow:none}
+.sw{width:64px;height:44px;border:0;background:transparent;padding:0;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+.sw i{display:block;position:relative;width:56px;height:32px;border-radius:99px;background:#9aaeb3}
+.sw i::after{content:"";position:absolute;top:4px;left:4px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .15s}
+.sw[aria-pressed="true"] i{background:var(--acc)}
+.sw[aria-pressed="true"] i::after{left:28px}
+.bl .t{flex:1;min-width:0;display:flex;flex-direction:column}
+.bl .t b{font-size:1.1rem;line-height:1.15;color:#000}
+.bl .t small{font-size:.85rem}
+.bl .t a{color:var(--acc);font-weight:700;font-size:.9rem;text-underline-offset:2px}
+.new{display:inline-block;background:#d9ab3a;color:#000;border-radius:99px;padding:0 8px;font-size:.8rem;font-weight:700;margin-left:6px}
+.ar{width:44px;height:44px;border-radius:99px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;padding:0}
+.ar:disabled{cursor:default;background:#eef3f4}
+.btns{display:grid;gap:10px}
+.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border:1px solid var(--acc);border-radius:99px;background:var(--acc);color:var(--on);font:inherit;font-size:1.15rem;font-weight:700;cursor:pointer;text-decoration:none}
+.btn.alt{background:var(--card);color:var(--acc)}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,14px);width:min(520px,calc(100% - 32px));display:flex;align-items:center;gap:12px;background:#fff;color:#1f2a24;border:1px solid #d3e6ea;border-left:6px solid #0f6b78;border-radius:16px;padding:10px 10px 10px 12px;box-shadow:0 10px 28px rgba(15,107,120,.25);font-size:1.05rem;line-height:1.3;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:30}
+#toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:#0f6b78;color:#fff;display:grid;place-items:center;font-weight:700}
+#toast>span{flex:1}
+#toast button{flex:none;border:1px solid #0f6b78;background:#e3f6f8;color:#0b4f59;border-radius:99px;padding:6px 14px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#toast,.sw i::after{transition:none}}
+</style>
+</head>
+<body>
+<header class="hdr gut">
+  <div class="wrap">
+    <a class="back" href="./">← Cookapli</a>
+    <h1>Personnaliser mon accueil</h1>
+  </div>
+</header>
+<main class="gut">
+  <div class="wrap">
+    <section aria-labelledby="h1p">
+      <h2 id="h1p">1. Choisis un profil de départ</h2>
+      <p class="note">Il range les blocs pour toi. Tu peux ensuite tout modifier.</p>
+      <div class="profils" id="profils"></div>
+    </section>
+    <section aria-labelledby="h2p">
+      <h2 id="h2p">2. Choisis et range tes blocs</h2>
+      <p class="note" id="compte" aria-live="polite"></p>
+      <p class="note">Tes changements sont enregistrés tout de suite. Chaque outil reste aussi accessible depuis cette page.</p>
+      <div class="blocs" id="blocs"></div>
+    </section>
+    <div class="btns">
+      <a class="btn" href="./">Voir mon accueil</a>
+      <button type="button" class="btn alt" id="reset">Revenir aux réglages du profil</button>
+    </div>
+  </div>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="accueil.js?v=1"></script>
+<script src="commentaire.js?v=4" data-context="Cookapli · Personnaliser mon accueil" defer></script>
+<script>
+(function(){
+  var A=window.CookAccueil,$=function(id){return document.getElementById(id)};
+  var s=A.lire()||A.choisirProfil("tout");
+  var nouveaux=A.BLOCS.filter(function(b){return s.connus.indexOf(b.id)<0}).map(function(b){return b.id});
+  var SVG_UP='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f6b78" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg>';
+  var SVG_DN='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f6b78" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+  function toast(m,annuler){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);
+    if(annuler){var b=document.createElement("button");b.type="button";b.textContent="Annuler";b.onclick=function(){annuler();t.classList.remove("on")};t.appendChild(b)}
+    t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},6000)}
+  function garder(){s.perso=true;A.ecrire(s)}
+  function dessiner(focus){
+    var P=$("profils");P.textContent="";
+    A.PROFILS.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="prof";b.setAttribute("aria-pressed",String(p.id===s.profil));
+      b.innerHTML="<b></b><small></small>";b.querySelector("b").textContent=p.n;b.querySelector("small").textContent=p.sub;
+      b.onclick=function(){if(p.id===s.profil&&!s.perso)return;var avant=JSON.stringify(s);s=A.choisirProfil(p.id);dessiner();
+        toast("Profil "+p.n+" : les blocs sont rangés pour toi",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
+      P.appendChild(b)});
+    var B=$("blocs");B.textContent="";var n=0;
+    s.blocs.forEach(function(x,i){var b=A.bloc(x.id);if(!b)return;if(x.on)n++;
+      var row=document.createElement("div");row.className="bl"+(x.on?"":" off");
+      var sw=document.createElement("button");sw.type="button";sw.className="sw";sw.setAttribute("aria-pressed",String(x.on));sw.setAttribute("aria-label",(x.on?"Masquer ":"Afficher ")+b.n);sw.innerHTML="<i></i>";
+      sw.onclick=function(){x.on=!x.on;garder();dessiner("sw"+i)};sw.id="sw"+i;
+      var t=document.createElement("div");t.className="t";
+      var nb=document.createElement("b");nb.textContent=b.n;if(nouveaux.indexOf(b.id)>=0){var nw=document.createElement("span");nw.className="new";nw.textContent="Nouveau";nb.appendChild(nw)}
+      var st=document.createElement("small");st.textContent=x.on?"Affiché sur l’accueil":"Masqué";
+      t.appendChild(nb);t.appendChild(st);
+      if(b.href){var a=document.createElement("a");a.href=b.href;a.textContent="Ouvrir l’outil";t.appendChild(a)}
+      var up=document.createElement("button");up.type="button";up.className="ar";up.id="up"+i;up.innerHTML=SVG_UP;up.setAttribute("aria-label","Monter "+b.n);up.disabled=i===0;
+      up.onclick=function(){var y=s.blocs[i-1];s.blocs[i-1]=x;s.blocs[i]=y;garder();dessiner(i-1>0?"up"+(i-1):"dn"+(i-1))};
+      var dn=document.createElement("button");dn.type="button";dn.className="ar";dn.id="dn"+i;dn.innerHTML=SVG_DN;dn.setAttribute("aria-label","Descendre "+b.n);dn.disabled=i===s.blocs.length-1;
+      dn.onclick=function(){var y=s.blocs[i+1];s.blocs[i+1]=x;s.blocs[i]=y;garder();dessiner(i+1<s.blocs.length-1?"dn"+(i+1):"up"+(i+1))};
+      row.appendChild(sw);row.appendChild(t);row.appendChild(up);row.appendChild(dn);B.appendChild(row)});
+    $("compte").textContent=n+(n>1?" blocs affichés":" bloc affiché")+", dans cet ordre, sur ton accueil"+(n>6?". Conseil : au-delà de 6, l’accueil devient chargé.":".");
+    if(focus&&$(focus))$(focus).focus()}
+  $("reset").onclick=function(){var avant=JSON.stringify(s);s=A.choisirProfil(s.profil);dessiner();
+    toast("Les réglages du profil sont rétablis",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
+  dessiner();
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
+</body>
+</html>

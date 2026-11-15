@@ -256,6 +256,33 @@ footer{padding-block:6px 30px}
 }
 @media (max-width:400px){.hero h1#h-hero{font-size:2.08rem}}
 @media (max-width:370px){.hero h1#h-hero{font-size:1.86rem}.hero .hero-ill{width:128px;top:16px}.hero .lead{margin-top:10px}}
+/* ===== Profils d'accueil (accueil.js) ===== */
+.off{display:none!important}
+.pbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ppill{flex:1 1 220px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:44px;padding:0 16px;border-radius:99px;border:1px solid var(--line);background:var(--acc-pale);color:var(--acc-deep);font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;text-align:left;box-shadow:var(--sh-card)}
+.ppill b{color:#000}
+.ppers{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:99px;background:var(--card);border:1px solid var(--acc);color:var(--acc);font-weight:700;text-decoration:none;box-shadow:var(--sh-card)}
+.news[hidden]{display:none}
+.news{display:grid;gap:10px;background:#fffaf0;border:2px solid #d9ab3a;border-radius:22px;padding:14px 16px;box-shadow:var(--sh-tile)}
+.news .tag{justify-self:start;background:#d9ab3a;color:#000;border-radius:99px;padding:2px 12px;font-weight:700;font-size:.9rem}
+.news h2{margin:0;font-size:1.35rem;color:#000}
+.news .row{display:flex;gap:8px;flex-wrap:wrap}
+.news .alt{background:var(--card);color:var(--acc)}
+.alltools{text-align:center;margin:0}
+.alltools a{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;color:var(--acc);font-weight:700;font-size:1.1rem}
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sheet-in{width:min(560px,100%);max-height:92vh;overflow:auto;background:var(--card);border-radius:26px 26px 0 0;padding:18px 16px max(22px,env(safe-area-inset-bottom,0px));display:grid;gap:10px;box-shadow:0 -2px 10px rgba(0,0,0,.15)}
+.sheet-h{display:flex;align-items:center;gap:10px}
+.sheet-h h2{margin:0;flex:1;font-size:1.6rem;color:var(--acc)}
+.sheet-x{width:44px;height:44px;border-radius:99px;border:1px solid var(--line);background:var(--card);font:inherit;font-size:1.2rem;cursor:pointer;color:#000}
+.sheet p{margin:0;font-weight:700;color:#000}
+.popt{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:8px 14px;border-radius:16px;border:1px solid var(--line);background:var(--card);font:inherit;text-align:left;cursor:pointer;color:#000}
+.popt span{flex:1;display:flex;flex-direction:column}
+.popt b{font-size:1.2rem}
+.popt small{font-size:.9rem;color:#000}
+.popt[aria-current="true"]{background:var(--acc-pale);border:3px solid var(--acc)}
+.sheet .lnk{justify-self:center;display:inline-flex;align-items:center;min-height:44px;color:var(--acc);font-weight:700}
 </style>
 </head>
 <body>
@@ -270,6 +297,12 @@ footer{padding-block:6px 30px}
 
 <main class="gut">
   <div class="wrap" style="display:grid;gap:26px">
+
+    <div class="pbar" id="pbar">
+      <button type="button" class="ppill" id="pBtn" aria-haspopup="dialog"><span>Profil : <b id="pNom">Tout afficher</b></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      <a class="ppers" href="perso.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Personnaliser</a>
+    </div>
+    <div id="newsBox" hidden></div>
 
     <section class="hero" aria-labelledby="h-hero">
       <div>
@@ -338,12 +371,12 @@ footer{padding-block:6px 30px}
       </div>
     </section>
 
-    <section aria-labelledby="h-season">
+    <section id="s-season" aria-labelledby="h-season">
       <div class="sec-h"><h2 class="label" id="h-season" style="--cat:var(--c-veg-2)">De saison en <span id="month">novembre</span></h2></div>
       <div class="season" id="season"></div>
     </section>
 
-    <section aria-labelledby="h-ideas">
+    <section id="s-ideas" aria-labelledby="h-ideas">
       <div class="sec-h">
         <h2 class="label" id="h-ideas" style="--cat:var(--c-dessert-2)">Besoin d'inspiration&nbsp;?</h2>
         <a href="../recettes/">Voir les 149 recettes →</a>
@@ -359,15 +392,24 @@ footer{padding-block:6px 30px}
       </div>
     </section>
 
+    <p class="alltools" id="allTools"><a href="perso.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Tous les outils de Cookapli</a></p>
 
   </div>
 </main>
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 33</p>
+  <p class="legal ver">Cookapli · version 34</p>
 </footer>
 
+<div class="sheet" id="pSheet" hidden>
+  <div class="sheet-in" role="dialog" aria-modal="true" aria-labelledby="pSheetT">
+    <div class="sheet-h"><h2 id="pSheetT">Changer de profil</h2><button type="button" class="sheet-x" id="pClose" aria-label="Fermer">✕</button></div>
+    <p id="pSheetP">Ton accueil se réorganise tout de suite.</p>
+    <div id="pList" style="display:grid;gap:8px"></div>
+    <a class="lnk" href="perso.html">Régler les blocs dans « Personnaliser »</a>
+  </div>
+</div>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <script src="../friscan/data.js?v=9"></script>
@@ -526,5 +568,60 @@ footer{padding-block:6px 30px}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
+<script src="accueil.js?v=1"></script>
+<script>
+/* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
+(function(){
+  var A=window.CookAccueil;if(!A)return;
+  var $=function(id){return document.getElementById(id)};
+  var s=A.lire(),premiere=!s;
+  function elt(b){return document.querySelector(b.sel)}
+  function appliquer(){
+    var st=s||{profil:"tout",blocs:A.preset("tout")},p=A.profil(st.profil);
+    $("pNom").textContent=p.n;
+    var nt=0,ng=0,tuiles=0;
+    st.blocs.forEach(function(x){var b=A.bloc(x.id),e=b&&elt(b);if(!e)return;
+      e.classList.toggle("off",!x.on);e.style.order=b.grand?String(10+(ng++)):String(nt++);if(!b.grand&&x.on)tuiles++});
+    var tools=document.querySelector('[aria-labelledby="h-tools"]');if(tools){tools.classList.toggle("off",!tuiles);tools.style.order="2"}
+    var hero=document.querySelector(".hero");if(hero)hero.style.order="1";
+    $("pbar").style.order="0";$("newsBox").style.order="0";$("allTools").style.order="99";
+  }
+  function fermer(){$("pSheet").hidden=true;if(!s){s=A.choisirProfil("tout");appliquer()}$("pBtn").focus()}
+  function ouvrir(bienvenue){
+    var st=s,L=$("pList");L.textContent="";
+    $("pSheetT").textContent=bienvenue?"Bienvenue dans Cookapli !":"Changer de profil";
+    $("pSheetP").textContent=bienvenue?"Choisis le profil qui te ressemble : ton accueil s'organise pour toi. Tu pourras en changer à tout moment.":"Ton accueil se réorganise tout de suite.";
+    A.PROFILS.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="popt";
+      var cur=st&&st.profil===p.id;if(cur)b.setAttribute("aria-current","true");
+      b.innerHTML="<span><b></b><small></small></span>"+(cur?'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0f6b78" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>':"");
+      b.querySelector("b").textContent=p.n;b.querySelector("small").textContent=p.sub;
+      b.onclick=function(){var avant=s;s=A.choisirProfil(p.id);appliquer();fermer();
+        toastAnn(cur?"Tu as déjà le profil "+p.n:"Profil "+p.n+" : ton accueil est réorganisé",cur?null:function(){if(avant){A.ecrire(avant);s=avant}else{try{localStorage.removeItem("cookapli.accueil")}catch(e){}s=null}appliquer()})};
+      L.appendChild(b)});
+    $("pSheet").hidden=false;var f=L.querySelector("[aria-current]")||L.firstChild;if(f)f.focus()}
+  /* message de confirmation avec « Annuler » (même style que les autres messages de Cookapli) */
+  function toastAnn(m,annuler){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);
+    if(annuler){var b=document.createElement("button");b.type="button";b.className="undo";b.textContent="Annuler";b.onclick=function(){annuler();t.classList.remove("on")};t.appendChild(b)}
+    t.classList.remove("warn");t.classList.add("on");clearTimeout(toastAnn.t);toastAnn.t=setTimeout(function(){t.classList.remove("on")},6000)}
+  $("pBtn").onclick=function(){ouvrir(false)};
+  $("pClose").onclick=fermer;
+  $("pSheet").addEventListener("click",function(e){if(e.target===$("pSheet"))fermer()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("pSheet").hidden)fermer()});
+  /* nouveautés : encart sur l'accueil, surtout quand le bloc n'est pas affiché par défaut */
+  function annoncer(){if(!s)return;var nv=A.nouveautes(s);A.ecrire(s);var box=$("newsBox");box.textContent="";box.hidden=true;
+    var n=nv[0];if(!n)return;
+    box.className="news";box.hidden=false;
+    box.innerHTML='<span class="tag">Nouveau</span><h2></h2><div class="row"></div>';
+    box.querySelector("h2").textContent="Nouveau dans Cookapli : "+n.bloc.n;
+    var row=box.querySelector(".row");
+    if(n.affiche){var ok=document.createElement("button");ok.type="button";ok.className="btn";ok.textContent="Super, merci";ok.onclick=function(){A.marquerConnu(s,n.bloc.id,false);annoncer()};row.appendChild(ok)}
+    else{var add=document.createElement("button");add.type="button";add.className="btn";add.textContent="Ajouter à mon accueil";
+      add.onclick=function(){A.marquerConnu(s,n.bloc.id,true);appliquer();annoncer();toastAnn(n.bloc.n+" est ajouté en bas de ton accueil",null)};row.appendChild(add);
+      var plus=document.createElement("button");plus.type="button";plus.className="btn alt";plus.textContent="Plus tard";plus.onclick=function(){A.marquerConnu(s,n.bloc.id,false);annoncer()};row.appendChild(plus)}
+    appliquer()}
+  appliquer();annoncer();
+  if(premiere)setTimeout(function(){ouvrir(true)},600);
+})();
+</script>
 </body>
 </html>
