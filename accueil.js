@@ -21,7 +21,7 @@
   var PROFILS = [
     { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'quecuisiner', 'courses', 'chrono', 'livre', 'inspiration'] },
     { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['reserves', 'quecuisiner', 'chrono', 'courses', 'inspiration', 'livre'] },
-    { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['reserves', 'celebrations', 'inspiration', 'saison', 'courses', 'livre'] },
+    { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['reserves', 'quecuisiner', 'celebrations', 'inspiration', 'saison', 'courses', 'livre'] },
     { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['reserves', 'antigaspi', 'quecuisiner', 'chrono', 'courses', 'livre', 'inspiration'] },
     { id: 'tout', n: 'Tous les outils', sub: 'Tous les outils de Cookapli', blocs: BLOCS.map(function (b) { return b.id; }) }
   ];
