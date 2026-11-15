@@ -65,7 +65,7 @@ p{margin:0}
 <body>
 <header class="hdr gut">
   <div class="wrap">
-    <a class="back" href="./">← Cookapli</a>
+    <div class="toprow" style="display:flex;align-items:center;gap:8px"><a class="back" href="./">← Cookapli</a></div>
     <h1>Personnaliser mon accueil</h1>
   </div>
 </header>
@@ -91,7 +91,8 @@ p{margin:0}
 </main>
 <div id="toast" role="status" aria-live="polite"></div>
 <script src="accueil.js?v=9"></script>
-<script src="commentaire.js?v=4" data-context="Cookapli · Personnaliser mon accueil" defer></script>
+<script src="../friscan/data.js?v=9"></script>
+<script src="commentaire.js?v=6" data-mode="tete" data-header=".toprow" data-place="fin" data-context="Cookapli · Personnaliser mon accueil" defer></script>
 <script>
 (function(){
   var A=window.CookAccueil,$=function(id){return document.getElementById(id)};

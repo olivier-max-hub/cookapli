@@ -5,7 +5,7 @@
    À ajouter en bas de chaque nouvelle page, après friscan/data.js (qui fournit l'adresse MES_RECETTES.comment) :
      <script src="../cookapli/commentaire.js" data-context="Cookapli · Nom de la page" data-extra="Phrase de confidentialité propre à la page (facultatif)"></script>
    Options : data-header="sélecteur" (où placer le bouton du haut), data-after="sélecteur" (où placer la section),
-   data-mode="tete" (seulement la tête avec la toque dans data-header, sans bouton flottant ; un appui ouvre une bulle avec le seul lien « Commentaire », vers le formulaire en bas de page). */
+   data-mode="tete" (data-place="fin" pour la placer à droite, à la fin de data-header ; seulement la tête avec la toque dans data-header, sans bouton flottant ; un appui ouvre une bulle avec le seul lien « Commentaire », vers le formulaire en bas de page). */
 (function () {
   "use strict";
   var me = document.currentScript || {};
@@ -41,8 +41,8 @@
     "@media (min-width:700px){.ckc-toque{display:flex}.ckc-fab{display:none}}" +
     "#commentaire{scroll-margin-top:150px}" +
     ".ckc-tete{position:relative;display:flex}" +
-    ".ckc-tete>button{width:38px;height:34px;padding:0!important;justify-content:center}" +
-    ".ckc-tete>button svg{width:30px;height:30px}" +
+    ".ckc-tete>button{width:44px;height:44px;padding:0!important;display:flex;align-items:center;justify-content:center;border:0!important;border-radius:99px;background:#fff!important;box-shadow:0 2px 6px rgba(0,0,0,.25);cursor:pointer}" +
+    ".ckc-tete>button svg{width:36px;height:36px}" +
     ".ckc-pop{position:absolute;top:calc(100% + 10px);right:0;z-index:20;width:max-content;max-width:min(260px,80vw);display:grid;gap:6px;padding:12px 14px;background:#fff;color:#1f2a24;border-radius:16px;box-shadow:0 4px 14px rgba(0,0,0,.25);font:1rem/1.35 Economica,'Arial Narrow',Arial,sans-serif;text-align:left}" +
     ".ckc-pop[hidden]{display:none}" +
     ".ckc-pop::before{content:'';position:absolute;top:-7px;right:14px;width:14px;height:14px;background:#fff;transform:rotate(45deg)}" +
@@ -102,7 +102,8 @@
       var pop = el("div", "ckc-pop"); pop.id = "ckcPop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Commentaire");
       /* un seul lien « Commentaire », qui mène au formulaire en bas de la page (demande d'Olivier, 15/11/2026) */
       var lk = el("a", null, "Commentaire"); lk.href = "#commentaire"; pop.appendChild(lk);
-      bx.appendChild(bt); bx.appendChild(pop); zone.insertBefore(bx, zone.firstChild);
+      bx.appendChild(bt); bx.appendChild(pop);
+      if (ds.place === "fin") { bx.style.marginLeft = "auto"; zone.appendChild(bx); } else zone.insertBefore(bx, zone.firstChild);
       function showPop(o) { pop.hidden = !o; bt.setAttribute("aria-expanded", String(o)); }
       bt.addEventListener("click", function (ev) { ev.stopPropagation(); showPop(pop.hidden); });
       lk.addEventListener("click", function (ev) { showPop(false); goComment(ev); });
