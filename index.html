@@ -111,7 +111,11 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 /* Tuiles outils */
 .tools{display:grid;grid-template-columns:minmax(0,1fr);gap:12px} /* une tuile par ligne, sur toute la largeur */
 .tile.have-tile{display:block}
-.have-tile .tile-link{display:flex;align-items:center;justify-content:space-between;gap:12px;color:inherit;text-decoration:none;border-radius:16px}
+.have-tile .tile-link{display:flex;align-items:center;justify-content:space-between;gap:12px;color:inherit;text-decoration:none;border-radius:16px;width:100%;background:none;border:0;padding:0;font:inherit;text-align:left;cursor:pointer}
+.have-tile .tile-link>span:first-child{flex:1}
+.have-tile .chev{flex:none;transition:transform .2s}
+.have-tile.open .chev{transform:rotate(180deg)}
+.have-tile .have-go{margin:12px 0 0}
 .have-tile .tile-link:focus-visible{outline:3px solid var(--acc-deep);outline-offset:2px}
 .have-tile .have-note{display:block;margin:8px 0 0;color:#000;font-weight:700;font-size:1rem;line-height:1.3;text-decoration:none}
 .have-tile .have{margin-top:12px;max-width:none}
@@ -277,7 +281,7 @@ footer{padding-block:6px 30px}
 .sheet-h h2{margin:0;flex:1;font-size:1.6rem;color:var(--acc)}
 .sheet-x{width:44px;height:44px;border-radius:99px;border:1px solid var(--line);background:var(--card);font:inherit;font-size:1.2rem;cursor:pointer;color:#000}
 .sheet p{margin:0;font-weight:700;color:#000}
-.popt{display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:8px 14px;border-radius:16px;border:1px solid var(--line);background:var(--card);font:inherit;text-align:left;cursor:pointer;color:#000}
+.popt{text-decoration:none;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;min-height:64px;padding:8px 14px;border-radius:16px;border:1px solid var(--line);background:var(--card);font:inherit;text-align:left;cursor:pointer;color:#000}
 .popt span{flex:1;display:flex;flex-direction:column}
 .popt b{font-size:1.2rem}
 .popt small{font-size:.9rem;color:#000}
@@ -300,7 +304,6 @@ footer{padding-block:6px 30px}
 
     <div class="pbar" id="pbar">
       <button type="button" class="ppill" id="pBtn" aria-haspopup="dialog"><span>Profil : <b id="pNom">Tout afficher</b></span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
-      <a class="ppers" href="perso.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>Personnaliser</a>
     </div>
     <div id="newsBox" hidden></div>
 
@@ -313,17 +316,19 @@ footer{padding-block:6px 30px}
       <img class="hero-ill" src="mascotte/accueil-miroir.webp" alt="" width="688" height="600">
     </section>
 
-    <section aria-labelledby="h-tools">
-      <div class="sec-h"><h2 class="label" id="h-tools">Tes outils</h2></div>
+    <section id="s-tools" aria-label="Tes outils">
       <div class="tools">
         <div class="tile g-have have-tile" id="t-have">
-          <a class="tile-link" href="../friscan/#frigo"><span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span></a>
-          <a class="have-note" href="../friscan/#frigo" tabindex="-1" aria-hidden="true">C'est le point de départ de Cookapli : plus tes réserves sont complètes, plus les recettes proposées te correspondent.</a>
+          <button type="button" class="tile-link" id="have-open" aria-expanded="false" aria-controls="have-more"><span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span><svg class="chev" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div id="have-more" hidden>
+          <p class="have-note">C'est le point de départ de Cookapli : plus tes réserves sont complètes, plus les recettes proposées te correspondent.</p>
           <form class="have" id="have-form">
             <label for="have-input">J'ai…</label>
             <input id="have-input" type="text" autocomplete="off" placeholder="des œufs, une courgette, de la feta">
             <button class="btn" type="submit">Trouver<span class="long">&nbsp;une recette</span></button>
           </form>
+          <p class="have-go"><a class="btn alt" href="../friscan/#frigo">Ouvrir mes réserves</a></p>
+          </div>
         </div>
         <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner avec mes réserves&nbsp;?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
@@ -399,7 +404,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 34</p>
+  <p class="legal ver">Cookapli · version 35</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -407,7 +412,6 @@ footer{padding-block:6px 30px}
     <div class="sheet-h"><h2 id="pSheetT">Changer de profil</h2><button type="button" class="sheet-x" id="pClose" aria-label="Fermer">✕</button></div>
     <p id="pSheetP">Ton accueil se réorganise tout de suite.</p>
     <div id="pList" style="display:grid;gap:8px"></div>
-    <a class="lnk" href="perso.html">Régler les blocs dans « Personnaliser »</a>
   </div>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
@@ -568,7 +572,7 @@ footer{padding-block:6px 30px}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
-<script src="accueil.js?v=1"></script>
+<script src="accueil.js?v=2"></script>
 <script>
 /* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
 (function(){
@@ -578,11 +582,11 @@ footer{padding-block:6px 30px}
   function elt(b){return document.querySelector(b.sel)}
   function appliquer(){
     var st=s||{profil:"tout",blocs:A.preset("tout")},p=A.profil(st.profil);
-    $("pNom").textContent=p.n;
+    $("pNom").textContent=st.perso?"Personnalisé":st.profil==="tout"?"Tous les outils":p.n;
     var nt=0,ng=0,tuiles=0;
     st.blocs.forEach(function(x){var b=A.bloc(x.id),e=b&&elt(b);if(!e)return;
       e.classList.toggle("off",!x.on);e.style.order=b.grand?String(10+(ng++)):String(nt++);if(!b.grand&&x.on)tuiles++});
-    var tools=document.querySelector('[aria-labelledby="h-tools"]');if(tools){tools.classList.toggle("off",!tuiles);tools.style.order="2"}
+    var tools=$("s-tools");if(tools){tools.classList.toggle("off",!tuiles);tools.style.order="2"}
     var hero=document.querySelector(".hero");if(hero)hero.style.order="1";
     $("pbar").style.order="0";$("newsBox").style.order="0";$("allTools").style.order="99";
   }
@@ -591,13 +595,17 @@ footer{padding-block:6px 30px}
     var st=s,L=$("pList");L.textContent="";
     $("pSheetT").textContent=bienvenue?"Bienvenue dans Cookapli !":"Changer de profil";
     $("pSheetP").textContent=bienvenue?"Choisis le profil qui te ressemble : ton accueil s'organise pour toi. Tu pourras en changer à tout moment.":"Ton accueil se réorganise tout de suite.";
-    A.PROFILS.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="popt";
-      var cur=st&&st.profil===p.id;if(cur)b.setAttribute("aria-current","true");
+    A.PROFILS.filter(function(p){return p.id!=="tout"}).forEach(function(p){var b=document.createElement("button");b.type="button";b.className="popt";
+      var cur=st&&!st.perso&&st.profil===p.id;if(cur)b.setAttribute("aria-current","true");
       b.innerHTML="<span><b></b><small></small></span>"+(cur?'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0f6b78" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>':"");
       b.querySelector("b").textContent=p.n;b.querySelector("small").textContent=p.sub;
       b.onclick=function(){var avant=s;s=A.choisirProfil(p.id);appliquer();fermer();
         toastAnn(cur?"Tu as déjà le profil "+p.n:"Profil "+p.n+" : ton accueil est réorganisé",cur?null:function(){if(avant){A.ecrire(avant);s=avant}else{try{localStorage.removeItem("cookapli.accueil")}catch(e){}s=null}appliquer()})};
       L.appendChild(b)});
+    var pe=document.createElement("a");pe.className="popt";pe.href="perso.html";
+    var curP=!!st&&(st.perso||st.profil==="tout");if(curP)pe.setAttribute("aria-current","true");
+    pe.innerHTML='<span><b>Personnaliser</b><small>Choisis toi-même tes outils et leur ordre</small></span><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f6b78" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>';
+    L.appendChild(pe);
     $("pSheet").hidden=false;var f=L.querySelector("[aria-current]")||L.firstChild;if(f)f.focus()}
   /* message de confirmation avec « Annuler » (même style que les autres messages de Cookapli) */
   function toastAnn(m,annuler){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);
@@ -619,6 +627,8 @@ footer{padding-block:6px 30px}
       add.onclick=function(){A.marquerConnu(s,n.bloc.id,true);appliquer();annoncer();toastAnn(n.bloc.n+" est ajouté en bas de ton accueil",null)};row.appendChild(add);
       var plus=document.createElement("button");plus.type="button";plus.className="btn alt";plus.textContent="Plus tard";plus.onclick=function(){A.marquerConnu(s,n.bloc.id,false);annoncer()};row.appendChild(plus)}
     appliquer()}
+  (function(){var bt=$("have-open"),more=$("have-more"),tile=$("t-have");if(!bt)return;
+    bt.onclick=function(){var o=more.hidden;more.hidden=!o;bt.setAttribute("aria-expanded",String(o));tile.classList.toggle("open",o);if(o)$("have-input").focus()}})();
   appliquer();annoncer();
   if(premiere)setTimeout(function(){ouvrir(true)},600);
 })();

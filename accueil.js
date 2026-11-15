@@ -18,11 +18,11 @@
     { id: 'inspiration', href: './#s-ideas', n: "Besoin d'inspiration ?", sel: '#s-ideas', grand: 1, depuis: 1 }
   ];
   var PROFILS = [
-    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['batch', 'courses', 'quecuisiner', 'chrono', 'reserves', 'livre'] },
-    { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['chrono', 'quecuisiner', 'livre', 'courses', 'reserves'] },
-    { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['celebrations', 'inspiration', 'livre', 'saison', 'equilibre', 'reserves'] },
-    { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['antigaspi', 'reserves', 'quecuisiner', 'chrono', 'courses', 'livre'] },
-    { id: 'tout', n: 'Tout afficher', sub: 'Tous les outils de Cookapli', blocs: BLOCS.map(function (b) { return b.id; }) }
+    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'courses', 'quecuisiner', 'chrono', 'livre'] },
+    { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['reserves', 'chrono', 'quecuisiner', 'livre', 'courses'] },
+    { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['reserves', 'celebrations', 'inspiration', 'livre', 'saison', 'equilibre'] },
+    { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['reserves', 'antigaspi', 'quecuisiner', 'chrono', 'courses', 'livre'] },
+    { id: 'tout', n: 'Tous les outils', sub: 'Tous les outils de Cookapli', blocs: BLOCS.map(function (b) { return b.id; }) }
   ];
   var CLE = 'cookapli.accueil';
 
@@ -43,6 +43,8 @@
     s.blocs = (s.blocs || []).filter(function (x) { if (!bloc(x.id) || vus[x.id]) return false; vus[x.id] = 1; return true; });
     BLOCS.forEach(function (b) { if (!vus[b.id]) s.blocs.push({ id: b.id, on: false }); });
     s.connus = s.connus || BLOCS.map(function (b) { return b.id; });
+    /* accueil non modifié : il suit toujours la version actuelle de son profil */
+    if (!s.perso) { var connus = s.connus; s.blocs = preset(s.profil); s.blocs.forEach(function (x) { if (connus.indexOf(x.id) < 0) x.on = false; }); }
     return s;
   }
   function ecrire(s) { try { localStorage.setItem(CLE, JSON.stringify(s)); } catch (e) {} }

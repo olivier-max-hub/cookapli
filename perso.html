@@ -73,13 +73,14 @@ p{margin:0}
   <div class="wrap">
     <section aria-labelledby="h1p">
       <h2 id="h1p">1. Choisis un profil de départ</h2>
-      <p class="note">Il range les blocs pour toi. Tu peux ensuite tout modifier.</p>
+      <p class="note">Il range les outils pour toi. Tu peux ensuite tout modifier.</p>
       <div class="profils" id="profils"></div>
     </section>
     <section aria-labelledby="h2p">
       <h2 id="h2p">2. Choisis et range tes blocs</h2>
       <p class="note" id="compte" aria-live="polite"></p>
       <p class="note">Tes changements sont enregistrés tout de suite. Chaque outil reste aussi accessible depuis cette page.</p>
+      <button type="button" class="btn alt" id="tous">Afficher tous les outils</button>
       <div class="blocs" id="blocs"></div>
     </section>
     <div class="btns">
@@ -89,7 +90,7 @@ p{margin:0}
   </div>
 </main>
 <div id="toast" role="status" aria-live="polite"></div>
-<script src="accueil.js?v=1"></script>
+<script src="accueil.js?v=2"></script>
 <script src="commentaire.js?v=4" data-context="Cookapli · Personnaliser mon accueil" defer></script>
 <script>
 (function(){
@@ -104,7 +105,7 @@ p{margin:0}
   function garder(){s.perso=true;A.ecrire(s)}
   function dessiner(focus){
     var P=$("profils");P.textContent="";
-    A.PROFILS.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="prof";b.setAttribute("aria-pressed",String(p.id===s.profil));
+    A.PROFILS.filter(function(p){return p.id!=="tout"}).forEach(function(p){var b=document.createElement("button");b.type="button";b.className="prof";b.setAttribute("aria-pressed",String(!s.perso&&p.id===s.profil));
       b.innerHTML="<b></b><small></small>";b.querySelector("b").textContent=p.n;b.querySelector("small").textContent=p.sub;
       b.onclick=function(){if(p.id===s.profil&&!s.perso)return;var avant=JSON.stringify(s);s=A.choisirProfil(p.id);dessiner();
         toast("Profil "+p.n+" : les blocs sont rangés pour toi",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
@@ -126,7 +127,9 @@ p{margin:0}
       row.appendChild(sw);row.appendChild(t);row.appendChild(up);row.appendChild(dn);B.appendChild(row)});
     $("compte").textContent=n+(n>1?" blocs affichés":" bloc affiché")+", dans cet ordre, sur ton accueil"+(n>6?". Conseil : au-delà de 6, l’accueil devient chargé.":".");
     if(focus&&$(focus))$(focus).focus()}
-  $("reset").onclick=function(){var avant=JSON.stringify(s);s=A.choisirProfil(s.profil);dessiner();
+  $("tous").onclick=function(){var avant=JSON.stringify(s);s.blocs.forEach(function(x){x.on=true});garder();dessiner();
+    toast("Tous les outils sont affichés sur ton accueil",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
+  $("reset").onclick=function(){var avant=JSON.stringify(s);s=A.choisirProfil(s.profil==="tout"?"famille":s.profil);dessiner();
     toast("Les réglages du profil sont rétablis",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
   dessiner();
 })();
