@@ -143,7 +143,9 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .g-occasion .stars{position:absolute;right:8px;top:6px;width:96px;height:84px;pointer-events:none}
 .g-chrono{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .g-gaspi{background:linear-gradient(135deg,var(--c-veg-1),var(--c-veg-2))}
-.g-equilibre{background:linear-gradient(135deg,var(--c-dessert-1),var(--c-dessert-2))}
+.g-equilibre{background:linear-gradient(135deg,#2e9a5a,#1f7a43)} /* même vert que la tuile Équilibre alimentaire du Livre de recettes */
+.tile.g-equilibre,.tile.g-equilibre b,.tile.g-equilibre small{color:#fff}
+.tile.g-equilibre:focus-visible{outline-color:#1f7a43}
 .count{position:absolute;top:10px;right:12px;background:var(--card);color:var(--acc-deep);font-size:.8rem;font-weight:700;padding:1px 9px;border-radius:99px;box-shadow:var(--sh-card)}
 
 /* Saison */
@@ -408,7 +410,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 47</p>
+  <p class="legal ver">Cookapli · version 48</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
