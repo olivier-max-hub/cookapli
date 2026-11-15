@@ -4,7 +4,7 @@
    ces 12 derniers mois pour ses catégories Open Food Facts, on garde ceux relevés en France,
    on les ramène en euros par kilo (ou par litre), puis on prend la médiane après avoir écarté
    les 10 % les plus bas et les 10 % les plus hauts. S'il y a moins de 5 relevés, on garde la
-   valeur précédente.
+   valeur précédente. Un ingrédient marqué « fixe » dans prix.json n'est jamais modifié.
    Lancement : node scripts/maj-prix.mjs (Node 20 ou plus, aucune dépendance). */
 import { readFile, writeFile } from 'node:fs/promises';
 import vm from 'node:vm';
@@ -65,7 +65,9 @@ function mediane(v) {
 async function relevesPour(d, depuis) {
   const vus = new Set(), out = [];
   for (const tag of d.t || []) {
-    for (const cle of ['category_tag', 'product__categories_tags__contains']) {
+    /* fruits et légumes : seulement les produits bruts (sinon les produits transformés, comme les oignons frits, faussent le prix) */
+    const modes = d.r === 'fl' ? ['category_tag'] : ['category_tag', 'product__categories_tags__contains'];
+    for (const cle of modes) {
       for (let page = 1; page <= PAGES_MAX; page++) {
         const j = await appel({ [cle]: tag, date__gte: depuis, size: 100, page });
         await pause(400);
@@ -90,14 +92,17 @@ let maj = 0;
 for (const [id, d] of Object.entries(ING)) {
   if (d.old) continue;
   const avant = ancien.p[id] || { e: null, src: 'ref', n: 0 };
+  /* prix fixé à la main (ex. bouillon : le prix au kilo des cubes ne vaut pas pour un litre de bouillon) */
+  if (avant.fixe) { console.log(id.padEnd(20), 'prix fixe →', avant.e, '€/kg'); continue; }
   let releves = [];
   try { releves = await relevesPour(d, depuis); } catch (e) { console.log(id, 'erreur', e.message); }
   if (releves.length >= MIN_RELEVES) {
     const e = Math.round(mediane(releves) * 100) / 100;
-    ancien.p[id] = { e, src: 'op', n: releves.length };
+    ancien.p[id] = { e, src: 'op', n: releves.length, ref: avant.ref };
     maj++;
   } else {
-    ancien.p[id] = { ...avant, n: releves.length };
+    /* pas assez de relevés : on revient au prix de référence */
+    ancien.p[id] = { e: avant.ref != null ? avant.ref : avant.e, src: 'ref', n: releves.length, ref: avant.ref };
   }
   console.log(id.padEnd(20), String(releves.length).padStart(4), 'relevés →', ancien.p[id].e, '€/kg', ancien.p[id].src);
 }

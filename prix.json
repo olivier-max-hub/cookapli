@@ -1,817 +1,982 @@
 {
  "maj": "2026-11-15",
- "note": "Prix moyens indicatifs en euros par kilo (ou par litre). Valeurs de départ estimées, remplacées chaque mois par la médiane des prix relevés en France dans Open Prices (Open Food Facts, licence ODbL) quand il y a au moins 5 relevés sur les 12 derniers mois.",
+ "note": "Prix moyens indicatifs en euros par kilo (ou par litre). Valeurs de départ estimées, remplacées chaque mois par la médiane des prix relevés en France dans Open Prices (Open Food Facts, licence ODbL) quand il y a au moins 5 relevés sur les 12 derniers mois. Les ingrédients marqués « fixe » ont un prix fixé à la main (ex. bouillon prêt à l'emploi, café préparé).",
  "source": "Open Prices – Open Food Facts (ODbL)",
  "p": {
   "foie_gras": {
    "e": 77.5,
    "src": "op",
-   "n": 157
+   "n": 157,
+   "ref": 60.0
   },
   "rillettes": {
    "e": 15.57,
    "src": "op",
-   "n": 260
+   "n": 260,
+   "ref": 12.0
   },
   "saucisson": {
    "e": 23.24,
    "src": "op",
-   "n": 292
+   "n": 292,
+   "ref": 18.0
   },
   "truite_fumee": {
    "e": 44.17,
    "src": "op",
-   "n": 60
+   "n": 60,
+   "ref": 35.0
   },
   "saumon_fume": {
    "e": 48.58,
    "src": "op",
-   "n": 112
+   "n": 112,
+   "ref": 40.0
   },
   "saumon": {
    "e": 29.71,
    "src": "op",
-   "n": 202
+   "n": 202,
+   "ref": 22.0
   },
   "saint_jacques": {
    "e": 50,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 50.0
   },
   "huitres": {
    "e": 9,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 9.0
   },
   "crevettes": {
    "e": 26.25,
    "src": "op",
-   "n": 154
+   "n": 154,
+   "ref": 18.0
   },
   "moules": {
    "e": 11.83,
    "src": "op",
-   "n": 38
+   "n": 38,
+   "ref": 5.0
   },
   "calamar": {
    "e": 14,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 14.0
   },
   "sardines": {
    "e": 19.08,
    "src": "op",
-   "n": 242
+   "n": 242,
+   "ref": 10.0
   },
   "maquereau": {
    "e": 14.36,
    "src": "op",
-   "n": 149
+   "n": 149,
+   "ref": 12.0
   },
   "poisson_blanc": {
    "e": 17.24,
    "src": "op",
-   "n": 310
+   "n": 310,
+   "ref": 18.0
   },
   "thon": {
    "e": 16.15,
    "src": "op",
-   "n": 274
+   "n": 274,
+   "ref": 14.0
   },
   "surimi": {
    "e": 12.03,
    "src": "op",
-   "n": 89
+   "n": 89,
+   "ref": 9.0
   },
   "lardons": {
    "e": 11.47,
    "src": "op",
-   "n": 239
+   "n": 239,
+   "ref": 11.0
   },
   "jambon": {
    "e": 21.83,
    "src": "op",
-   "n": 269
+   "n": 269,
+   "ref": 15.0
   },
   "chorizo": {
    "e": 18.51,
    "src": "op",
-   "n": 48
+   "n": 48,
+   "ref": 16.0
   },
   "saucisse": {
    "e": 11.74,
    "src": "op",
-   "n": 181
+   "n": 181,
+   "ref": 10.0
   },
   "boudin": {
    "e": 9,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 9.0
   },
   "steak_hache": {
    "e": 12,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 12.0
   },
   "dinde": {
    "e": 14.41,
    "src": "op",
-   "n": 112
+   "n": 112,
+   "ref": 12.0
   },
   "canard": {
    "e": 16.98,
    "src": "op",
-   "n": 91
+   "n": 91,
+   "ref": 14.0
   },
   "porc": {
    "e": 12.2,
    "src": "op",
-   "n": 265
+   "n": 265,
+   "ref": 9.0
   },
   "veau": {
    "e": 22,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 22.0
   },
   "agneau": {
    "e": 20,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 20.0
   },
   "boeuf": {
    "e": 16.46,
    "src": "op",
-   "n": 273
+   "n": 273,
+   "ref": 20.0
   },
   "lapin": {
    "e": 13,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 13.0
   },
   "poulet": {
    "e": 11.85,
    "src": "op",
-   "n": 318
+   "n": 318,
+   "ref": 10.0
   },
   "gnocchi": {
    "e": 6.36,
    "src": "op",
-   "n": 190
+   "n": 190,
+   "ref": 4.5
   },
   "raviolis": {
    "e": 10.38,
    "src": "op",
-   "n": 334
+   "n": 334,
+   "ref": 9.0
   },
   "pate_pizza": {
    "e": 6,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 6.0
   },
   "pate_brisee": {
    "e": 6,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 6.0
   },
   "pizza": {
    "e": 7.61,
    "src": "op",
-   "n": 141
+   "n": 141,
+   "ref": 7.0
   },
   "frites": {
    "e": 2.5,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 2.5
   },
   "legumes_surgeles": {
    "e": 3.71,
    "src": "op",
-   "n": 184
+   "n": 184,
+   "ref": 3.0
   },
   "quinoa": {
    "e": 9.92,
    "src": "op",
-   "n": 81
+   "n": 81,
+   "ref": 7.0
   },
   "avoine": {
    "e": 3.97,
    "src": "op",
-   "n": 82
+   "n": 82,
+   "ref": 2.5
   },
   "cereales": {
    "e": 7.73,
    "src": "op",
-   "n": 255
+   "n": 255,
+   "ref": 6.0
   },
   "polenta": {
    "e": 3,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 3.0
   },
   "nouilles": {
    "e": 11.11,
    "src": "op",
-   "n": 175
+   "n": 175,
+   "ref": 5.0
   },
   "pates": {
    "e": 3.33,
    "src": "op",
-   "n": 348
+   "n": 348,
+   "ref": 2.0
   },
   "riz": {
    "e": 4.49,
    "src": "op",
-   "n": 222
+   "n": 222,
+   "ref": 2.5
   },
   "semoule": {
    "e": 2.2,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 2.2
   },
   "tortilla": {
    "e": 17.16,
    "src": "op",
-   "n": 151
+   "n": 151,
+   "ref": 7.0
   },
   "pain_mie": {
    "e": 3.84,
    "src": "op",
-   "n": 239
+   "n": 239,
+   "ref": 4.0
   },
   "pain": {
    "e": 7.94,
    "src": "op",
-   "n": 106
+   "n": 106,
+   "ref": 4.0
   },
   "patate_douce": {
-   "e": 2.99,
-   "src": "op",
-   "n": 35
+   "e": 3.0,
+   "src": "ref",
+   "n": 35,
+   "ref": 3.0
   },
   "biscottes": {
    "e": 7.56,
    "src": "op",
-   "n": 161
+   "n": 161,
+   "ref": 5.0
   },
   "pdt": {
-   "e": 3.18,
-   "src": "op",
-   "n": 284
+   "e": 1.5,
+   "src": "ref",
+   "n": 284,
+   "ref": 1.5
   },
   "fromage_rape": {
    "e": 10.9,
    "src": "op",
-   "n": 259
+   "n": 259,
+   "ref": 11.0
   },
   "mascarpone": {
    "e": 9.21,
    "src": "op",
-   "n": 44
+   "n": 44,
+   "ref": 10.0
   },
   "ricotta": {
    "e": 7.52,
    "src": "op",
-   "n": 31
+   "n": 31,
+   "ref": 10.0
   },
   "raclette": {
    "e": 14.03,
    "src": "op",
-   "n": 199
+   "n": 199,
+   "ref": 15.0
   },
   "bleu": {
    "e": 18,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 18.0
   },
   "mozzarella": {
    "e": 9.24,
    "src": "op",
-   "n": 165
+   "n": 165,
+   "ref": 9.0
   },
   "feta": {
    "e": 14.86,
    "src": "op",
-   "n": 42
+   "n": 42,
+   "ref": 13.0
   },
   "chevre": {
    "e": 16.88,
    "src": "op",
-   "n": 274
+   "n": 274,
+   "ref": 16.0
   },
   "parmesan": {
    "e": 27.38,
    "src": "op",
-   "n": 68
+   "n": 68,
+   "ref": 28.0
   },
   "fromage_frais": {
    "e": 10.72,
    "src": "op",
-   "n": 241
+   "n": 241,
+   "ref": 9.0
   },
   "fromage": {
    "e": 13.8,
    "src": "op",
-   "n": 201
+   "n": 201,
+   "ref": 14.0
   },
   "tofu": {
    "e": 9,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 9.0
   },
   "lait_vegetal": {
    "e": 2,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 2.0
   },
   "dessert_lacte": {
    "e": 4.77,
    "src": "op",
-   "n": 464
+   "n": 464,
+   "ref": 3.5
   },
   "creme": {
    "e": 5.83,
    "src": "op",
-   "n": 261
+   "n": 261,
+   "ref": 4.5
   },
   "yaourt": {
    "e": 5.33,
    "src": "op",
-   "n": 160
+   "n": 160,
+   "ref": 2.5
   },
   "pate_tartiner": {
    "e": 11.34,
    "src": "op",
-   "n": 380
+   "n": 380,
+   "ref": 7.0
   },
   "confiture": {
    "e": 8.04,
    "src": "op",
-   "n": 306
+   "n": 306,
+   "ref": 6.0
   },
   "biscuits": {
    "e": 11.27,
    "src": "op",
-   "n": 248
+   "n": 248,
+   "ref": 6.0
   },
   "glace": {
    "e": 12.67,
    "src": "op",
-   "n": 354
+   "n": 354,
+   "ref": 6.0
   },
   "amandes": {
    "e": 23.44,
    "src": "op",
-   "n": 173
+   "n": 173,
+   "ref": 15.0
   },
   "noix_coco": {
    "e": 10,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 10.0
   },
   "fruits_secs": {
    "e": 10.18,
    "src": "op",
-   "n": 594
+   "n": 594,
+   "ref": 14.0
   },
   "chocolat": {
    "e": 27.13,
    "src": "op",
-   "n": 332
+   "n": 332,
+   "ref": 10.0
   },
   "lait_coco": {
    "e": 5.06,
    "src": "op",
-   "n": 19
+   "n": 19,
+   "ref": 4.5
   },
   "lait": {
    "e": 1.96,
    "src": "op",
-   "n": 149
+   "n": 149,
+   "ref": 1.1
   },
   "beurre": {
    "e": 12.2,
    "src": "op",
-   "n": 236
+   "n": 236,
+   "ref": 10.0
   },
   "oeuf": {
    "e": 5.59,
    "src": "op",
-   "n": 50
+   "n": 50,
+   "ref": 5.5
   },
   "brick": {
    "e": 15,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 15.0
   },
   "pate_feuilletee": {
    "e": 6,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 6.0
   },
   "olives": {
    "e": 12.76,
    "src": "op",
-   "n": 333
+   "n": 333,
+   "ref": 10.0
   },
   "cornichons": {
    "e": 7,
    "src": "ref",
-   "n": 1
+   "n": 1,
+   "ref": 7.0
   },
   "mayonnaise": {
    "e": 7.86,
    "src": "op",
-   "n": 204
+   "n": 204,
+   "ref": 6.0
   },
   "ketchup": {
    "e": 5.66,
    "src": "op",
-   "n": 233
+   "n": 233,
+   "ref": 4.0
   },
   "tahini": {
    "e": 18.81,
    "src": "op",
-   "n": 24
+   "n": 24,
+   "ref": 14.0
   },
   "beurre_cacahuete": {
    "e": 10.83,
    "src": "op",
-   "n": 211
+   "n": 211,
+   "ref": 9.0
   },
   "pesto": {
    "e": 13.68,
    "src": "op",
-   "n": 214
+   "n": 214,
+   "ref": 14.0
   },
   "sauce_tomate": {
    "e": 4.82,
    "src": "op",
-   "n": 380
+   "n": 380,
+   "ref": 3.0
   },
   "haricots_blancs": {
    "e": 4.31,
    "src": "op",
-   "n": 150
+   "n": 150,
+   "ref": 3.5
   },
   "haricots_rouges": {
    "e": 3.5,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 3.5
   },
   "pois_chiches": {
    "e": 4.6,
    "src": "op",
-   "n": 205
+   "n": 205,
+   "ref": 3.0
   },
   "lentilles": {
    "e": 5.57,
    "src": "op",
-   "n": 277
+   "n": 277,
+   "ref": 3.5
   },
   "mais": {
    "e": 5.02,
    "src": "op",
-   "n": 196
+   "n": 196,
+   "ref": 4.0
   },
   "aubergine": {
-   "e": 7.99,
-   "src": "op",
-   "n": 98
+   "e": 3.0,
+   "src": "ref",
+   "n": 98,
+   "ref": 3.0
   },
   "brocoli": {
-   "e": 3.98,
-   "src": "op",
-   "n": 53
+   "e": 3.5,
+   "src": "ref",
+   "n": 53,
+   "ref": 3.5
   },
   "chou_fleur": {
-   "e": 3.21,
-   "src": "op",
-   "n": 38
+   "e": 2.5,
+   "src": "ref",
+   "n": 38,
+   "ref": 2.5
   },
   "chou": {
-   "e": 4.38,
-   "src": "op",
-   "n": 61
+   "e": 2.0,
+   "src": "ref",
+   "n": 61,
+   "ref": 2.0
   },
   "poireau": {
-   "e": 3.09,
-   "src": "op",
-   "n": 60
+   "e": 2.5,
+   "src": "ref",
+   "n": 60,
+   "ref": 2.5
   },
   "haricots_verts": {
-   "e": 6.29,
-   "src": "op",
-   "n": 286
+   "e": 5.0,
+   "src": "ref",
+   "n": 286,
+   "ref": 5.0
   },
   "petits_pois": {
    "e": 3.74,
    "src": "op",
-   "n": 66
+   "n": 66,
+   "ref": 3.5
   },
   "butternut": {
-   "e": 3.32,
-   "src": "op",
-   "n": 21
+   "e": 2.0,
+   "src": "ref",
+   "n": 21,
+   "ref": 2.0
   },
   "betterave": {
    "e": 3,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 3.0
   },
   "radis": {
-   "e": 10,
-   "src": "op",
-   "n": 21
+   "e": 5.0,
+   "src": "ref",
+   "n": 21,
+   "ref": 5.0
   },
   "celeri": {
-   "e": 4.98,
-   "src": "op",
-   "n": 24
+   "e": 3.0,
+   "src": "ref",
+   "n": 24,
+   "ref": 3.0
   },
   "fenouil": {
    "e": 3.5,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 3.5
   },
   "asperge": {
-   "e": 14.09,
-   "src": "op",
-   "n": 105
+   "e": 9.0,
+   "src": "ref",
+   "n": 105,
+   "ref": 9.0
   },
   "artichaut": {
-   "e": 12.25,
-   "src": "op",
-   "n": 101
+   "e": 4.0,
+   "src": "ref",
+   "n": 101,
+   "ref": 4.0
   },
   "endive": {
-   "e": 6.69,
-   "src": "op",
-   "n": 22
+   "e": 3.0,
+   "src": "ref",
+   "n": 22,
+   "ref": 3.0
   },
   "navet": {
    "e": 2.5,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 2.5
   },
   "herbes": {
-   "e": 93.33,
-   "src": "op",
-   "n": 203
+   "e": 25.0,
+   "src": "ref",
+   "n": 203,
+   "ref": 25.0
   },
   "gingembre": {
    "e": 8,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 8.0
   },
   "piment": {
-   "e": 32.9,
-   "src": "op",
-   "n": 139
+   "e": 15.0,
+   "src": "ref",
+   "n": 139,
+   "ref": 15.0
   },
   "tomate": {
-   "e": 4.82,
-   "src": "op",
-   "n": 283
+   "e": 3.0,
+   "src": "ref",
+   "n": 283,
+   "ref": 3.0
   },
   "courgette": {
-   "e": 7.07,
-   "src": "op",
-   "n": 132
+   "e": 2.5,
+   "src": "ref",
+   "n": 132,
+   "ref": 2.5
   },
   "champignon": {
-   "e": 7.39,
-   "src": "op",
-   "n": 269
+   "e": 5.0,
+   "src": "ref",
+   "n": 269,
+   "ref": 5.0
   },
   "epinard": {
-   "e": 3.21,
-   "src": "op",
-   "n": 80
+   "e": 6.0,
+   "src": "ref",
+   "n": 80,
+   "ref": 6.0
   },
   "poivron": {
-   "e": 11.44,
-   "src": "op",
-   "n": 81
+   "e": 4.0,
+   "src": "ref",
+   "n": 81,
+   "ref": 4.0
   },
   "carotte": {
-   "e": 3.56,
-   "src": "op",
-   "n": 289
+   "e": 1.5,
+   "src": "ref",
+   "n": 289,
+   "ref": 1.5
   },
   "avocat": {
-   "e": 9.6,
-   "src": "op",
-   "n": 48
+   "e": 6.0,
+   "src": "ref",
+   "n": 48,
+   "ref": 6.0
   },
   "concombre": {
-   "e": 6.5,
-   "src": "op",
-   "n": 99
+   "e": 2.5,
+   "src": "ref",
+   "n": 99,
+   "ref": 2.5
   },
   "salade": {
-   "e": 8,
-   "src": "op",
-   "n": 302
+   "e": 3.5,
+   "src": "ref",
+   "n": 302,
+   "ref": 3.5
   },
   "citron": {
-   "e": 4.89,
-   "src": "op",
-   "n": 101
+   "e": 3.0,
+   "src": "ref",
+   "n": 101,
+   "ref": 3.0
   },
   "orange": {
-   "e": 2.99,
-   "src": "op",
-   "n": 121
+   "e": 2.5,
+   "src": "ref",
+   "n": 121,
+   "ref": 2.5
   },
   "poire": {
-   "e": 3.95,
-   "src": "op",
-   "n": 39
+   "e": 3.0,
+   "src": "ref",
+   "n": 39,
+   "ref": 3.0
   },
   "fruits_rouges": {
-   "e": 9.98,
-   "src": "op",
-   "n": 127
+   "e": 12.0,
+   "src": "ref",
+   "n": 127,
+   "ref": 12.0
   },
   "raisin": {
-   "e": 6.98,
-   "src": "op",
-   "n": 27
+   "e": 4.0,
+   "src": "ref",
+   "n": 27,
+   "ref": 4.0
   },
   "kiwi": {
-   "e": 7.4,
-   "src": "op",
-   "n": 43
+   "e": 4.0,
+   "src": "ref",
+   "n": 43,
+   "ref": 4.0
   },
   "ananas": {
-   "e": 6.68,
-   "src": "op",
-   "n": 29
+   "e": 2.5,
+   "src": "ref",
+   "n": 29,
+   "ref": 2.5
   },
   "mangue": {
-   "e": 5.63,
-   "src": "op",
-   "n": 31
+   "e": 4.0,
+   "src": "ref",
+   "n": 31,
+   "ref": 4.0
   },
   "peche": {
-   "e": 5.05,
-   "src": "op",
-   "n": 128
+   "e": 3.5,
+   "src": "ref",
+   "n": 128,
+   "ref": 3.5
   },
   "melon": {
-   "e": 3.43,
-   "src": "op",
-   "n": 34
+   "e": 2.5,
+   "src": "ref",
+   "n": 34,
+   "ref": 2.5
   },
   "rhubarbe": {
    "e": 6,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 6.0
   },
   "germes_soja": {
    "e": 7,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 7.0
   },
   "figue": {
-   "e": 15.9,
-   "src": "op",
-   "n": 21
+   "e": 9.0,
+   "src": "ref",
+   "n": 21,
+   "ref": 9.0
   },
   "pomme": {
-   "e": 3.21,
-   "src": "op",
-   "n": 160
+   "e": 2.5,
+   "src": "ref",
+   "n": 160,
+   "ref": 2.5
   },
   "banane": {
-   "e": 2.07,
-   "src": "op",
-   "n": 96
+   "e": 2.0,
+   "src": "ref",
+   "n": 96,
+   "ref": 2.0
   },
   "sel": {
-   "e": 11,
-   "src": "op",
-   "n": 230
+   "e": 0.8,
+   "src": "ref",
+   "n": 230,
+   "ref": 0.8,
+   "fixe": true
   },
   "poivre": {
    "e": 73.42,
    "src": "op",
-   "n": 125
+   "n": 125,
+   "ref": 40.0
   },
   "huile": {
    "e": 10.69,
    "src": "op",
-   "n": 310
+   "n": 310,
+   "ref": 6.0
   },
   "oignon": {
-   "e": 18,
-   "src": "op",
-   "n": 86
+   "e": 1.8,
+   "src": "ref",
+   "n": 86,
+   "ref": 1.8
   },
   "ail": {
-   "e": 19.27,
-   "src": "op",
-   "n": 42
+   "e": 7.0,
+   "src": "ref",
+   "n": 42,
+   "ref": 7.0
   },
   "farine": {
    "e": 2.22,
    "src": "op",
-   "n": 224
+   "n": 224,
+   "ref": 1.2
   },
   "sucre": {
    "e": 2.84,
    "src": "op",
-   "n": 244
+   "n": 244,
+   "ref": 1.3
   },
   "epices": {
    "e": 62.2,
    "src": "op",
-   "n": 202
+   "n": 202,
+   "ref": 40.0
   },
   "moutarde": {
    "e": 8.11,
    "src": "op",
-   "n": 209
+   "n": 209,
+   "ref": 5.0
   },
   "vinaigre": {
    "e": 6.65,
    "src": "op",
-   "n": 199
+   "n": 199,
+   "ref": 3.0
   },
   "bouillon": {
-   "e": 20,
-   "src": "op",
-   "n": 215
+   "e": 0.4,
+   "src": "ref",
+   "n": 215,
+   "ref": 0.4,
+   "fixe": true
   },
   "sauce_soja": {
    "e": 18.49,
    "src": "op",
-   "n": 142
+   "n": 142,
+   "ref": 8.0
   },
   "levure": {
    "e": 10,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 10.0
   },
   "levure_boulangere": {
    "e": 15,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 15.0
   },
   "chapelure": {
    "e": 4,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 4.0
   },
   "cacao": {
    "e": 7.92,
    "src": "op",
-   "n": 98
+   "n": 98,
+   "ref": 12.0
   },
   "cafe": {
-   "e": 27.97,
-   "src": "op",
-   "n": 173
+   "e": 0.5,
+   "src": "ref",
+   "n": 173,
+   "ref": 0.5,
+   "fixe": true
   },
   "vin_blanc": {
    "e": 9.27,
    "src": "op",
-   "n": 33
+   "n": 33,
+   "ref": 5.0
   },
   "herbes_seches": {
    "e": 30,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 30.0
   },
   "vanille": {
    "e": 62.5,
    "src": "op",
-   "n": 38
+   "n": 38,
+   "ref": 300.0
   },
   "maizena": {
    "e": 4.76,
    "src": "op",
-   "n": 29
+   "n": 29,
+   "ref": 5.0
   },
   "gelatine": {
    "e": 60,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 60.0
   },
   "alcool": {
    "e": 24.45,
    "src": "op",
-   "n": 130
+   "n": 130,
+   "ref": 20.0
   },
   "eau_fleur": {
    "e": 8,
    "src": "ref",
-   "n": 0
+   "n": 0,
+   "ref": 8.0
   },
   "miel": {
    "e": 17.47,
    "src": "op",
-   "n": 201
+   "n": 201,
+   "ref": 12.0
   }
  }
 }
