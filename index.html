@@ -404,7 +404,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 35</p>
+  <p class="legal ver">Cookapli · version 36</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -628,7 +628,7 @@ footer{padding-block:6px 30px}
       var plus=document.createElement("button");plus.type="button";plus.className="btn alt";plus.textContent="Plus tard";plus.onclick=function(){A.marquerConnu(s,n.bloc.id,false);annoncer()};row.appendChild(plus)}
     appliquer()}
   (function(){var bt=$("have-open"),more=$("have-more"),tile=$("t-have");if(!bt)return;
-    bt.onclick=function(){var o=more.hidden;more.hidden=!o;bt.setAttribute("aria-expanded",String(o));tile.classList.toggle("open",o);if(o)$("have-input").focus()}})();
+    bt.onclick=function(){var o=more.hidden;more.hidden=!o;bt.setAttribute("aria-expanded",String(o));tile.classList.toggle("open",o)}})();
   appliquer();annoncer();
   if(premiere)setTimeout(function(){ouvrir(true)},600);
 })();
