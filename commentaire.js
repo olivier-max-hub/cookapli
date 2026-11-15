@@ -5,7 +5,7 @@
    À ajouter en bas de chaque nouvelle page, après friscan/data.js (qui fournit l'adresse MES_RECETTES.comment) :
      <script src="../cookapli/commentaire.js" data-context="Cookapli · Nom de la page" data-extra="Phrase de confidentialité propre à la page (facultatif)"></script>
    Options : data-header="sélecteur" (où placer le bouton du haut), data-after="sélecteur" (où placer la section),
-   data-mode="tete" (seulement la tête avec la toque dans data-header, sans bouton flottant ; un appui ouvre une bulle avec le lien vers le commentaire). */
+   data-mode="tete" (seulement la tête avec la toque dans data-header, sans bouton flottant ; un appui ouvre une bulle avec le seul lien « Commentaire », vers le formulaire en bas de page). */
 (function () {
   "use strict";
   var me = document.currentScript || {};
@@ -47,7 +47,7 @@
     ".ckc-pop[hidden]{display:none}" +
     ".ckc-pop::before{content:'';position:absolute;top:-7px;right:14px;width:14px;height:14px;background:#fff;transform:rotate(45deg)}" +
     ".ckc-pop b{font-size:1.15rem;color:#0f6b78}" +
-    ".ckc-pop a{color:#0f6b78;font-weight:700;text-decoration:underline;text-underline-offset:3px}";
+    ".ckc-pop a{color:#0f6b78;font-weight:700;font-size:1.15rem;text-decoration:underline;text-underline-offset:3px;min-height:32px;display:flex;align-items:center}";
   document.head.appendChild(css);
 
   function deviceType() { var ua = navigator.userAgent || ""; return (/Android|iPhone|iPad|iPod|Mobile/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1) || matchMedia("(max-width:699px)").matches) ? "Mobile" : "PC"; }
@@ -100,8 +100,8 @@
       var bt = el("button"); bt.type = "button"; bt.setAttribute("aria-label", "Commentaire"); bt.setAttribute("aria-expanded", "false"); bt.setAttribute("aria-controls", "ckcPop");
       bt.innerHTML = TOQUE.replace(/<span>.*<\/span>/, "");
       var pop = el("div", "ckc-pop"); pop.id = "ckcPop"; pop.hidden = true; pop.setAttribute("role", "dialog"); pop.setAttribute("aria-label", "Commentaire");
-      pop.appendChild(el("b", null, "Commentaire"));
-      var lk = el("a", null, "Laisser un commentaire en bas de la page"); lk.href = "#commentaire"; pop.appendChild(lk);
+      /* un seul lien « Commentaire », qui mène au formulaire en bas de la page (demande d'Olivier, 15/11/2026) */
+      var lk = el("a", null, "Commentaire"); lk.href = "#commentaire"; pop.appendChild(lk);
       bx.appendChild(bt); bx.appendChild(pop); zone.insertBefore(bx, zone.firstChild);
       function showPop(o) { pop.hidden = !o; bt.setAttribute("aria-expanded", String(o)); }
       bt.addEventListener("click", function (ev) { ev.stopPropagation(); showPop(pop.hidden); });
