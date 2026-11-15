@@ -47,7 +47,8 @@ function prixKg(item, d) {
   const p = Number(item.price);
   if (!(p > 0)) return null;
   if (item.price_per === 'KILOGRAM') return p;
-  if (item.price_per === 'UNIT' && !item.product_code) return d.pu ? p / (d.pu / 1000) : null;
+  /* prix à la pièce : seulement pour les pièces d'au moins 50 g (un radis est vendu en botte, pas à l'unité) */
+  if (item.price_per === 'UNIT' && !item.product_code) return d.pu >= 50 ? p / (d.pu / 1000) : null;
   const pr = item.product || {};
   const q = Number(pr.product_quantity), u = String(pr.product_quantity_unit || 'g').toLowerCase();
   if (q > 0 && (u === 'g' || u === 'ml')) return p / (q / 1000);
@@ -96,8 +97,11 @@ for (const [id, d] of Object.entries(ING)) {
   if (avant.fixe) { console.log(id.padEnd(20), 'prix fixe →', avant.e, '€/kg'); continue; }
   let releves = [];
   try { releves = await relevesPour(d, depuis); } catch (e) { console.log(id, 'erreur', e.message); }
-  if (releves.length >= MIN_RELEVES) {
-    const e = Math.round(mediane(releves) * 100) / 100;
+  const med = releves.length >= MIN_RELEVES ? Math.round(mediane(releves) * 100) / 100 : null;
+  /* garde-fou : une médiane plus de 3 fois au-dessus ou en dessous du prix de référence est sans doute faussée */
+  const plausible = med != null && (avant.ref == null || (med <= 3 * avant.ref && med >= avant.ref / 3));
+  if (plausible) {
+    const e = med;
     ancien.p[id] = { e, src: 'op', n: releves.length, ref: avant.ref };
     maj++;
   } else {
