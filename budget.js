@@ -88,5 +88,21 @@
     return { tot: tot, pers: r.pers, pp: tot / r.pers, niv: niveau(tot / r.pers) };
   }
 
-  window.CookBudget = { charger: charger, pret: pret, prixKg: prixKg, niveau: niveau, fourchette: fourchette, dateMaj: dateMaj, euros: euros, grammes: grammes, recetteFriscan: recetteFriscan, AVERT: AVERT };
+  /* calories d'une recette Friscan (kcal pour 100 g du référentiel ING), par personne, arrondies à 10 ; 0 si impossible.
+     Ne dépend pas des prix : utilisable même si prix.json n'est pas chargé. Outil indicatif, sans valeur médicale. */
+  function kcalFriscan(r, ING) {
+    if (!r || !r.ing || !r.pers) return 0;
+    var tot = 0, ok = 0, ko = 0;
+    r.ing.forEach(function (x) {
+      if (x[2]) return;
+      var d = ING[x[0]], a = grammes(x[1], d, x[0]);
+      if (a.st === 'neg') { ok++; return; }
+      if (a.st !== 'ok' || !d || d.kc == null) { ko++; return; }
+      tot += a.g * d.kc / 100; ok++;
+    });
+    if (!ok || ko * 3 > ok || tot <= 0 || tot / r.pers > 3000) return 0;
+    return Math.max(10, Math.round(tot / r.pers / 10) * 10);
+  }
+
+  window.CookBudget = { kcalFriscan: kcalFriscan, charger: charger, pret: pret, prixKg: prixKg, niveau: niveau, fourchette: fourchette, dateMaj: dateMaj, euros: euros, grammes: grammes, recetteFriscan: recetteFriscan, AVERT: AVERT };
 })();
