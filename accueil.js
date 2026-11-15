@@ -1,6 +1,7 @@
 /* Cookapli — accueil personnalisable par profils (partagé par index.html et perso.html)
    Chaque bloc de l'accueil a un identifiant. Un profil = une liste de blocs affichés, dans l'ordre.
    Le réglage de l'utilisateur est gardé sur son téléphone (localStorage « cookapli.accueil »).
+   « Besoin d'inspiration ? » (carrousel) est dans tous les profils.
    Ajouter un bloc plus tard : l'ajouter à BLOCS avec « depuis » (numéro de version Cookapli) et,
    si besoin, dans les profils qui l'affichent par défaut. Il sera annoncé sur l'accueil (« Nouveau »). */
 (function () {
@@ -18,10 +19,10 @@
     { id: 'inspiration', href: './#s-ideas', n: "Besoin d'inspiration ?", sel: '#s-ideas', grand: 1, depuis: 1 }
   ];
   var PROFILS = [
-    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'courses', 'quecuisiner', 'chrono', 'livre'] },
-    { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['reserves', 'chrono', 'quecuisiner', 'livre', 'courses'] },
+    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'courses', 'quecuisiner', 'chrono', 'livre', 'inspiration'] },
+    { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['reserves', 'chrono', 'quecuisiner', 'livre', 'courses', 'inspiration'] },
     { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['reserves', 'celebrations', 'inspiration', 'livre', 'saison', 'equilibre'] },
-    { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['reserves', 'antigaspi', 'quecuisiner', 'chrono', 'courses', 'livre'] },
+    { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['reserves', 'antigaspi', 'quecuisiner', 'chrono', 'courses', 'livre', 'inspiration'] },
     { id: 'tout', n: 'Tous les outils', sub: 'Tous les outils de Cookapli', blocs: BLOCS.map(function (b) { return b.id; }) }
   ];
   var CLE = 'cookapli.accueil';
