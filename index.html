@@ -301,6 +301,20 @@ body.fond-profil #fondProfil{display:block}
 body.fond-profil .alltools a,body.fond-profil .cm-toggle{background:rgba(255,255,255,.92);border-radius:99px;box-shadow:var(--sh-card)}
 body.fond-profil .cm-toggle{padding:6px 16px}
 body.fond-profil .legal{background:rgba(255,255,255,.92)}
+body.fond-profil .sec-h a{background:rgba(255,255,255,.92);border-radius:99px;padding:4px 14px;box-shadow:var(--sh-card)}
+/* tuiles translucides sur le papier peint (70 %) */
+body.fond-profil .tile,body.fond-profil .batch{backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+body.fond-profil .g-cook{background:linear-gradient(135deg,color-mix(in srgb,var(--c-plat-1) 70%,transparent),color-mix(in srgb,var(--c-plat-2) 70%,transparent))}
+body.fond-profil .g-recettes{background:linear-gradient(135deg,color-mix(in srgb,var(--c-aperitif-1) 70%,transparent),color-mix(in srgb,var(--c-aperitif-2) 70%,transparent))}
+body.fond-profil .g-have{background:linear-gradient(135deg,color-mix(in srgb,var(--c-veg-1) 70%,transparent),color-mix(in srgb,var(--c-veg-2) 70%,transparent))}
+body.fond-profil .g-scan{background:linear-gradient(135deg,color-mix(in srgb,var(--c-salee-1) 70%,transparent),color-mix(in srgb,var(--c-salee-2) 70%,transparent))}
+body.fond-profil .g-courses{background:linear-gradient(135deg,color-mix(in srgb,var(--c-unique-1) 70%,transparent),color-mix(in srgb,var(--c-unique-2) 70%,transparent))}
+body.fond-profil .g-batch{background:linear-gradient(135deg,color-mix(in srgb,var(--c-entree-1) 70%,transparent),color-mix(in srgb,var(--c-entree-2) 70%,transparent))}
+body.fond-profil .g-occasion{background:linear-gradient(135deg,color-mix(in srgb,#fff0f5 70%,transparent),color-mix(in srgb,var(--c-acc-2) 70%,transparent))}
+body.fond-profil .g-chrono{background:linear-gradient(135deg,color-mix(in srgb,var(--c-salee-1) 70%,transparent),color-mix(in srgb,var(--c-salee-2) 70%,transparent))}
+body.fond-profil .g-gaspi{background:linear-gradient(135deg,color-mix(in srgb,var(--c-veg-1) 70%,transparent),color-mix(in srgb,var(--c-veg-2) 70%,transparent))}
+body.fond-profil .g-equilibre{background:linear-gradient(135deg,color-mix(in srgb,#2e9a5a 70%,transparent),color-mix(in srgb,#1f7a43 70%,transparent))}
+body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)}
 </style>
 </head>
 <body>
@@ -419,7 +433,7 @@ body.fond-profil .legal{background:rgba(255,255,255,.92)}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 54</p>
+  <p class="legal ver">Cookapli · version 55</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
