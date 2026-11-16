@@ -117,7 +117,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .have-tile.open .chev{transform:rotate(180deg)}
 .have-tile .have-go{margin:12px 0 0}
 .have-tile .tile-link:focus-visible{outline:3px solid var(--acc-deep);outline-offset:2px}
-.have-tile .have-note{display:block;margin:8px 0 0;color:#000;font-weight:700;font-size:1rem;line-height:1.3;text-decoration:none}
+#t-have .have-note{display:block;margin:8px 0 0;color:#000;font-weight:700;line-height:1.3;text-decoration:none}
 .have-tile .have{margin-top:12px;max-width:none}
 .have-tile .quick{max-width:none}
 @media (prefers-reduced-motion:no-preference){.tile.have-tile:hover{transform:none;box-shadow:var(--sh-tile)}} /* tuile avec champ de saisie : elle ne bouge pas au survol */
@@ -269,7 +269,7 @@ footer{padding-block:6px 30px}
 /* ===== Profils d'accueil (accueil.js) ===== */
 .off{display:none!important}
 .pbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.ppill{flex:1 1 220px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:0 16px;border-radius:99px;border:2px solid #f8d96b;background:rgba(255,241,184,.75);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);color:#000;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;text-align:left;box-shadow:var(--sh-card)}
+.ppill{flex:1 1 220px;display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:48px;padding:0 16px;border-radius:99px;border:2px solid rgba(248,217,107,.8);background:rgba(255,241,184,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);color:#000;font:inherit;font-weight:700;font-size:1.05rem;cursor:pointer;text-align:left;box-shadow:var(--sh-card)}
 .ppill b{color:#000}
 .ppers{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:99px;background:var(--card);border:1px solid var(--acc);color:var(--acc);font-weight:700;text-decoration:none;box-shadow:var(--sh-card)}
 .news[hidden]{display:none}
@@ -348,7 +348,7 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
     <section id="s-tools" aria-label="Tes outils">
       <div class="tools">
         <a class="tile g-have" id="t-have" href="../friscan/#frigo">
-          <span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small></span><span class="ill" aria-hidden="true">🥕</span>
+          <span><b>Mes réserves</b><small>Ton frigo et ton placard, toujours à jour</small><small class="have-note">C'est le point de départ de Cookapli : plus tes réserves sont complètes, plus les recettes proposées te correspondent.</small></span><span class="ill" aria-hidden="true">🥕</span>
         </a>
         <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner avec mes réserves&nbsp;?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
@@ -424,7 +424,7 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 58</p>
+  <p class="legal ver">Cookapli · version 59</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
