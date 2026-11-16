@@ -294,7 +294,7 @@ footer{padding-block:6px 30px}
 .popt[aria-current="true"]{background:var(--acc-pale);border:3px solid var(--acc)}
 .sheet .lnk{justify-self:center;display:inline-flex;align-items:center;min-height:44px;color:var(--acc);font-weight:700}
 /* ===== Papier peint propre à certains profils : image figée pendant le défilement ===== */
-#fondProfil{display:none;position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;transform:translateZ(0);z-index:-1;pointer-events:none;background:center bottom/contain no-repeat;opacity:.7}
+#fondProfil{display:none;position:fixed;top:var(--hb,0px);left:0;right:0;height:calc(100vh - var(--hb,0px));height:calc(100lvh - var(--hb,0px));transform:translateZ(0);z-index:-1;pointer-events:none;background:center bottom/contain no-repeat;opacity:.7}
 body.fond-profil{background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg)}
 body.fond-profil #fondProfil{display:block}
 /* textes du bas lisibles sur le papier peint */
@@ -433,7 +433,7 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 55</p>
+  <p class="legal ver">Cookapli · version 56</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -633,10 +633,14 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
   var $=function(id){return document.getElementById(id)};
   var s=A.lire(),premiere=!s;
   function elt(b){return document.querySelector(b.sel)}
+  /* le papier peint commence sous le bandeau, pour que l'image ne soit pas cachée en haut */
+  function hauteurBandeau(){var h=document.querySelector(".hdr");if(h)document.documentElement.style.setProperty("--hb",Math.round(h.getBoundingClientRect().bottom+6)+"px")}
+  addEventListener("resize",function(){if(document.body.classList.contains("fond-profil"))hauteurBandeau()});
   function appliquer(){
     var st=s||{profil:"tout",blocs:A.preset("tout")},p=A.profil(st.profil);
     var FONDS={famille:"fond/famille.webp",debutant:"fond/debutant.webp"},fd=FONDS[st.profil];
-    document.body.classList.toggle("fond-profil",!!fd);if(fd)$("fondProfil").style.backgroundImage="url("+fd+")";
+    document.body.classList.toggle("fond-profil",!!fd);if(fd)hauteurBandeau();
+   if(fd)$("fondProfil").style.backgroundImage="url("+fd+")";
     $("pNom").textContent=st.perso?"Personnalisé":st.profil==="tout"?"Tous les outils":p.n;
     var nt=0,ng=0,tuiles=0;
     st.blocs.forEach(function(x){var b=A.bloc(x.id),e=b&&elt(b);if(!e)return;
