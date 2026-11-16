@@ -293,9 +293,14 @@ footer{padding-block:6px 30px}
 .popt small{font-size:.9rem;color:#000}
 .popt[aria-current="true"]{background:var(--acc-pale);border:3px solid var(--acc)}
 .sheet .lnk{justify-self:center;display:inline-flex;align-items:center;min-height:44px;color:var(--acc);font-weight:700}
+/* ===== Papier peint du profil Famille : image figée pendant le défilement ===== */
+#fondProfil{display:none;position:fixed;top:0;left:0;right:0;height:100vh;height:100lvh;transform:translateZ(0);z-index:-1;pointer-events:none;background:url(fond/famille.webp) center bottom/contain no-repeat;opacity:.7}
+body.fond-famille{background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg)}
+body.fond-famille #fondProfil{display:block}
 </style>
 </head>
 <body>
+<div id="fondProfil" aria-hidden="true"></div>
 
 <header class="hdr gut">
   <div class="wrap">
@@ -410,7 +415,7 @@ footer{padding-block:6px 30px}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 51</p>
+  <p class="legal ver">Cookapli · version 52</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -612,6 +617,7 @@ footer{padding-block:6px 30px}
   function elt(b){return document.querySelector(b.sel)}
   function appliquer(){
     var st=s||{profil:"tout",blocs:A.preset("tout")},p=A.profil(st.profil);
+    document.body.classList.toggle("fond-famille",st.profil==="famille");
     $("pNom").textContent=st.perso?"Personnalisé":st.profil==="tout"?"Tous les outils":p.n;
     var nt=0,ng=0,tuiles=0;
     st.blocs.forEach(function(x){var b=A.bloc(x.id),e=b&&elt(b);if(!e)return;
