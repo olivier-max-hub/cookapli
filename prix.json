@@ -1,5 +1,5 @@
 {
- "maj": "2026-11-15",
+ "maj": "2026-11-16",
  "note": "Prix moyens indicatifs en euros par kilo (ou par litre). Valeurs de départ estimées, remplacées chaque mois par la médiane des prix relevés en France dans Open Prices (Open Food Facts, licence ODbL) quand il y a au moins 5 relevés sur les 12 derniers mois. Les ingrédients marqués « fixe » ont un prix fixé à la main (ex. bouillon prêt à l'emploi, café préparé).",
  "source": "Open Prices – Open Food Facts (ODbL)",
  "p": {
@@ -106,7 +106,7 @@
    "ref": 11
   },
   "jambon": {
-   "e": 21.83,
+   "e": 21.85,
    "src": "op",
    "n": 269,
    "ref": 15
@@ -178,9 +178,9 @@
    "ref": 13
   },
   "poulet": {
-   "e": 11.85,
+   "e": 11.96,
    "src": "op",
-   "n": 318,
+   "n": 319,
    "ref": 10
   },
   "gnocchi": {
@@ -190,9 +190,9 @@
    "ref": 4.5
   },
   "raviolis": {
-   "e": 10.38,
+   "e": 10.4,
    "src": "op",
-   "n": 334,
+   "n": 337,
    "ref": 9
   },
   "pate_pizza": {
@@ -208,9 +208,9 @@
    "ref": 6
   },
   "pizza": {
-   "e": 7.61,
+   "e": 7.6,
    "src": "op",
-   "n": 141,
+   "n": 143,
    "ref": 7
   },
   "frites": {
@@ -226,9 +226,9 @@
    "ref": 3
   },
   "quinoa": {
-   "e": 9.92,
+   "e": 9.94,
    "src": "op",
-   "n": 81,
+   "n": 80,
    "ref": 7
   },
   "avoine": {
@@ -238,9 +238,9 @@
    "ref": 2.5
   },
   "cereales": {
-   "e": 7.73,
+   "e": 7.79,
    "src": "op",
-   "n": 255,
+   "n": 259,
    "ref": 6
   },
   "polenta": {
@@ -250,21 +250,21 @@
    "ref": 3
   },
   "nouilles": {
-   "e": 11.11,
+   "e": 11.34,
    "src": "op",
-   "n": 175,
+   "n": 173,
    "ref": 5
   },
   "pates": {
-   "e": 3.33,
+   "e": 3.12,
    "src": "op",
-   "n": 348,
+   "n": 341,
    "ref": 2
   },
   "riz": {
-   "e": 4.49,
+   "e": 4.44,
    "src": "op",
-   "n": 222,
+   "n": 221,
    "ref": 2.5
   },
   "semoule": {
@@ -280,13 +280,13 @@
    "ref": 7
   },
   "pain_mie": {
-   "e": 3.84,
+   "e": 3.8,
    "src": "op",
-   "n": 239,
+   "n": 241,
    "ref": 4
   },
   "pain": {
-   "e": 7.94,
+   "e": 7.76,
    "src": "op",
    "n": 106,
    "ref": 4
@@ -364,13 +364,13 @@
    "ref": 28
   },
   "fromage_frais": {
-   "e": 10.72,
+   "e": 10.7,
    "src": "op",
-   "n": 241,
+   "n": 240,
    "ref": 9
   },
   "fromage": {
-   "e": 13.8,
+   "e": 13.45,
    "src": "op",
    "n": 201,
    "ref": 14
@@ -388,9 +388,9 @@
    "ref": 2
   },
   "dessert_lacte": {
-   "e": 4.77,
+   "e": 4.72,
    "src": "op",
-   "n": 464,
+   "n": 466,
    "ref": 3.5
   },
   "creme": {
@@ -400,39 +400,39 @@
    "ref": 4.5
   },
   "yaourt": {
-   "e": 5.33,
+   "e": 5.45,
    "src": "op",
-   "n": 160,
+   "n": 162,
    "ref": 2.5
   },
   "pate_tartiner": {
-   "e": 11.34,
+   "e": 11.29,
    "src": "op",
-   "n": 380,
+   "n": 376,
    "ref": 7
   },
   "confiture": {
-   "e": 8.04,
+   "e": 8.03,
    "src": "op",
-   "n": 306,
+   "n": 305,
    "ref": 6
   },
   "biscuits": {
-   "e": 11.27,
+   "e": 11.61,
    "src": "op",
-   "n": 248,
+   "n": 265,
    "ref": 6
   },
   "glace": {
    "e": 12.67,
    "src": "op",
-   "n": 354,
+   "n": 356,
    "ref": 6
   },
   "amandes": {
-   "e": 23.44,
+   "e": 23.47,
    "src": "op",
-   "n": 173,
+   "n": 172,
    "ref": 15
   },
   "noix_coco": {
@@ -444,7 +444,7 @@
   "fruits_secs": {
    "e": 10.18,
    "src": "op",
-   "n": 594,
+   "n": 590,
    "ref": 14
   },
   "chocolat": {
@@ -460,9 +460,9 @@
    "ref": 4.5
   },
   "lait": {
-   "e": 1.96,
+   "e": 1.94,
    "src": "op",
-   "n": 149,
+   "n": 153,
    "ref": 1.1
   },
   "beurre": {
@@ -508,7 +508,7 @@
    "ref": 6
   },
   "ketchup": {
-   "e": 5.66,
+   "e": 5.61,
    "src": "op",
    "n": 233,
    "ref": 4
@@ -532,15 +532,15 @@
    "ref": 14
   },
   "sauce_tomate": {
-   "e": 4.82,
+   "e": 4.81,
    "src": "op",
-   "n": 380,
+   "n": 378,
    "ref": 3
   },
   "haricots_blancs": {
-   "e": 4.31,
+   "e": 4.34,
    "src": "op",
-   "n": 150,
+   "n": 151,
    "ref": 3.5
   },
   "haricots_rouges": {
@@ -550,15 +550,15 @@
    "ref": 3.5
   },
   "pois_chiches": {
-   "e": 4.6,
+   "e": 4.64,
    "src": "op",
-   "n": 205,
+   "n": 204,
    "ref": 3
   },
   "lentilles": {
-   "e": 5.57,
+   "e": 5.59,
    "src": "op",
-   "n": 277,
+   "n": 274,
    "ref": 3.5
   },
   "mais": {
@@ -610,9 +610,9 @@
    "ref": 3.5
   },
   "butternut": {
-   "e": 2.47,
+   "e": 2.44,
    "src": "op",
-   "n": 12,
+   "n": 13,
    "ref": 2
   },
   "betterave": {
@@ -622,9 +622,9 @@
    "ref": 3
   },
   "radis": {
-   "e": 5,
-   "src": "ref",
-   "n": 11,
+   "e": 2.98,
+   "src": "op",
+   "n": 5,
    "ref": 5
   },
   "celeri": {
@@ -642,7 +642,7 @@
   "asperge": {
    "e": 9,
    "src": "ref",
-   "n": 2,
+   "n": 1,
    "ref": 9
   },
   "artichaut": {
@@ -833,9 +833,9 @@
    "fixe": true
   },
   "poivre": {
-   "e": 73.42,
+   "e": 73.61,
    "src": "op",
-   "n": 125,
+   "n": 122,
    "ref": 40
   },
   "huile": {
@@ -857,9 +857,9 @@
    "ref": 7
   },
   "farine": {
-   "e": 2.22,
+   "e": 2.19,
    "src": "op",
-   "n": 224,
+   "n": 225,
    "ref": 1.2
   },
   "sucre": {
@@ -869,9 +869,9 @@
    "ref": 1.3
   },
   "epices": {
-   "e": 62.2,
+   "e": 60.5,
    "src": "op",
-   "n": 202,
+   "n": 204,
    "ref": 40
   },
   "moutarde": {
@@ -951,7 +951,7 @@
   "maizena": {
    "e": 4.76,
    "src": "op",
-   "n": 29,
+   "n": 28,
    "ref": 5
   },
   "gelatine": {
@@ -973,9 +973,9 @@
    "ref": 8
   },
   "miel": {
-   "e": 17.47,
+   "e": 17.55,
    "src": "op",
-   "n": 201,
+   "n": 202,
    "ref": 12
   }
  }
