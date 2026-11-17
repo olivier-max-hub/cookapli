@@ -446,6 +446,18 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 
 .hero #t-have.haveq{padding:2px 3px 2px 12px!important}
 .hero #t-have #have-sub:empty{display:none!important}
+
+/* essai : section saison retirée, carrousel de saison à deux cartes côte à côte */
+#s-season{display:none!important}
+.carou{gap:10px!important}
+.carou .slide{flex:0 0 calc((100% - 10px) / 2)!important}
+@media (min-width:900px){.carou .slide{flex-basis:calc((100% - 30px) / 4)!important}}
+.carou .card .t{padding:8px 9px 10px!important}
+.carou .card b{font-size:.92rem!important;line-height:1.2;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.carou .cinfo.lite{gap:4px!important;margin-top:6px!important}
+.carou .cinfo.lite span{font-size:.72rem!important;padding:4px 7px!important}
+.carou .vegtag{font-size:.58rem!important;padding:3px 7px!important}
+.carou .thumb{aspect-ratio:4/3!important}
 </style>
 </head>
 <body>
@@ -538,7 +550,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 
     <section id="s-ideas" aria-labelledby="h-ideas">
       <div class="sec-h">
-        <h2 class="label" id="h-ideas" style="--cat:var(--c-dessert-2)">Idées du moment</h2>
+        <h2 class="label" id="h-ideas" style="--cat:var(--c-veg-2)">De saison en <span id="mois2">novembre</span></h2>
         <a href="../recettes/">Voir les 149 recettes →</a>
       </div>
       <div class="carou-wrap">
@@ -623,7 +635,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
     [["🥬","Chou"],["🥬","Poireau"],["🥔","Céleri"],["🥗","Endive"],["🥕","Panais"],["🍊","Clémentine"],["🍊","Orange"]]
   ];
   var MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
-  var m=new Date().getMonth();
+  var m=new Date().getMonth();window.COOK_SAISON=SEASON[m].map(function(p){return p[1]});window.COOK_MOIS=MONTHS[m];
   $("month").textContent=MONTHS[m];
   var box=$("season");
   SEASON[m].forEach(function(p){var s=document.createElement("span");s.className="sp";var e=document.createElement("span");e.setAttribute("aria-hidden","true");e.textContent=p[0];s.appendChild(e);s.appendChild(document.createTextNode(p[1]));box.appendChild(s)});
@@ -676,7 +688,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 (function(){
   var box=document.getElementById("carou"),prev=document.getElementById("carou-prev"),next=document.getElementById("carou-next");
   if(!box)return;
-  var SITE="../recettes/",CATS_LIVRE=["Apéritif","Entrée"],KEY="cookapli.carrousel",FRI="../friscan/";
+  var SITE="../recettes/",CATS_LIVRE=["Apéritif","Entrée"],KEY="cookapli.carrousel.saison",FRI="../friscan/";
   var FRI_COUL=(typeof CATS!=="undefined"&&CATS)||{};
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
   function slug(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
@@ -715,8 +727,19 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
     return '<a class="card slide" style="--top:'+c[1]+'" href="'+FRI+'#r-'+esc(r.id)+'">'+(veg?'<div class="vegrow"><span class="vegtag">Végétarien</span></div>':'')+
       '<div class="thumb" style="background:linear-gradient(135deg,'+c[0]+','+c[1]+')"><img src="'+FRI+encodeURI(r.img)+'" alt="" loading="lazy" onerror="this.remove()">'+(r.ia?'<span class="iamini" title="'+IA_TXT+'">IA</span>':'')+'</div>'+
       '<div class="t"><b>'+esc(r.n)+'</b><div class="cinfo lite">'+h+'</div></div></a>'}
+  /* essai : uniquement les recettes qui contiennent un produit de saison */
+  function nrm(x){return String(x||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[_-]+/g," ")}
+  var SYN={courge:["courge","butternut","potiron","potimarron"],potiron:["potiron","potimarron","courge"],butternut:["butternut","courge"],champignons:["champignon"],"petits pois":["petits pois","petit pois"],"haricot vert":["haricots verts","haricot vert"],chou:["chou ","choux","chou$"],pomme:["pommes?(?! de terre)"],"chou fleur":["chou fleur"]};
+  function motsSaison(){return (window.COOK_SAISON||[]).map(function(n){var k=nrm(n);return SYN[k]||[k.replace(/s$/,"")]})}
+  function deSaison(r){var M=motsSaison();if(!M.length)return true;var txt;
+    if(r.rap)txt=nrm(r.rap.n+" "+(r.rap.ing||[]).map(function(i){return i[0]+" "+(i[3]||"")}).join(" "));
+    else txt=nrm(r.n+" "+(r.t||"")+" "+(r.f&&r.f.ing?r.f.ing.map(function(i){return i.t}).join(" "):""));
+    txt=" "+txt+" ";
+    return M.some(function(ws){return ws.some(function(w){return w.slice(-1)==="$"?new RegExp("\\b"+w.slice(0,-1)+"$").test(txt.trim()):new RegExp("\\b"+w).test(txt)})})}
   function render(list){
     list=(list||[]).concat(rapides());
+    var sais=list.filter(deSaison);if(sais.length>=2)list=sais;
+    var mo=document.getElementById("mois2");if(mo&&window.COOK_MOIS)mo.textContent=window.COOK_MOIS;
     if(!list.length)return;
     box.innerHTML=shuffle(list.slice()).map(function(r){if(r.rap)return carteRapide(r.rap);
       return '<a class="card slide" style="--top:hsl('+hue(r.c)+' 65% 55%)" href="'+SITE+'#'+esc(r.s)+'">'+(/vegetarien|vegan/.test(slug((r.c||"")+" "+(r.t||"")+" "+(r.n||"")))?'<div class="vegrow"><span class="vegtag">Végétarien</span></div>':'')+'<div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="t"><b>'+esc(r.n)+'</b>'+(r.m?pills(r.m,r.f):'<small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small>')+'</div></a>';
@@ -743,7 +766,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
     var t=res[0],fi=(res[1]&&res[1].fiches)||{},out=[],cur="";
     rows(t).slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var img=(r[6]||"").trim();
       var sl=slug(n),f=fi[sl];
-      if(CATS_LIVRE.indexOf(cur)>=0&&img)out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
+      if(img)out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
     if(!out.length)return;
     try{localStorage.setItem(KEY,JSON.stringify({list:out,t:Date.now()}))}catch(e){}
     derniere=out;render(out);
