@@ -458,6 +458,32 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 .carou .cinfo.lite span{font-size:.72rem!important;padding:4px 7px!important}
 .carou .vegtag{font-size:.58rem!important;padding:3px 7px!important}
 .carou .thumb{aspect-ratio:4/3!important}
+
+/* essai : pages qui glissent (accueil puis profils), le carrousel reste en place */
+#pbar{display:none!important}
+.pager{order:2;display:flex;align-items:flex-start;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;margin:0 -16px;padding:0 16px}
+.pager::-webkit-scrollbar{display:none}
+.pg{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;display:flex;flex-direction:column;gap:14px;min-width:0}
+.pg .batch,.pg .hero,.pg #s-tools{margin:0}
+.pband{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fdf3c9;border:2px solid #e9c44a;border-radius:99px;padding:6px 8px 6px 16px;min-height:44px;cursor:pointer}
+.pband .pb-t{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.pband .pb-t small{font-size:.72rem;font-weight:700;color:#7a5a00;text-transform:uppercase;letter-spacing:.04em}
+.pband .pb-t b{font-size:1rem;color:#1d1d1b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pband .pb-go{display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;font-weight:800;font-size:.85rem;border-radius:99px;padding:7px 12px;white-space:nowrap}
+.pband .pb-back{font-weight:800;color:#7a5a00;font-size:.85rem;white-space:nowrap}
+@media (prefers-reduced-motion:no-preference){.pband .arr{animation:nudge 1.2s ease-in-out infinite}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+.pdots{order:2;display:flex;justify-content:center;gap:7px;margin-top:-8px}
+.pdots i{width:8px;height:8px;border-radius:99px;background:#b9d6db;transition:width .2s,background .2s}
+.pdots i.on{width:22px;background:var(--acc)}
+/* vitrine : au premier lancement, on voit les outils sans pouvoir les ouvrir */
+.pg.vitrine .hero,.pg.vitrine #s-tools,.pg.vitrine .batch,.pg.apercu .hero,.pg.apercu .tools,.pg.apercu .batch{pointer-events:none}
+.pg.vitrine .tools,.pg.vitrine .batch,.pg.vitrine .haveq{filter:saturate(.85)}
+.pg .choisir{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0 2px}
+.pg .choisir .btn{background:var(--acc);color:#fff;border:0;border-radius:99px;font:inherit;font-weight:800;font-size:1.05rem;padding:12px 26px;cursor:pointer;box-shadow:var(--sh-card)}
+.pg .choisir .btn[disabled]{background:#5d8f96;cursor:default}
+.pg .choisir a{color:var(--acc-deep);font-weight:700;font-size:.92rem}
+.pg .pdesc{margin:-4px 4px 0;font-size:.95rem;font-weight:700;color:var(--acc-deep)}
 </style>
 </head>
 <body>
@@ -479,6 +505,9 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
     </div>
     <div id="newsBox" hidden></div>
 
+    <div class="pager" id="pager" aria-label="Accueil et profils (glisse vers la gauche)">
+     <div class="pg" id="pg0" data-pid="tout">
+      <div class="pband" id="pband0"><span class="pb-t"><small>Ton espace</small><b id="pb0nom">Tous les outils</b></span><span class="pb-go">Personnalise ton espace <span class="arr" aria-hidden="true">➜</span></span></div>
     <section class="hero" aria-labelledby="h-hero">
       <div>
         <p class="hello" id="hello">Bonsoir</p>
@@ -542,6 +571,10 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
         <div class="week" aria-hidden="true"><span>Lun</span><span>Mar</span><span>Mer</span><span>Jeu</span><span>Ven</span></div>
       </div>
     </section>
+     </div>
+     <div class="pg" id="pg1" data-pid="famille"></div>
+    </div>
+    <div class="pdots" id="pdots" aria-hidden="true"><i class="on"></i><i></i></div>
 
     <section id="s-season" aria-labelledby="h-season">
       <div class="sec-h"><h2 class="label" id="h-season" style="--cat:var(--c-veg-2)">De saison en <span id="month">novembre</span></h2></div>
@@ -850,7 +883,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
   (function(){var bt=$("have-open"),more=$("have-more"),tile=$("t-have");if(!bt)return;
     bt.onclick=function(){var o=more.hidden;more.hidden=!o;bt.setAttribute("aria-expanded",String(o));tile.classList.toggle("open",o)}})();
   appliquer();annoncer();
-  if(premiere)setTimeout(function(){ouvrir(true)},600);
+
 })();
 </script>
 <script>
@@ -859,6 +892,44 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 function maj(){var v=[].filter.call(g.querySelectorAll(".tile"),function(t){return getComputedStyle(t).display!=="none"}),last=v.length%2?v[v.length-1]:null;
   [].forEach.call(g.querySelectorAll(".tile"),function(t){var w=t===last;if(t.classList.contains("wide")!==w)t.classList.toggle("wide",w)})}
 maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attributeFilter:["hidden","style"],childList:true});addEventListener("pageshow",maj)})();
+</script>
+<script>
+/* essai : glisse accueil → profil Famille */
+(function(){var A=window.CookAccueil,pager=document.getElementById("pager"),pg0=document.getElementById("pg0"),pg1=document.getElementById("pg1");if(!A||!pager)return;
+  var CH="cookapli.essai.choix",choix=null;try{choix=localStorage.getItem(CH)}catch(e){}
+  var st=A.lire&&A.lire();var cur=st&&st.profil;
+  if(!choix)pg0.classList.add("vitrine");
+  var NOMS={tout:"Tous les outils"};A.PROFILS.forEach(function(p){NOMS[p.id]=p.n});
+  if(choix){document.getElementById("pb0nom").textContent=NOMS[cur]||"Tous les outils";pg0.querySelector(".pb-go").innerHTML='Changer de profil <span class="arr" aria-hidden="true">➜</span>'}
+  /* tuiles d'un profil : on reprend les vraies tuiles (même rendu), sans le Livre ni Célébrations dans cet essai */
+  var CACHE={livre:1,celebrations:1};
+  function page(el,pid){var p=A.profil(pid),blocs=p.blocs;el.classList.add("apercu");
+    var band=document.createElement("div");band.className="pband";band.innerHTML='<span class="pb-t"><small>Profil</small><b></b></span><span class="pb-back">‹ Accueil</span>';band.querySelector("b").textContent=p.n;el.appendChild(band);
+    var d=document.createElement("p");d.className="pdesc";d.textContent=p.sub;el.appendChild(d);
+    function cl(sel){var o=pg0.querySelector(sel);if(!o)return null;var c=o.cloneNode(true);c.removeAttribute("id");[].forEach.call(c.querySelectorAll("[id]"),function(x){x.removeAttribute("id")});c.classList.remove("off");c.style.order="";c.removeAttribute("hidden");return c}
+    if(blocs.indexOf("reserves")>=0){var hr=cl(".hero");if(hr){var f=hr.querySelector("form");if(f)f.onsubmit=function(e){e.preventDefault()};el.appendChild(hr)}}
+    var sec=document.createElement("section"),grid=document.createElement("div");grid.className="tools";sec.appendChild(grid);
+    var n=0;blocs.forEach(function(id){var b=A.bloc(id);if(!b||b.grand||id==="reserves"||CACHE[id])return;var t=cl(b.sel);if(t){t.classList.remove("wide");grid.appendChild(t);n++}});
+    if(n%2&&grid.lastChild)grid.lastChild.classList.add("wide");
+    if(n)el.appendChild(sec);
+    if(blocs.indexOf("batch")>=0){var bt=cl("section.batch");if(bt)el.appendChild(bt)}
+    var ch=document.createElement("div");ch.className="choisir";
+    var btn=document.createElement("button");btn.type="button";btn.className="btn";
+    if(choix&&cur===pid){btn.textContent="✓ C'est ton profil";btn.disabled=true}else{btn.textContent="Choisir ce profil";btn.onclick=function(){A.choisirProfil(pid);try{localStorage.setItem(CH,pid)}catch(e){}location.reload()}}
+    var cfg=document.createElement("a");cfg.href="#";cfg.textContent="Configurer mes outils ›";cfg.onclick=function(e){e.preventDefault();var b=document.getElementById("pBtn");if(b)b.click()};
+    ch.appendChild(btn);ch.appendChild(cfg);el.appendChild(ch)}
+  /* on attend que les profils aient rangé la page d'accueil */
+  setTimeout(function(){page(pg1,"famille")},50);
+  var dots=[].slice.call(document.querySelectorAll("#pdots i"));
+  function idx(){return Math.round(pager.scrollLeft/pager.clientWidth)}
+  pager.addEventListener("scroll",function(){var i=idx();dots.forEach(function(d,k){d.classList.toggle("on",k===i)})},{passive:true});
+  function aller(i){pager.scrollTo({left:i*(pager.clientWidth+16),behavior:"smooth"})}
+  pg0.querySelector(".pband").onclick=function(){aller(1)};
+  pager.addEventListener("click",function(e){if(e.target.closest(".pb-back"))aller(0);
+    /* vitrine : toucher un outil fait glisser vers les profils */
+    if(pg0.classList.contains("vitrine")&&e.target.closest("#pg0 .hero,#pg0 #s-tools,#pg0 .batch"))aller(1)});
+  [].forEach.call(pg0.querySelectorAll(".hero,#s-tools,.batch"),function(x){x.addEventListener("click",function(e){if(pg0.classList.contains("vitrine")){e.preventDefault();e.stopPropagation();aller(1)}},true)});
+})();
 </script>
 </body>
 </html>
