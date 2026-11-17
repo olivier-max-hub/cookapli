@@ -416,6 +416,23 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
 /* essai : Livre de recettes (lien sous le carrousel) et Célébrations retirés de la grille */
 #t-recettes,#t-occasion{display:none!important}
 .tools .tile.wide{grid-column:1/-1}
+
+/* essai : champ dans le bloc d'accueil, titre plus petit, couleurs Max 30 min et Équilibre */
+.hero{position:relative}
+.hero .haveq{grid-column:1/-1;margin:4px 0 0!important;box-shadow:none}
+.hero .haveq small{position:static;grid-column:1/-1;margin:0 0 4px 4px}
+.hero .haveq small:empty{display:none}
+.hero h1,.hero h1#h-hero{font-size:1.55rem!important;margin:0 0 4px!important}
+.hero .hello{font-size:.9rem!important}
+.hero .lead{font-size:.95rem!important}
+.hero .hello,.hero h1,.hero .lead{padding-right:96px!important}
+.hero .hero-ill{width:96px!important;max-width:96px!important;top:8px!important;right:8px!important}
+.tools .tile.g-chrono{background:linear-gradient(135deg,#ffe2bd,#ffc98c)}
+body.fond-profil .tools .tile.g-chrono{background:linear-gradient(135deg,color-mix(in srgb,#ffe2bd 70%,transparent),color-mix(in srgb,#ffc98c 70%,transparent))}
+.tools .tile.g-chrono b{color:#7a3e00}
+.tools .tile.g-equilibre{background:linear-gradient(135deg,#a9dcb9,#86c99d)}
+body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,color-mix(in srgb,#a9dcb9 70%,transparent),color-mix(in srgb,#86c99d 70%,transparent))}
+.tools .tile.g-equilibre b{color:#14532d}
 </style>
 </head>
 <body>
@@ -444,16 +461,17 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
         <p class="lead">Une vraie recette avec ce que tu as.</p>
       </div>
       <img class="hero-ill" src="mascotte/accueil-miroir.webp" alt="" width="688" height="600">
+      <form class="haveq" id="t-have" role="search" action="../friscan/#frigo">
+          <label for="have-input" class="haveq-ill" aria-hidden="true">🥕</label>
+          <input id="have-input" type="search" enterkeyhint="go" autocomplete="off" placeholder="J'ai… courgette, œufs, riz" aria-label="Ajoute ce que tu as dans tes réserves (sépare par des virgules)">
+          <button type="submit" aria-label="Ouvrir mes réserves">➜</button>
+          <small id="have-sub"></small><small id="have-start" hidden></small>
+        </form>
     </section>
 
     <section id="s-tools" aria-label="Tes outils">
       <div class="tools">
-        <form class="haveq" id="t-have" role="search" action="../friscan/#frigo">
-          <label for="have-input" class="haveq-ill" aria-hidden="true">🥕</label>
-          <input id="have-input" type="search" enterkeyhint="go" autocomplete="off" placeholder="J'ai… courgette, œufs, riz" aria-label="Ajoute ce que tu as dans tes réserves (sépare par des virgules)">
-          <button type="submit" aria-label="Ouvrir mes réserves">➜</button>
-          <small id="have-sub">Ton frigo et ton placard, toujours à jour</small><small id="have-start" hidden></small>
-        </form>
+        
         <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner&nbsp;?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
@@ -600,7 +618,7 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
   // « J'ai… » : champ + raccourcis
   /* tuile Mes réserves : « Commence ici » si les réserves sont vides, sinon le nombre de produits */
   function majReserves(){var n=0;try{var f=JSON.parse(localStorage.getItem("friscan.fridge")||"[]");if(Array.isArray(f))n=f.length}catch(e){}
-    $("have-sub").textContent=n>0?n+(n>1?" produits":" produit")+" dans tes réserves":"Ton frigo et ton placard, toujours à jour";$("have-start").hidden=n>0}
+    $("have-sub").textContent=n>0?n+(n>1?" produits":" produit")+" dans tes réserves":"";$("have-start").hidden=n>0}
   majReserves();addEventListener("pageshow",majReserves);
   var input=$("have-input");if(input){ /* champ « J'ai… » retiré de l'accueil le 16/11/2026 */
   function items(){return input.value.split(",").map(function(s){return s.trim()}).filter(Boolean)}
