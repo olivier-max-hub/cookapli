@@ -412,6 +412,10 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
 .tile .ill{font-size:1.5rem!important;flex:none}
 .tile b,#t-cook b{font-size:1rem!important}
 
+
+/* essai : Livre de recettes (lien sous le carrousel) et Célébrations retirés de la grille */
+#t-recettes,#t-occasion{display:none!important}
+.tools .tile.wide{grid-column:1/-1}
 </style>
 </head>
 <body>
@@ -794,6 +798,13 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
   appliquer();annoncer();
   if(premiere)setTimeout(function(){ouvrir(true)},600);
 })();
+</script>
+<script>
+/* essai : si le nombre de tuiles visibles est impair, la dernière prend toute la largeur */
+(function(){var g=document.querySelector(".tools");if(!g)return;
+function maj(){var v=[].filter.call(g.querySelectorAll(".tile"),function(t){return getComputedStyle(t).display!=="none"}),last=v.length%2?v[v.length-1]:null;
+  [].forEach.call(g.querySelectorAll(".tile"),function(t){var w=t===last;if(t.classList.contains("wide")!==w)t.classList.toggle("wide",w)})}
+maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attributeFilter:["hidden","style"],childList:true});addEventListener("pageshow",maj)})();
 </script>
 </body>
 </html>
