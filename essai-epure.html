@@ -484,6 +484,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 .pg .choisir .btn[disabled]{background:#5d8f96;cursor:default}
 .pg .choisir a{color:var(--acc-deep);font-weight:700;font-size:.92rem}
 .pg .pdesc{margin:-4px 4px 0;font-size:.95rem;font-weight:700;color:var(--acc-deep)}
+#allTools{display:none!important}
 </style>
 </head>
 <body>
@@ -916,7 +917,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     var ch=document.createElement("div");ch.className="choisir";
     var btn=document.createElement("button");btn.type="button";btn.className="btn";
     if(choix&&cur===pid){btn.textContent="✓ C'est ton profil";btn.disabled=true}else{btn.textContent="Choisir ce profil";btn.onclick=function(){A.choisirProfil(pid);try{localStorage.setItem(CH,pid)}catch(e){}location.reload()}}
-    var cfg=document.createElement("a");cfg.href="#";cfg.textContent="Configurer mes outils ›";cfg.onclick=function(e){e.preventDefault();var b=document.getElementById("pBtn");if(b)b.click()};
+    var cfg=document.createElement("a");cfg.href="perso.html";cfg.textContent="Configurer mes outils ›";
     ch.appendChild(btn);ch.appendChild(cfg);el.appendChild(ch)}
   /* on attend que les profils aient rangé la page d'accueil */
   setTimeout(function(){page(pg1,"famille")},50);
