@@ -12,7 +12,7 @@
 <meta name="application-name" content="Cookapli">
 <title>Cookapli</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Economica:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:wght@400;600;700;800&display=swap">
 <style>
 /* Layout: teal frame en haut, assiette appétissante + recherche « J'ai… », puis les 6 outils en tuiles pastel, puis idées et batch cooking. Thème clair unique, comme le design system Mes recettes. */
 :root{
@@ -371,6 +371,33 @@ body{background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3
 body.fond-profil .tile.g-equilibre{background:linear-gradient(135deg,color-mix(in srgb,#4fae74 70%,transparent),color-mix(in srgb,#3a9560 70%,transparent))}
 .tile.g-occasion{background:linear-gradient(135deg,#fff7fa,#fad2e1)}
 body.fond-profil .tile.g-occasion{background:linear-gradient(135deg,color-mix(in srgb,#fff7fa 70%,transparent),color-mix(in srgb,#fad2e1 70%,transparent))}
+
+/* essai : police Nunito, plus compacte et lisible en petit */
+:root{--font:Nunito,"Segoe UI",Arial,sans-serif!important}
+html{font-size:14px}
+body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
+.brand b{font-size:1.6rem}
+.hero{padding:14px 16px!important}
+.hero h1{font-size:1.9rem!important;font-weight:800}
+.hero .hello,.hero h1{padding-right:110px!important}
+.hero-ill{width:118px!important;max-width:118px!important}
+.lead{font-size:1rem!important;font-weight:700}
+.tools{gap:8px!important}
+.tile{padding:10px 12px 11px!important;border-radius:16px!important;gap:2px!important}
+.tile b,#t-cook b{font-size:1.05rem!important;font-weight:800;line-height:1.15}
+.tile .ill{font-size:1.6rem!important}
+#t-have{padding:10px 14px!important}
+#t-have b{font-size:1.25rem!important}
+#t-have #have-sub{font-size:.9rem!important}
+#t-have .ill{font-size:2rem!important}
+.tile .count{font-size:.8rem;top:8px!important;right:8px!important}
+.g-occasion .stars{width:48px!important;height:42px!important}
+.ppill{min-height:40px!important;font-size:1rem}
+.batch h2{font-size:1.35rem!important;font-weight:800}
+.batch p{font-size:.95rem!important}
+.label{font-size:1.15rem!important}
+.carou .card b{font-size:1.05rem!important}
+.cinfo.lite span{font-size:.85rem!important;padding:5px 9px!important}
 </style>
 </head>
 <body>
