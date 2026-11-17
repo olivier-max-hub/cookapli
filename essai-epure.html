@@ -398,6 +398,20 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
 .label{font-size:1.15rem!important}
 .carou .card b{font-size:1.05rem!important}
 .cinfo.lite span{font-size:.85rem!important;padding:5px 9px!important}
+
+/* essai : champ de saisie à la place de la tuile Mes réserves, icône à côté du texte */
+.haveq{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:6px;background:#fff;border:2px solid var(--acc);border-radius:99px;padding:4px 4px 4px 14px;box-shadow:var(--sh-card);position:relative;margin-bottom:24px}
+.haveq:focus-within{outline:3px solid var(--acc);outline-offset:2px}
+.haveq-ill{font-size:1.3rem;line-height:1}
+.haveq input{min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;font-weight:600;color:var(--ink);padding:9px 2px}
+.haveq input:focus{outline:none}
+.haveq input::placeholder{color:#5d6f73}
+.haveq button{border:0;border-radius:99px;background:var(--acc);color:#fff;font:inherit;font-weight:800;font-size:1.1rem;width:42px;height:42px;cursor:pointer}
+.haveq small{position:absolute;left:18px;top:100%;margin-top:3px;font-size:.85rem;font-weight:700;color:var(--acc-deep)}
+.tile{flex-direction:row-reverse!important;align-items:center!important;justify-content:flex-end!important;gap:10px!important;padding:12px!important}
+.tile .ill{font-size:1.5rem!important;flex:none}
+.tile b,#t-cook b{font-size:1rem!important}
+
 </style>
 </head>
 <body>
@@ -430,9 +444,12 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
 
     <section id="s-tools" aria-label="Tes outils">
       <div class="tools">
-        <a class="tile g-have" id="t-have" href="../friscan/#frigo">
-          <span><b>Mes réserves</b><small id="have-sub">Ton frigo et ton placard, toujours à jour</small><small class="have-start" id="have-start" hidden>👉 Commence ici : ajoute tes premiers produits</small><small class="have-note">C'est le point de départ de Cookapli : plus tes réserves sont complètes, plus les recettes proposées te correspondent.</small></span><span class="ill" aria-hidden="true">🥕</span>
-        </a>
+        <form class="haveq" id="t-have" role="search" action="../friscan/#frigo">
+          <label for="have-input" class="haveq-ill" aria-hidden="true">🥕</label>
+          <input id="have-input" type="search" enterkeyhint="go" autocomplete="off" placeholder="J'ai… courgette, œufs, riz" aria-label="Ajoute ce que tu as dans tes réserves (sépare par des virgules)">
+          <button type="submit" aria-label="Ouvrir mes réserves">➜</button>
+          <small id="have-sub">Ton frigo et ton placard, toujours à jour</small><small id="have-start" hidden></small>
+        </form>
         <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
           <span><b>Que cuisiner&nbsp;?</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
@@ -595,10 +612,10 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
     input.value=list.join(", ");syncChips();save();
   });
   input.addEventListener("input",function(){syncChips();save()});
-  $("have-form").addEventListener("submit",function(e){
+  $("t-have").addEventListener("submit",function(e){
     e.preventDefault();
     var list=items();
-    if(!list.length){toast("Ajoute au moins un ingrédient");input.focus();return}
+    if(!list.length){location.href="../friscan/#frigo";return}
     // Les ingrédients tapés partent dans le frigo Friscan (même site), puis on ouvre ses recettes
     var f=[];try{f=JSON.parse(localStorage.getItem("friscan.fridge")||"[]")}catch(err){}
     if(!Array.isArray(f))f=[];
@@ -608,7 +625,7 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
       if(!already)f.unshift({uid:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:id?ING[id].n:name,ing:id,other:!id,added:Date.now()});
     });
     try{localStorage.setItem("friscan.fridge",JSON.stringify(f));localStorage.removeItem("cookapli-have")}catch(err){}
-    location.href="../friscan/#recettes";
+    location.href="../friscan/#frigo";
   });}
 
   // Outils pas encore branchés
