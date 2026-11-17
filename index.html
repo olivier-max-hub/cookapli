@@ -426,7 +426,7 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 63</p>
+  <p class="legal ver">Cookapli · version 64</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -635,7 +635,7 @@ body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)
   addEventListener("resize",function(){if(document.body.classList.contains("fond-profil"))hauteurBandeau()});
   function appliquer(){
     var st=s||{profil:"tout",blocs:A.preset("tout")},p=A.profil(st.profil);
-    var FONDS={famille:"fond/famille.webp",debutant:"fond/debutant.webp"},fd=FONDS[st.profil];
+    var FONDS={famille:"fond/famille.webp",debutant:"fond/debutant.webp",gourmand:"fond/gourmand.webp",antigaspi:"fond/antigaspi.webp",equilibre:"fond/equilibre.webp"},fd=FONDS[st.profil];
     document.body.classList.toggle("fond-profil",!!fd);if(fd)hauteurBandeau();
    if(fd)$("fondProfil").style.backgroundImage="url("+fd+")";
     $("pNom").textContent=st.perso?"Personnalisé":st.profil==="tout"?"Tous les outils":p.n;
