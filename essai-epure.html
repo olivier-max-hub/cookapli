@@ -362,6 +362,15 @@ main .wrap{gap:18px!important}
 .carou .vegtag{font-size:.65rem;padding:4px 10px}
 .carou .thumb{aspect-ratio:16/10;height:auto}
 footer .legal:not(.ver){font-size:.9rem}
+
+/* essai : sans papier peint, tuiles plus claires (même transparence) */
+body{background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg)!important}
+#fondProfil{display:none!important}
+.tools{--c-aperitif-1:#dff4f6;--c-aperitif-2:#c7e9ee;--c-entree-1:#ffece3;--c-entree-2:#ffdccc;--c-plat-1:#ece8fa;--c-plat-2:#dcd4f6;--c-unique-1:#fff8dc;--c-unique-2:#fcecb5;--c-veg-1:#e6f6e5;--c-veg-2:#cfeccc;--c-acc-1:#ffe8f0;--c-acc-2:#fad2e1;--c-salee-1:#e4f0fd;--c-salee-2:#cee2f8;--c-dessert-1:#fff0d9;--c-dessert-2:#fde0b5}
+.tile.g-equilibre{background:linear-gradient(135deg,#4fae74,#3a9560)}
+body.fond-profil .tile.g-equilibre{background:linear-gradient(135deg,color-mix(in srgb,#4fae74 70%,transparent),color-mix(in srgb,#3a9560 70%,transparent))}
+.tile.g-occasion{background:linear-gradient(135deg,#fff7fa,#fad2e1)}
+body.fond-profil .tile.g-occasion{background:linear-gradient(135deg,color-mix(in srgb,#fff7fa 70%,transparent),color-mix(in srgb,#fad2e1 70%,transparent))}
 </style>
 </head>
 <body>
