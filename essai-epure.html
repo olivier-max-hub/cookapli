@@ -485,6 +485,12 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 .pg .choisir a{color:var(--acc-deep);font-weight:700;font-size:.92rem}
 .pg .pdesc{margin:-4px 4px 0;font-size:.95rem;font-weight:700;color:var(--acc-deep)}
 #allTools{display:none!important}
+
+/* vitrine : champ de saisie masqué, tuile Budget bleu clair */
+.pg.vitrine .hero .haveq{display:none!important}
+.tools .tile.g-budget{background:linear-gradient(135deg,#e3f1fd,#c6e1fa)}
+.tools .tile.g-budget .ill{font-weight:800;color:#1c5d99;font-size:1.4rem!important;width:1.6rem;text-align:center}
+.tools .tile.g-budget b{color:#174a7a}
 </style>
 </head>
 <body>
@@ -920,7 +926,14 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     var cfg=document.createElement("a");cfg.href="perso.html";cfg.textContent="Configurer mes outils ›";
     ch.appendChild(btn);ch.appendChild(cfg);el.appendChild(ch)}
   /* on attend que les profils aient rangé la page d'accueil */
-  setTimeout(function(){page(pg1,"famille")},50);
+  setTimeout(function(){page(pg1,"famille");if(pg0.classList.contains("vitrine"))vitrine()},50);
+  /* vitrine : intitulés accrocheurs (couleurs inchangées), une tuile Budget en plus, pas de champ de saisie */
+  function vitrine(){
+    function lib(sel,t){var b=pg0.querySelector(sel+" b");if(b)b.textContent=t}
+    lib("#t-cook","Des recettes testées");lib("#t-equilibre","Calories / personne");
+    var eq=pg0.querySelector("#t-equilibre");
+    if(eq&&!pg0.querySelector(".g-budget")){var bu=document.createElement("span");bu.className="tile g-budget";bu.innerHTML='<span><b>Budget / personne</b></span><span class="ill" aria-hidden="true">€</span>';bu.style.order=eq.style.order;eq.parentNode.insertBefore(bu,eq.nextSibling)}
+  }
   var dots=[].slice.call(document.querySelectorAll("#pdots i"));
   function idx(){return Math.round(pager.scrollLeft/pager.clientWidth)}
   pager.addEventListener("scroll",function(){var i=idx();dots.forEach(function(d,k){d.classList.toggle("on",k===i)})},{passive:true});
