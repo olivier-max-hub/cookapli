@@ -7,11 +7,11 @@
 (function () {
   var BLOCS = [
     { id: 'reserves', href: '../friscan/#frigo', n: 'Mes réserves', sel: '#t-have', depuis: 1 },
-    { id: 'quecuisiner', href: '../friscan/#recettes', n: 'Que cuisiner avec mes réserves ?', sel: '#t-cook', depuis: 1 },
-    { id: 'chrono', href: '../friscan/#chrono', n: '30 minutes chrono', sel: '#t-chrono', depuis: 1 },
-    { id: 'antigaspi', n: 'Idées Anti gaspi', sel: '#t-gaspi', depuis: 1 },
-    { id: 'courses', href: 'courses.html', n: 'Liste de courses', sel: '#t-courses', depuis: 1 },
-    { id: 'equilibre', href: '../recettes/#equilibre', n: 'Équilibre alimentaire', sel: '#t-equilibre', depuis: 1 },
+    { id: 'quecuisiner', href: '../friscan/#recettes', n: 'Des recettes testées', sel: '#t-cook', depuis: 1 },
+    { id: 'chrono', href: '../friscan/#chrono', n: 'Max 30 min', sel: '#t-chrono', depuis: 1 },
+    { id: 'antigaspi', n: 'Zéro gaspi', sel: '#t-gaspi', depuis: 1 },
+    { id: 'courses', href: 'courses.html', n: 'Courses auto', sel: '#t-courses', depuis: 1 },
+    { id: 'equilibre', href: '../recettes/#equilibre', n: 'Calories / personne', sel: '#t-equilibre', depuis: 1 },
     { id: 'livre', href: '../recettes/', n: 'Livre de recettes', sel: '#t-recettes', depuis: 1 },
     { id: 'celebrations', n: 'Célébrations', sel: '#t-occasion', depuis: 1 },
     { id: 'batch', n: 'Batch cooking 3h', sel: 'section.batch', grand: 1, depuis: 1 },
