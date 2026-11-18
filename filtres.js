@@ -8,11 +8,10 @@
     { id: 'vege', n: 'Végétarien', court: 'végétarien', g: 'regime', d: 'Sans viande ni poisson' },
     { id: 'vegan', n: 'Végan', court: 'végan', g: 'regime', d: 'Aucun produit animal (ni lait, ni œufs, ni miel)' },
     { id: 'gluten', n: 'Sans gluten', court: 'sans gluten', g: 'allergie', d: 'Blé, seigle, orge, pâtes, pain…' },
-    { id: 'lait', n: 'Sans lait', court: 'sans lait', g: 'allergie', d: 'Lait, beurre, crème, fromage, yaourt…' },
-    { id: 'oeuf', n: 'Sans œufs', court: 'sans œufs', g: 'allergie', d: 'Œufs, mayonnaise, meringue…' },
     { id: 'coque', n: 'Sans fruits à coque', court: 'sans fruits à coque', g: 'allergie', d: 'Noix, amandes, noisettes, pistaches…' },
     { id: 'arachide', n: 'Sans arachides', court: 'sans arachides', g: 'allergie', d: 'Cacahuètes, huile d\'arachide…' },
-    { id: 'mer', n: 'Sans poisson ni fruits de mer', court: 'sans poisson ni fruits de mer', g: 'allergie', d: 'Poissons, crustacés, coquillages' }
+    { id: 'poisson', n: 'Sans poisson', court: 'sans poisson', g: 'allergie', d: 'Saumon, thon, cabillaud, anchois…' },
+    { id: 'fruitsmer', n: 'Sans fruits de mer', court: 'sans fruits de mer', g: 'allergie', d: 'Crevettes, moules, crabe, huîtres, calamars…' }
   ];
   function norm(s) {
     return ' ' + String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
@@ -20,7 +19,9 @@
   }
   function re(mots) { return new RegExp(' (?:' + mots.join('|') + ')'); }
   /* produits de la mer */
-  var MER = ['poisson', 'saumon', 'thon', 'cabillaud', 'colin', 'merlu', 'lieu', 'dorade', 'daurade', 'bar ', 'loup de mer', 'sole', 'truite', 'sardine', 'maquereau', 'hareng', 'anchois', 'morue', 'haddock', 'eglefin', 'lotte', 'raie', 'turbot', 'fletan', 'espadon', 'tilapia', 'perche', 'sandre', 'brochet', 'carpe', 'rouget', 'saint pierre', 'merlan', 'surimi', 'oeufs? de lump', 'tarama', 'crevette', 'gambas', 'langoustine', 'homard', 'langouste', 'crabe', 'tourteau', 'ecrevisse', 'moule', 'huitre', 'palourde', 'saint jacques', 'st jacques', 'noix de saint', 'petoncle', 'bulot', 'bigorneau', 'calamar', 'calmar', 'encornet', 'seiche', 'poulpe', 'oursin', 'fruits? de mer', 'nuoc mam', 'sauce poisson', 'sauce de poisson', 'fumet de poisson', 'bonite', 'dashi'];
+  var POISSON = ['poisson', 'saumon', 'thon', 'cabillaud', 'colin', 'merlu', 'lieu', 'dorade', 'daurade', 'bar ', 'loup de mer', 'sole', 'truite', 'sardine', 'maquereau', 'hareng', 'anchois', 'morue', 'haddock', 'eglefin', 'lotte', 'raie', 'turbot', 'fletan', 'espadon', 'tilapia', 'perche', 'sandre', 'brochet', 'carpe', 'rouget', 'saint pierre', 'merlan', 'surimi', 'oeufs? de lump', 'tarama', 'nuoc mam', 'sauce poisson', 'sauce de poisson', 'fumet de poisson', 'bonite', 'dashi'];
+  var FDM = ['crevette', 'gambas', 'langoustine', 'homard', 'langouste', 'crabe', 'tourteau', 'ecrevisse', 'moule', 'huitre', 'palourde', 'saint jacques', 'st jacques', 'noix de saint', 'petoncle', 'bulot', 'bigorneau', 'calamar', 'calmar', 'encornet', 'seiche', 'poulpe', 'oursin', 'fruits? de mer'];
+  var MER = POISSON.concat(FDM);
   var VIANDE = ['viande', 'boeuf', 'veau', 'porc', 'cochon', 'agneau', 'mouton', 'chevreau', 'cheval', 'gibier', 'chevreuil', 'sanglier', 'lapin', 'lievre', 'poulet', 'poule ', 'poularde', 'chapon', 'coquelet', 'pintade', 'dinde', 'dindonneau', 'canard', 'oie ', 'caille', 'pigeon', 'volaille', 'magret', 'foie', 'foies', 'gesier', 'rognon', 'jambon', 'lardon', 'lard ', 'bacon', 'pancetta', 'coppa', 'speck', 'chorizo', 'saucisse', 'saucisson', 'merguez', 'chipolata', 'andouille', 'boudin', 'rillette', 'pate de foie', 'pate de campagne', 'pate en croute', 'steak', 'escalope', 'cote de', 'cotes de', 'cotelette', 'gigot', 'epaule', 'filet mignon', 'roti', 'entrecote', 'bavette', 'onglet', 'paleron', 'jarret', 'joue de', 'queue de boeuf', 'osso', 'blanc de poulet', 'cuisse', 'aiguillette', 'chair a saucisse', 'gelatine', 'saindoux', 'graisse de canard', 'graisse d oie', 'bouillon de boeuf', 'bouillon de volaille', 'bouillon de poule', 'fond de veau', 'fond de volaille', 'cube de volaille', 'kebab', 'nugget', 'knack', 'strasbourg', 'mortadelle', 'bresaola', 'serrano', 'prosciutto', 'parme '];
   var LAIT = ['lait(?! de coco| d amande| de soja| d avoine| de riz| vegetal| de noisette| de cajou)', 'laitage', 'lactose', 'beurre(?! de cacahuete| d arachide| de cacahuetes)', 'creme(?! de coco| vegetale| de soja| d avoine| de marron| de cassis| de balsamique)', 'creme fraiche', 'chantilly', 'fromage(?! vegetal)', 'yaourt(?! vegetal| de soja)', 'yogourt', 'skyr', 'kefir', 'petit suisse', 'faisselle', 'ricotta', 'mascarpone', 'mozzarella', 'burrata', 'parmesan', 'parmigiano', 'grana', 'pecorino', 'emmental', 'gruyere', 'comte', 'beaufort', 'cheddar', 'gouda', 'edam', 'mimolette', 'raclette', 'reblochon', 'tomme', 'cantal', 'saint nectaire', 'camembert', 'brie', 'coulommiers', 'munster', 'maroilles', 'roquefort', 'bleu d', 'gorgonzola', 'feta', 'chevre', 'saint moret', 'boursin', 'kiri', 'vache qui rit', 'cancoillotte', 'halloumi', 'cottage', 'quark', 'fromage blanc', 'bechamel', 'ghee', 'lait concentre', 'dulce de leche', 'caramel au beurre', 'ganache', 'brioche', 'croissant', 'gratine', 'pate feuilletee', 'pate brisee', 'pate sablee', 'chocolat au lait', 'chocolat blanc'];
   var OEUF = ['oeuf', 'jaunes? d oeuf', 'blancs? d oeuf', 'blancs en neige', 'mayonnaise', 'mayo ', 'aioli', 'meringue', 'brioche', 'pate fraiche', 'tagliatelle', 'nouilles aux oeufs', 'biscuit', 'genoise', 'creme anglaise', 'flan', 'quiche'];
@@ -29,7 +30,8 @@
   var ARACHIDE = ['arachide', 'cacahuete', 'cacahouete', 'beurre de cacahuete', 'peanut', 'sate', 'satay', 'huile d arachide'];
   var ANIMAL = ['miel', 'gelatine', 'colle de poisson', 'saindoux', 'suif', 'presure', 'cochenille'];
   var R = {
-    mer: re(MER),
+    poisson: re(POISSON),
+    fruitsmer: re(FDM),
     vege: re(VIANDE.concat(MER)),
     vegan: re(VIANDE.concat(MER, LAIT, OEUF, ANIMAL)),
     gluten: re(GLUTEN),
@@ -38,7 +40,7 @@
     coque: re(COQUE),
     arachide: re(ARACHIDE)
   };
-  function lire() { try { var f = JSON.parse(localStorage.getItem(CLE) || 'null'); return f && f.length ? f.filter(function (id) { return R[id]; }) : []; } catch (e) { return []; } }
+  function lire() { try { var f = JSON.parse(localStorage.getItem(CLE) || 'null') || [], ids = LISTE.map(function (x) { return x.id; }), out = []; f.forEach(function (id) { (id === 'mer' ? ['poisson', 'fruitsmer'] : [id]).forEach(function (k) { if (ids.indexOf(k) >= 0 && out.indexOf(k) < 0) out.push(k); }); }); return out; } catch (e) { return []; } }
   function ecrire(f) { try { localStorage.setItem(CLE, JSON.stringify(f || [])); } catch (e) {} }
   /* raisons pour lesquelles un texte d'ingrédients ne convient pas (liste vide = ça convient) */
   function raisons(texte, f) {

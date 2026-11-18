@@ -477,7 +477,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 .pdots i{width:8px;height:8px;border-radius:99px;background:#b9d6db;transition:width .2s,background .2s}
 .pdots i.on{width:22px;background:var(--acc)}
 /* vitrine : au premier lancement, on voit les outils sans pouvoir les ouvrir */
-.pg.vitrine .hero,.pg.vitrine #s-tools,.pg.vitrine .batch,.pg.apercu .hero,.pg.apercu .tools,.pg.apercu .batch{pointer-events:none}
+.pg.vitrine .hero,.pg.vitrine #s-tools,.pg.vitrine .batch{pointer-events:none}
 .pg.vitrine .tools,.pg.vitrine .batch,.pg.vitrine .haveq{filter:saturate(.85)}
 .pg .choisir{display:flex;flex-direction:column;align-items:center;gap:8px;padding:4px 0 2px}
 .pg .choisir .btn{background:var(--acc);color:#fff;border:0;border-radius:99px;font:inherit;font-weight:800;font-size:1.05rem;padding:12px 26px;cursor:pointer;box-shadow:var(--sh-card)}
@@ -551,6 +551,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 .fnote{flex-basis:100%;text-align:center;margin:4px 0 0;font-size:.85rem;font-weight:800;color:#14532d}
 .pg.vitrine .fnote{display:none}
 .fvide{grid-column:1/-1;text-align:center;font-weight:700;color:#3d5559;margin:8px 0}
+.pg:not(.vitrine) .hero .lead{display:none!important}
 </style>
 </head>
 <body>
@@ -673,7 +674,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 73</p>
+  <p class="legal ver">Cookapli · version 74</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -687,7 +688,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <script src="../friscan/data.js?v=18"></script>
 <script src="budget.js?v=3"></script>
-<script src="filtres.js?v=1"></script>
+<script src="filtres.js?v=2"></script>
 <script src="../recettes/calories.js?v=1"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -892,7 +893,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
-<script src="accueil.js?v=11"></script>
+<script src="accueil.js?v=12"></script>
 <script>
 /* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
 (function(){
@@ -1025,7 +1026,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   function apercu(pid,i){var p=info(pid),pg=el("div","pg apercu");pg.dataset.pid=pid;
     pg.appendChild(bandeau(pid,i));var d=el("p","pdesc");d.textContent=p.sub;pg.appendChild(d);
     var blocs=p.blocs;
-    if(blocs.indexOf("reserves")>=0){var hr=cl(".hero");if(hr){var f=hr.querySelector("form");if(f)f.onsubmit=function(e){e.preventDefault()};pg.appendChild(hr)}}
+    if(blocs.indexOf("reserves")>=0){var hr=cl(".hero");if(hr){var f=hr.querySelector("form");if(f)f.onsubmit=function(e){e.preventDefault();var src=$("t-have"),inp=$("have-input");if(!src||!inp)return;inp.value=f.querySelector("input").value;src.dispatchEvent(new Event("submit",{cancelable:true}))};pg.appendChild(hr)}}
     var sec=el("section"),grid=el("div","tools");sec.appendChild(grid);var n=0;
     blocs.forEach(function(id){var bl=A.bloc(id);if(!bl||bl.grand||id==="reserves"||CACHE[id])return;var t=cl(bl.sel);if(t){t.classList.remove("wide");grid.appendChild(t);n++}});
     if(n%2&&grid.lastChild)grid.lastChild.classList.add("wide");if(n)pg.appendChild(sec);
