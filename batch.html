@@ -72,8 +72,8 @@ p{margin:0}
 .semaine{display:grid;gap:4px;margin:0;padding:0;list-style:none}
 .semaine li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(15,107,120,.12)}
 .semaine li:last-child{border-bottom:0}
-.semaine .j{flex:none;width:7.5em;font-weight:800;color:var(--acc-deep)}
-.semaine .c{flex:none;font-size:.85rem;font-weight:800}
+.semaine .j{flex:none;width:5.6em;font-weight:800;color:var(--acc-deep)}.semaine.dd .j{width:7.4em}.semaine .p{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+.semaine .c{font-size:.85rem;font-weight:800;margin-top:2px}
 .semaine .c.frigo{color:var(--vert)}.semaine .c.cong{color:var(--froid)}
 .ray h3{margin:4px 0 4px;font-size:1.02rem;color:var(--acc-deep)}
 .ray ul{list-style:none;margin:0;padding:0}
@@ -311,7 +311,7 @@ function dessiner2(){if(!PLAN)return;var P=PLAN.plats,n=creneaux().length,couv=P
   $("plats").innerHTML=P.map(function(p,i){return carte(p,i)}).join("")+(PLAN.soupe?carte(PLAN.soupe,0,true):"");
   $("soupe").textContent=PLAN.soupe?"− Retirer la soupe":"+ Ajouter une soupe ou une entrée";
   var cr=creneaux(),L=cr.map(function(x){var p=P.filter(function(p){return p.sl.some(function(y){return y.d===x.d&&y.m===x.m})})[0];
-    return '<li><span class="j">'+esc(nomCr(x))+'</span><span style="flex:1">'+(p?esc(p.c.n):'<i>—</i>')+'</span>'+(p?'<span class="c '+stock(p.c,x)+'">'+(stock(p.c,x)==="cong"?"❄️ à sortir la veille":"🧊 frigo")+'</span>':'')+'</li>'});
+    return '<li><span class="j">'+esc(nomCr(x))+'</span><span class="p"><span>'+(p?esc(p.c.n):'<i>—</i>')+'</span>'+(p?'<span class="c '+stock(p.c,x)+'">'+(stock(p.c,x)==="cong"?"❄️ Congélateur : à sortir la veille":"🧊 Frigo")+'</span>':'')+'</span></li>'});$("semaine").classList.toggle("dd",S.repas==="dejdin");
   $("semaine").innerHTML=L.join("");$("go3").disabled=!P.length}
 $("plats").onclick=function(e){var b=e.target.closest("[data-ch]");if(b){changer(+b.dataset.ch);return}if(e.target.closest("[data-soupe]"))soupe()};
 $("soupe").onclick=soupe;
