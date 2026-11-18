@@ -1,0 +1,1086 @@
+{
+"v": 1,
+"note": "Classement batch cooking validé par Olivier le 18/11/2026. Les préparations ne sont jamais utilisées.",
+"recettes": [
+{
+"n": "Flan au Butternut",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Pâté de foies de volailles",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Salade Coleslaw",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Salade de Lentilles au Yaourt à la Grecque",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Salade de Poulet à l'Orientale",
+"src": "livre",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Salade de Radis à l'asiatique",
+"src": "livre",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "ete"
+},
+{
+"n": "Soupe de Butternut, Crème de Coco et Curry",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Terrine d'été à la ratatouille et au chèvre",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Velouté de Petits Pois à la menthe",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Endives aux Noix et au Roquefort",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "cru",
+"saison": "hiver"
+},
+{
+"n": "Tartare de Saumon fumé",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Ballotin de foie gras de canard",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Coq au vin Simone",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Jambalaya",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Quiche au Camembert, Lardons et Pommes de Terre",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Fricassée de Crevettes au Curry, Poivrons, Ail et Gingembre",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Salade de Poulet à la Coriandre",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Viande sautée façon thaïlandaise",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Filet Mignon en croûte sauce St Agur",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Cassolette de Noix de Saint Jacques et Fruits de Mer",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Huîtres chaudes au Sabayon",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Vols au Vent aux Fruits de Mer",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Courgettes Farcies Façon Bolognaise",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Gratin de Patates Douces et Montbéliard",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "La tourte du vendangeur",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Poêlée de courge butternut et de poulet",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Quiche Norvégienne au Saumon et au Poireau",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Samoussas au Poulet et au Curcuma",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Beignets de Crevettes à la Chinoise",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "friture",
+"saison": "tout"
+},
+{
+"n": "Hamburger Maison",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Clafoutis Carottes et Poireaux",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau invisible aux Pommes de terre et au Comté",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Quiche Sans Pâte Courgette & Chèvre",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Tarte sans pâte aux courgettes",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Boulettes de Patate Douce (Thaï street food)",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Accra végétariens aux Oignons",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": true,
+"cuisson": "friture",
+"saison": "tout"
+},
+{
+"n": "Nems végétariens",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": true,
+"cuisson": "friture",
+"saison": "tout"
+},
+{
+"n": "Patate douce au four, Chèvre et Miel",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Tarte à la tomate et à la moutarde",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Tarte Tomate & Moutarde à l'ancienne",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Tarte à la Courgette et aux Oignons",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Tatin d'Endives au Roquefort et aux Noix",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Courge Butternut, Pois Chiches et Curry rouge",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Flan aux légumes d'été",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Flan de Courgettes",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Flan de Courgette au Chèvre Frais",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Gâteau de Pommes de Terre",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Poêlée d’hiver aux endives, pommes de terre et carottes",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Poêlée d’hiver au brocoli, carottes et pommes de terre",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Nids de Pommes de Terre, Fromage & Lardons",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Poêlée de Patates Douces Sautées",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Poêlée de riz aux poireaux, champignons et parmesan",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Riz Cantonnais",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Beignets de Courgette à la Grecque",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "friture",
+"saison": "ete"
+},
+{
+"n": "Frites de patates douces croustillantes",
+"src": "livre",
+"type": "accompagnement",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Cake aux Pistaches",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Carrot Cake et son glaçage",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Cheesecake au citron sans cuisson",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Cheesecake aux Pistaches",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Crème onctueuse au chocolat",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Crème Brulée à la Chicorée",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Crème brûlée",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Flan Pâtissier",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Flan Poires et Chocolat",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Fondant aux pommes et mascarpone",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau au Chocolat et Courgette",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Gâteau invisible aux pommes (1)",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau invisible aux pommes (2)",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau aux Pommes et aux Noix",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau au potimarron, noix et pommes",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau d'automne, Pommes et Noix",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Gâteau au Yaourt et Coco",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau allemand au fromage blanc",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau Antillais Ananas et Rhum",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau au Citron et à la Ricotta, glaçage aux Pistaches grillées",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau aux Noix",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Mousse au chocolat Aquafaba",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Muffins marbrés au chocolat corsé",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Semoule au lait",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Tarte au Fromage Blanc",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Tirami su",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Tarte à la Rhubarbe",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Tarte au Sucre",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Tartelette Pomme et Amandes",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Crème au Chocolat aux œufs durs",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Nougat glacé",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Quatre-Quarts",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau nuage au chocolat",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "tout"
+},
+{
+"n": "Gâteau Forêt Noire",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Chili con carne express",
+"src": "friscan",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Dal de lentilles coco",
+"src": "friscan",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Poulet curry-coco",
+"src": "friscan",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Poêlée façon ratatouille et feta",
+"src": "friscan",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Pâtes à l’aubergine (alla Norma)",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Pâtes sauce tomate à l’ail",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Salade de quinoa",
+"src": "friscan",
+"type": "plat",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Aubergines rôties au yaourt",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Chou-fleur rôti aux épices",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver"
+},
+{
+"n": "Tarte fine tomate-moutarde",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete"
+},
+{
+"n": "Shakshuka",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Poêlée de courgettes à la feta",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Tofu sauté aux légumes",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Nouilles sautées au poulet",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Pommes de terre sautées aux lardons",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Saucisses fumées et pommes de terre rissolées",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Côtes de porc à la moutarde",
+"src": "friscan",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Velouté de courgette au fromage frais",
+"src": "friscan",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Velouté de courge",
+"src": "friscan",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Salade de riz",
+"src": "friscan",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Salade de pâtes au thon",
+"src": "friscan",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Poireaux vinaigrette",
+"src": "friscan",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Houmous express",
+"src": "friscan",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Purée de patate douce",
+"src": "friscan",
+"type": "accompagnement",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Haricots verts à l’ail",
+"src": "friscan",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "ete"
+},
+{
+"n": "Brocoli sauté à l’ail, sauce soja",
+"src": "friscan",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Riz sauté aux œufs",
+"src": "friscan",
+"type": "accompagnement",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout"
+},
+{
+"n": "Yaourt pomme-cannelle",
+"src": "friscan",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Poires au chocolat",
+"src": "friscan",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "hiver"
+},
+{
+"n": "Salade de fruits",
+"src": "friscan",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+},
+{
+"n": "Tiramisu express en verrine",
+"src": "friscan",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout"
+}
+]
+}
