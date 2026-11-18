@@ -528,6 +528,18 @@ body.fond-profil .hero{background:rgba(255,255,255,.86)}
 body.fond-profil .pband{background:color-mix(in srgb,#fdf3c9 88%,transparent)}
 body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 .pager{overflow-y:hidden;transition:height .25s ease}
+
+/* vitrine : pas de titre au-dessus des deux recettes */
+.pg.vitrine #s-ideas .sec-h{display:none!important}
+/* essai vitrine en liste (?vitrine=liste) : liste à cases cochées à la place des tuiles */
+.pg.vliste #s-tools,.pg.vliste .batch{display:none!important}
+.vlist{order:2;list-style:none;margin:2px 0 0;padding:0 4px;display:flex;flex-direction:column}
+.vlist li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 2px;border-bottom:1px solid rgba(15,107,120,.14)}
+.vlist li:last-child{border-bottom:0}
+.vlist .vl-t{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.vlist .vl-t b{font-size:1.05rem;font-weight:800;color:var(--acc-deep)}
+.vlist .vl-t small{font-size:.88rem;color:#3d5559;font-weight:600}
+.vlist .vl-ok{flex:none;width:26px;height:26px;border-radius:7px;background:#1f9d55;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;box-shadow:0 2px 6px rgba(31,157,85,.35)}
 </style>
 </head>
 <body>
@@ -649,7 +661,7 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 66</p>
+  <p class="legal ver">Cookapli · version 67</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -945,7 +957,8 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
 (function(){
   var A=window.CookAccueil,$=function(id){return document.getElementById(id)},pager=$("pager"),live=$("pg0");if(!A||!pager||!live)return;
   var st=A.lire();
-  var vitrine=!st||(st.profil==="tout"&&!st.perso);
+  var Q=new URLSearchParams(location.search),essai=Q.get("vitrine");/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
+  var vitrine=!!essai||!st||(st.profil==="tout"&&!st.perso);
   var ORDRE=["famille","debutant","gourmand","antigaspi","equilibre","perso"];
   var livePid=vitrine?"vitrine":(st.perso||st.profil==="tout")?"perso":st.profil;
   if(ORDRE.indexOf(livePid)<0&&livePid!=="vitrine")livePid="perso";
@@ -966,7 +979,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     var a=el("button","btn");a.type="button";
     if(pid==="perso"){a.textContent=livePid==="perso"?"Modifier mon accueil":"Personnaliser";a.onclick=function(){location.href="perso.html"}}
     else if(pid===livePid){a.textContent="✓ C'est ton profil";a.disabled=true}
-    else{a.textContent="Choisir ce profil";a.onclick=function(){A.choisirProfil(pid);location.reload()}}
+    else{a.textContent="Choisir ce profil";a.onclick=function(){A.choisirProfil(pid);if(essai)location.href="./";else location.reload()}}
     row.appendChild(a);
     if(pid!=="perso"){var t=el("a","btn inv","Voir tous les outils");t.href="perso.html";row.appendChild(t)}}
   function cl(sel){var o=live.querySelector(sel);if(!o)return null;var c=o.cloneNode(true);c.removeAttribute("id");
@@ -978,6 +991,11 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   live.insertBefore(bandeau(livePid,PAGES.indexOf(livePid)),live.firstChild);
   if(livePid!=="vitrine"){var d0=el("p","pdesc");d0.textContent=info(livePid).sub;live.insertBefore(d0,live.children[1])}
   boutons($("choix0"),livePid);
+  if(vitrine&&essai==="liste"){live.classList.add("vliste");
+    var L=[["Des recettes testées en cuisine","aucune recette inventée"],["Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["Max 30 min","des recettes prêtes en 30 minutes"],["Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["Courses auto","ce qui manque part tout seul dans ta liste"],["Calories / personne","pour chaque recette"],["Budget / personne","€, €€ ou €€€ pour chaque recette"],["Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["Un chef qui te guide","les étapes lues à voix haute"],["Inspiration de saison","les bons produits du moment"]];
+    var ul=el("ul","vlist");ul.setAttribute("aria-label","Ce que Cookapli fait pour toi");
+    L.forEach(function(x){var li=el("li",null,'<span class="vl-t"><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></span><span class="vl-ok" role="img" aria-label="inclus">✓</span>');ul.appendChild(li)});
+    var tl=$("s-tools");tl.parentNode.insertBefore(ul,tl)}
   if(vitrine){live.classList.add("vitrine");var ar=$("allRec");if(ar)ar.hidden=true;
     var eq=$("t-equilibre");if(eq&&!live.querySelector(".g-budget")){var bu=el("span","tile g-budget",'<span><b>Budget / personne</b></span><span class="ill" aria-hidden="true">€</span>');bu.style.order=eq.style.order;eq.parentNode.insertBefore(bu,eq.nextSibling)}}
 
