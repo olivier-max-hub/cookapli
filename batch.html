@@ -145,6 +145,7 @@ p{margin:0}
     <div class="card" id="liste"></div>
   </section>
 
+<p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:24px">Batch cooking · version 4</p>
 </div></main>
 <div id="toast" role="status" aria-live="polite"><span></span></div>
 
@@ -379,7 +380,7 @@ function aller(n){if(n>1&&!PLAN)n=1;etape=n;[1,2,3].forEach(function(k){$("e"+k)
 document.querySelector(".steps").onclick=function(e){var b=e.target.closest("[data-e]");if(!b||b.disabled)return;var n=+b.dataset.e;if(n===2&&!PLAN)nouvelle();aller(n)};
 
 /* ---------- chargement ---------- */
-function demarrer(){PLAN=restaurer();if(PLAN&&S.plan.cfg!==cfgAct()){PLAN=null;if(location.hash!=="#semaine")nouvelle()}var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
+function demarrer(){PLAN=restaurer();if(PLAN&&PLAN.plats.length<Math.min(nbPlats(creneaux().length),PLAN.dispo||0))S.plan.cfg="";if(PLAN&&S.plan.cfg!==cfgAct()){PLAN=null;if(location.hash!=="#semaine")nouvelle()}var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
 fetch("batch.json?v=2").then(function(r){return r.json()}).then(function(j){BATCH=(j.recettes||[]);demarrer();
   /* Livre : liste et fiches à jour (même cache que le Livre de recettes) */
   var M=typeof MES_RECETTES!=="undefined"?MES_RECETTES:null;if(!M)return;
