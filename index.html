@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 77</p>
+  <p class="legal ver">Cookapli · version 78</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -978,7 +978,9 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   var st=A.lire();
   (function(){var FL=window.CookFiltres,fa=FL?FL.lire():[],n=document.querySelector("#s-ideas .fnote");if(n&&fa.length){n.textContent="🥗 Recettes "+FL.libelle(fa);n.hidden=false}})();
   try{history.scrollRestoration="manual"}catch(e){}
-  var Q=new URLSearchParams(location.search),essai=Q.get("vitrine");/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
+  var Q=new URLSearchParams(location.search),essai=Q.get("vitrine");
+  /* la vitrine demandée par lien ne s'affiche qu'une fois : un rafraîchissement revient sur le profil */
+  if(essai&&st){try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
   var vitrine=!!essai||!st||(st.profil==="tout"&&!st.perso);
   var ORDRE=["famille","debutant","gourmand","antigaspi","equilibre","perso"];
   /* la dernière page est « Mes outils » ; un accueil modifié reste sur la page de son profil de départ */
