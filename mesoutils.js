@@ -71,7 +71,7 @@
     }
     var voir = el('a', 'mo-btn', 'Voir mon profil personnalisé'); voir.href = './';
     if (opt.voir) voir.onclick = function (e) { e.preventDefault(); opt.voir(); };
-    var reset = el('button', 'mo-btn alt', 'Revenir aux outils du profil'); reset.type = 'button';
+    var reset = el('button', 'mo-btn alt', 'Réinitialiser les outils du profil'); reset.type = 'button';
     reset.onclick = function () { var avant = JSON.stringify(s); s = A.choisirProfil(s.profil === 'tout' ? 'famille' : s.profil); dessiner();
       toast('Les outils du profil sont rétablis', function () { s = JSON.parse(avant); A.ecrire(s); dessiner(); signal('outil'); }); signal('outil'); };
     bt.appendChild(voir); bt.appendChild(reset);
