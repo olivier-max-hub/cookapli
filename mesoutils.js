@@ -40,7 +40,9 @@
   function monter(box, opt) {
     opt = opt || {}; style();
     var A = window.CookAccueil, F = window.CookFiltres; if (!A || !box) return;
-    var s = A.lire() || A.choisirProfil('famille'); if (s.profil === 'tout' && !s.perso) s = A.choisirProfil('famille');
+    /* rien n'est enregistré tant que l'utilisateur n'a rien touché : la vitrine reste la vitrine */
+    var lu = A.lire(), vierge = !lu || (lu.profil === 'tout' && !lu.perso);
+    var s = vierge ? { v: 1, profil: 'famille', perso: false, blocs: A.preset('famille'), connus: A.BLOCS.map(function (b) { return b.id; }) } : lu;
     box.classList.add('mo'); box.innerHTML = '';
     var sp = el('section', null, '<h2>Ton profil</h2><div class="mo-chips" role="group" aria-label="Profil"></div>'),
       so = el('section', null, '<h2>Les outils de ton profil</h2><ul class="mo-list"></ul>'),
@@ -52,21 +54,22 @@
     function dessiner() {
       var P = sp.querySelector('.mo-chips'); P.textContent = '';
       A.PROFILS.filter(function (p) { return p.id !== 'tout'; }).forEach(function (p) {
-        var on = p.id === s.profil, b = el('button', 'mo-chip'); b.type = 'button'; b.setAttribute('aria-pressed', String(on)); b.textContent = p.n + (on && s.perso ? ' (modifié)' : '');
-        b.onclick = function () { if (on && !s.perso) return; var avant = JSON.stringify(s); s = A.choisirProfil(p.id); dessiner();
+        var on = !vierge && p.id === s.profil, b = el('button', 'mo-chip'); b.type = 'button'; b.setAttribute('aria-pressed', String(on)); b.textContent = p.n + (on && s.perso ? ' (modifié)' : '');
+        b.onclick = function () { if (on && !s.perso) return; var avant = JSON.stringify(s); s = A.choisirProfil(p.id); vierge = false; dessiner();
           toast("C'est noté. Ton accueil te ressemble", function () { s = JSON.parse(avant); A.ecrire(s); dessiner(); signal('profil'); }); signal('profil'); };
         P.appendChild(b);
       });
+      var note = sp.querySelector('.mo-note'); if (vierge && !note) { note = el('p', 'mo-note', 'Choisis le profil qui te ressemble, puis ajuste tes outils.'); sp.insertBefore(note, P); } else if (!vierge && note) note.remove();
       var prof = A.profil(s.profil).blocs, BP = so.querySelector('ul'), BA = sa.querySelector('ul'); BP.textContent = ''; BA.textContent = '';
       s.blocs.forEach(function (x) { var o = OUTILS[x.id]; if (!o) return;
-        (prof.indexOf(x.id) >= 0 ? BP : BA).appendChild(ligne(o[0], o[1], o[2], x.on, function (v) { x.on = v; s.perso = true; A.ecrire(s); toast("C'est noté. Ton accueil te ressemble"); signal('outil'); }));
+        (prof.indexOf(x.id) >= 0 ? BP : BA).appendChild(ligne(o[0], o[1], o[2], x.on, function (v) { x.on = v; s.perso = true; vierge = false; A.ecrire(s); toast("C'est noté. Ton accueil te ressemble"); signal('outil'); }));
       });
       sa.hidden = !BA.children.length;
     }
     function filtres() { if (!F) { sf.hidden = true; return; } var ul = sf.querySelector('ul'), f = F.lire(); ul.textContent = '';
       F.LISTE.forEach(function (x) { ul.appendChild(ligne(ICF[x.id] || '•', x.n, x.d, f.indexOf(x.id) >= 0, function (v) { f = F.lire().filter(function (i) { return i !== x.id; }); if (v) f.push(x.id); F.ecrire(f); toast("C'est noté. Les propositions te ressemblent"); signal('filtre'); })); });
     }
-    var voir = el('a', 'mo-btn', 'Voir mon accueil'); voir.href = './';
+    var voir = el('a', 'mo-btn', 'Voir mon profil personnalisé'); voir.href = './';
     if (opt.voir) voir.onclick = function (e) { e.preventDefault(); opt.voir(); };
     var reset = el('button', 'mo-btn alt', 'Revenir aux outils du profil'); reset.type = 'button';
     reset.onclick = function () { var avant = JSON.stringify(s); s = A.choisirProfil(s.profil === 'tout' ? 'famille' : s.profil); dessiner();

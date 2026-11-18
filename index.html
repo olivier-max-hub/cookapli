@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 81</p>
+  <p class="legal ver">Cookapli · version 82</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -690,7 +690,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 <script src="../friscan/data.js?v=20"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
-<script src="mesoutils.js?v=2"></script>
+<script src="mesoutils.js?v=3"></script>
 <script src="../recettes/calories.js?v=2"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -1076,10 +1076,12 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   pager.addEventListener("scroll",function(){maj();hauteur()},{passive:true});
   addEventListener("resize",function(){aller(Math.max(der,0),true)});
   pager.addEventListener("click",function(e){var g=e.target.closest(".pb-go,.pb-next");
-    if(g){var b=g.closest(".pband");aller((+b.dataset.i||0)+1);return}
+    /* vitrine : « Personnalise ton espace » mène directement à Mes outils (dernière page) */
+    if(g){var b=g.closest(".pband");if(g.classList.contains("pb-go")){allerOutils();return}aller((+b.dataset.i||0)+1);return}
     /* vitrine : toucher la page fait glisser vers les profils */
-    if(live.classList.contains("vitrine")&&e.target.closest("#pg0")&&!e.target.closest(".carou a")){e.preventDefault();aller(1)}});
-  [].forEach.call(live.querySelectorAll(".hero,#s-tools,.batch"),function(x){x.addEventListener("click",function(e){if(live.classList.contains("vitrine")&&!e.target.closest(".pb-go")){e.preventDefault();e.stopPropagation();aller(1)}},true)});
+    if(live.classList.contains("vitrine")&&e.target.closest("#pg0")&&!e.target.closest(".carou a")){e.preventDefault();allerOutils()}});
+  function allerOutils(){aller(PAGES.length-1);var y=pager.getBoundingClientRect().top+scrollY-90;scrollTo({top:Math.max(0,y),behavior:"smooth"})}
+  [].forEach.call(live.querySelectorAll(".hero,#s-tools,.batch"),function(x){x.addEventListener("click",function(e){if(live.classList.contains("vitrine")&&!e.target.closest(".pb-go")){e.preventDefault();e.stopPropagation();allerOutils()}},true)});
   /* on attend que les profils aient rangé la page vivante */
   setTimeout(construire,60);
 })();
