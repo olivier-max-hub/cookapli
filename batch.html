@@ -303,7 +303,8 @@ $("pm").onclick=function(){S.pers=Math.max(1,S.pers-1);sauver();dessiner1()};
 $("pp").onclick=function(){S.pers=Math.min(12,S.pers+1);sauver();dessiner1()};
 $("cRepas").onclick=function(e){var b=e.target.closest("[data-v]");if(!b)return;S.repas=b.dataset.v;sauver();dessiner1()};
 $("cJours").onclick=function(e){var b=e.target.closest("[data-v]");if(!b)return;S.jours=+b.dataset.v;sauver();dessiner1()};
-function cfgAct(){return [S.pers,S.repas,S.jours,FA.join(","),SAISON].join("|")}
+/* r3 : version des règles ; une semaine faite avec d'anciennes règles est recomposée */
+function cfgAct(){return ["r3",S.pers,S.repas,S.jours,FA.join(","),SAISON].join("|")}
 $("go2").onclick=function(){if(!PLAN||!S.plan||S.plan.cfg!==cfgAct())nouvelle();aller(2)};
 
 /* ---------- écran 2 ---------- */
@@ -378,7 +379,7 @@ function aller(n){if(n>1&&!PLAN)n=1;etape=n;[1,2,3].forEach(function(k){$("e"+k)
 document.querySelector(".steps").onclick=function(e){var b=e.target.closest("[data-e]");if(!b||b.disabled)return;var n=+b.dataset.e;if(n===2&&!PLAN)nouvelle();aller(n)};
 
 /* ---------- chargement ---------- */
-function demarrer(){PLAN=restaurer();if(PLAN&&S.plan.cfg!==cfgAct())PLAN=null;var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
+function demarrer(){PLAN=restaurer();if(PLAN&&S.plan.cfg!==cfgAct()){PLAN=null;if(location.hash!=="#semaine")nouvelle()}var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
 fetch("batch.json?v=2").then(function(r){return r.json()}).then(function(j){BATCH=(j.recettes||[]);demarrer();
   /* Livre : liste et fiches à jour (même cache que le Livre de recettes) */
   var M=typeof MES_RECETTES!=="undefined"?MES_RECETTES:null;if(!M)return;
