@@ -225,22 +225,35 @@ function repartir(n,repas){var a=[];for(var i=0;i<n;i++)a.push(Math.floor(repas/
 function vege(c){return c.e.prot==="Végétarien"}
 /* ordre : les plats qui ne se congèlent pas d'abord (frigo), les « possibles » en tête */
 function rang(c){return c.e.tenue==="possible"?0:!c.e.congele?1:2}
-function placer(plats){var cr=creneaux().sort(function(a,b){return (a.m==="soir"?0:1)-(b.m==="soir"?0:1)||a.d-b.d}),i=0,parts=repartir(plats.length,Math.min(cr.length,plats.length*2));
-  var ord=plats.slice().sort(function(a,b){return rang(a)-rang(b)});
-  return ord.map(function(c,j){var sl=cr.slice(i,i+parts[j]).sort(function(a,b){return a.d-b.d||(a.m==="midi"?0:1)-(b.m==="midi"?0:1)});i+=parts[j];return{c:c,sl:sl}})}
-function valide(P,niv){var four=0,feux=0,poss=0,prots={},nv=0;
-  for(var i=0;i<P.length;i++){var c=P[i].c,e=c.e,last=P[i].sl.length?P[i].sl[P[i].sl.length-1].d:0;
+/* placement : jamais le même plat deux jours de suite ni deux fois le même jour ;
+   « possible » = 1 repas, lundi ou mardi ; ne se congèle pas = au plus mercredi ; le reste peut aller au congélateur */
+function lim(c){return c.e.tenue==="possible"?1:!c.e.congele?2:9}
+function maxp(c){return c.e.tenue==="possible"?1:2}
+function placer(plats,gap){gap=gap==null?2:gap;var cr=creneaux(),n=plats.length;if(!n)return [];
+  var tot=Math.min(cr.length,plats.reduce(function(a,c){return a+maxp(c)},0)),q=plats.map(function(){return 1}),reste=tot-n;
+  if(reste<0)return null;
+  [2,1,0].forEach(function(r){plats.forEach(function(c,k){if(reste>0&&rang(c)===r&&q[k]<maxp(c)){q[k]++;reste--}})});
+  if(reste>0)return null;
+  var sl=plats.map(function(){return[]}),vides=cr.length-tot;
+  function ok(k,x){var c=plats[k];if(x.d>lim(c))return false;return sl[k].every(function(y){return gap?Math.abs(x.d-y.d)>=gap:!(x.d===y.d&&x.m===y.m)})}
+  function go(i,v){if(i===cr.length)return q.every(function(n,k){return sl[k].length===n});
+    var x=cr[i],ordre=plats.map(function(c,k){return k}).filter(function(k){return sl[k].length<q[k]}).sort(function(a,b){return lim(plats[a])-lim(plats[b])||(q[b]-sl[b].length)-(q[a]-sl[a].length)});
+    for(var t=0;t<ordre.length;t++){var k=ordre[t];if(!ok(k,x))continue;sl[k].push(x);if(go(i+1,v))return true;sl[k].pop()}
+    if(v>0&&go(i+1,v-1))return true;return false}
+  if(!go(0,vides))return null;
+  return plats.map(function(c,k){return{c:c,sl:sl[k]}}).sort(function(a,b){var x=a.sl[0],y=b.sl[0];return x.d-y.d||(x.m==="midi"?0:1)-(y.m==="midi"?0:1)})}
+function valide(P,niv){if(!P)return false;var four=0,feux=0,poss=0,prots={};
+  for(var i=0;i<P.length;i++){var c=P[i].c,e=c.e;
     if(e.cuisson==="four")four++;else if(e.cuisson==="plaque"||e.cuisson==="friture")feux++;
-    if(e.tenue==="possible"){poss++;if(last>1)return false}
-    else if(!e.congele&&last>2)return false;
-    if(vege(c))nv++;else if(niv<2){if(prots[e.prot])return false;prots[e.prot]=1}}
+    if(e.tenue==="possible")poss++;
+    if(!vege(c)&&niv<2){if(prots[e.prot])return false;prots[e.prot]=1}}
   if(poss>2)return false;
   if(niv<1&&(four>2||feux>2)&&P.length<=4)return false;
   if(niv<1&&(four>3||feux>3))return false;
   return true}
 function score(P){var s=0,vus={},nv=0;P.forEach(function(p){var c=p.c;if(vege(c))nv++;if(c.e.tenue==="ideale")s+=2;
     c.ing.forEach(function(x){if(!x.id)return;if(auFrigo(x.id))s+=1.5;if(vus[x.id]&&!/^(sel|poivre|huile|ail|oignon|epices|beurre|farine|sucre)$/.test(x.id))s+=1;vus[x.id]=1})});
-  if(nv)s+=3;return s+Math.random()*2}
+  if(nv)s+=3;s+=8*P.reduce(function(a,p){return a+p.sl.length},0);return s+Math.random()*2}
 function recents(){var h=lsGet(HIST,[]),lim=Date.now()-21*864e5,o={};(Array.isArray(h)?h:[]).forEach(function(x){if(x.t>lim)o[x.k]=1});return o}
 function composer(){
   var C=liste("plat"),rec=recents(),neufs=C.filter(function(c){return !rec[c.k]});if(neufs.length>=nbPlats(creneaux().length))C=neufs;
@@ -248,7 +261,7 @@ function composer(){
   for(var niv=0;niv<3;niv++){var best=null,bs=-1;
     for(var t=0;t<400;t++){var pick=melange(C.slice()).slice(0,n),P=placer(pick);if(!valide(P,niv))continue;var sc=score(P);if(sc>bs){bs=sc;best=P}}
     if(best)return{plats:best,dispo:C.length}}
-  return{plats:placer(melange(C.slice()).slice(0,n)),dispo:C.length}}
+  var pk=melange(C.slice()).slice(0,n);return{plats:placer(pk)||placer(pk,1)||placer(pk,0)||[],dispo:C.length}}
 function changer(i){
   var cur=PLAN.plats,C=liste("plat"),pris={};cur.forEach(function(p){pris[p.c.k]=1});
   var vus=PLAN.vus||(PLAN.vus={});vus[cur[i].c.k]=1;
@@ -306,6 +319,7 @@ function dessiner2(){if(!PLAN)return;var P=PLAN.plats,n=creneaux().length,couv=P
   $("recap2").textContent=couv+" repas · "+S.pers+" personne"+(S.pers>1?"s":"")+" · "+P.length+" plats";
   var m=$("manque");
   if(!P.length){m.hidden=false;m.textContent="Aucun plat de saison ne correspond encore à ton profil. De nouvelles recettes arrivent bientôt.";}
+  else if(couv<n&&PLAN.dispo>P.length){m.hidden=false;m.textContent="Ces plats couvrent "+couv+" repas sur "+n+" : un même plat n'est jamais servi deux jours de suite. Touche « Proposer une autre semaine » pour en couvrir plus.";}
   else if(couv<n){m.hidden=false;m.textContent=PLAN.dispo+" plat"+(PLAN.dispo>1?"s":"")+" seulement correspond"+(PLAN.dispo>1?"ent":"")+" à ton profil cette saison : ta semaine couvre "+couv+" repas sur "+n+".";}
   else m.hidden=true;
   $("plats").innerHTML=P.map(function(p,i){return carte(p,i)}).join("")+(PLAN.soupe?carte(PLAN.soupe,0,true):"");
