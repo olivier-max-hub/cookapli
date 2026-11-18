@@ -543,6 +543,8 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 .vlist .vl-ok{flex:none;width:26px;height:26px;border-radius:7px;background:#1f9d55;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;box-shadow:0 2px 6px rgba(31,157,85,.35)}
 .pg.vitrine .hero .lead{font-size:1.55rem!important;font-weight:800;line-height:1.15;color:var(--acc-deep);margin-top:2px!important;max-width:none!important}
 .pg>.pband.pband-bas{order:3;margin-top:2px}
+.vlist .vl-t b,.vlist .vl-t small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vlist .vl-i svg{display:block;margin:0 auto}
 </style>
 </head>
 <body>
@@ -664,7 +666,7 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 70</p>
+  <p class="legal ver">Cookapli · version 71</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -995,10 +997,12 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   if(livePid!=="vitrine"){var d0=el("p","pdesc");d0.textContent=info(livePid).sub;live.insertBefore(d0,live.children[1])}
   boutons($("choix0"),livePid);
   if(vitrine){live.classList.add("vliste");
-    var L=[["🥕","Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["🍳","De vraies recettes testées","aucune recette inventée"],["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],["♻️","Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["🛒","Courses auto","ajoute d'un coup ce qui manque pour ta recette"],["📷","Scanne tes articles chez toi ou en magasin","+ d'articles en réserve = + de recettes pour toi"],["⚖️","Calories / personne","pour chaque recette"],["€","Budget / personne","€, €€ ou €€€ pour chaque recette"],["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["📅","Planifie tes menus pour la semaine","prévois à l'avance, pas de prise de tête"],["🎙️","Un chef qui te guide","les étapes lues à voix haute"],["🍂","Inspiration de saison","les bons produits du moment"]];
+    var L=[["🥕","Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["🍳","De vraies recettes testées","aucune recette inventée"],["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],["♻️","Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["🛒","Courses auto","en un clic, ce qui manque pour ta recette"],['<svg width="24" height="20" viewBox="0 0 24 20" aria-hidden="true"><g fill="#0b4f59"><rect x="1" y="1" width="2" height="18"/><rect x="5" y="1" width="1" height="18"/><rect x="8" y="1" width="3" height="18"/><rect x="12" y="1" width="1" height="18"/><rect x="15" y="1" width="2" height="18"/><rect x="19" y="1" width="1" height="18"/><rect x="21" y="1" width="2" height="18"/></g></svg>',"Scanne chez toi ou en magasin","+ d'articles en réserve = + de recettes pour toi"],["⚖️","Calories / personne","pour chaque recette"],["€","Budget / personne","€, €€ ou €€€ pour chaque recette"],["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["📅","Planifie tes menus pour la semaine","prévois à l'avance, pas de prise de tête"],["🎙️","Un chef qui te guide","les étapes lues à voix haute"],["🍂","Inspiration de saison","les bons produits du moment"]];
     var ul=el("ul","vlist");ul.setAttribute("aria-label","Ce que Cookapli fait pour toi");
     L.forEach(function(x){var li=el("li",null,'<span class="vl-i" aria-hidden="true">'+x[0]+'</span><span class="vl-t"><b>'+esc(x[1])+'</b><small>'+esc(x[2])+'</small></span><span class="vl-ok" role="img" aria-label="inclus">✓</span>');ul.appendChild(li)});
     var tl=$("s-tools");tl.parentNode.insertBefore(ul,tl);
+    function ajuste(){[].forEach.call(ul.querySelectorAll(".vl-t b,.vl-t small"),function(x){x.style.fontSize="";var f=parseFloat(getComputedStyle(x).fontSize);while(x.scrollWidth>x.clientWidth+1&&f>10){f-=.5;x.style.fontSize=f+"px"}})}
+    setTimeout(ajuste,80);addEventListener("resize",ajuste);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(ajuste);
     /* le bandeau revient en fin de liste : on accède aux réglages sans remonter */
     var bas=bandeau("vitrine",0);bas.classList.add("pband-bas");tl.parentNode.insertBefore(bas,tl)}
   if(vitrine){live.classList.add("vitrine");var ar=$("allRec");if(ar)ar.hidden=true;
