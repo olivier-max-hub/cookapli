@@ -527,6 +527,7 @@ body.fond-profil .tools .tile.g-equilibre{background:linear-gradient(135deg,colo
 body.fond-profil .hero{background:rgba(255,255,255,.86)}
 body.fond-profil .pband{background:color-mix(in srgb,#fdf3c9 88%,transparent)}
 body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
+.pager{overflow-y:hidden;transition:height .25s ease}
 </style>
 </head>
 <body>
@@ -648,7 +649,7 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 65</p>
+  <p class="legal ver">Cookapli · version 66</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -997,7 +998,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   function construire(){var li=PAGES.indexOf(livePid);
     PAGES.forEach(function(pid,i){if(pid===livePid)return;var pg=apercu(pid,i);if(i<li)pager.insertBefore(pg,live);else pager.appendChild(pg)});
     var dots=$("pdots");dots.innerHTML=PAGES.map(function(){return "<i></i>"}).join("");
-    copieCarrousel();aller(li,true);maj()}
+    copieCarrousel();aller(li,true);maj();hauteur()}
 
   /* deux recettes de saison, tirées au hasard pour chaque page */
   function melange(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
@@ -1014,7 +1015,10 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     [].forEach.call(document.querySelectorAll("#pdots i"),function(d,k){d.classList.toggle("on",k===i)});
     var fd=FONDS[PAGES[i]];document.body.classList.toggle("fond-profil",!!fd);
     if(fd){var f=$("fondProfil");f.style.backgroundImage="url("+fd+")";var h=document.querySelector(".hdr");if(h)document.documentElement.style.setProperty("--hb",Math.round(h.getBoundingClientRect().bottom+6)+"px")}}
-  pager.addEventListener("scroll",function(){maj()},{passive:true});
+  /* la hauteur suit la page affichée, pour ne pas laisser de vide sous les pages courtes */
+  function hauteur(){var pg=pager.querySelectorAll(".pg")[idx()];if(pg)pager.style.height=pg.offsetHeight+"px"}
+  if(window.ResizeObserver){var ro=new ResizeObserver(hauteur);setTimeout(function(){[].forEach.call(pager.querySelectorAll(".pg"),function(x){ro.observe(x)})},120)}
+  pager.addEventListener("scroll",function(){maj();hauteur()},{passive:true});
   addEventListener("resize",function(){aller(Math.max(der,0),true)});
   pager.addEventListener("click",function(e){var g=e.target.closest(".pb-go,.pb-next");
     if(g){var b=g.closest(".pband");aller((+b.dataset.i||0)+1);return}
