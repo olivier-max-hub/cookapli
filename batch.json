@@ -1,5 +1,5 @@
 {
-"v": 1,
+"v": 2,
 "note": "Classement batch cooking validé par Olivier le 18/11/2026. Les préparations ne sont jamais utilisées.",
 "recettes": [
 {
@@ -9,7 +9,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Pâté de foies de volailles",
@@ -18,7 +19,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "tout"
+"saison": "tout",
+"prot": "Porc"
 },
 {
 "n": "Salade Coleslaw",
@@ -27,7 +29,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "cru",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien"
 },
 {
 "n": "Salade de Lentilles au Yaourt à la Grecque",
@@ -36,7 +39,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien"
 },
 {
 "n": "Salade de Poulet à l'Orientale",
@@ -45,7 +49,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "cru",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille",
+"fin": "Garder la salade et les amandes à part ; assembler et assaisonner au moment de servir."
 },
 {
 "n": "Salade de Radis à l'asiatique",
@@ -54,7 +60,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "cru",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Garder la sauce à part ; assaisonner au moment de servir."
 },
 {
 "n": "Soupe de Butternut, Crème de Coco et Curry",
@@ -63,7 +71,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Terrine d'été à la ratatouille et au chèvre",
@@ -72,7 +81,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Velouté de Petits Pois à la menthe",
@@ -81,7 +91,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Endives aux Noix et au Roquefort",
@@ -90,7 +101,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "cru",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Tartare de Saumon fumé",
@@ -99,7 +111,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "cru",
-"saison": "tout"
+"saison": "tout",
+"prot": "Poisson"
 },
 {
 "n": "Ballotin de foie gras de canard",
@@ -108,7 +121,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Volaille"
 },
 {
 "n": "Coq au vin Simone",
@@ -117,7 +131,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Volaille"
 },
 {
 "n": "Jambalaya",
@@ -126,7 +141,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille"
 },
 {
 "n": "Quiche au Camembert, Lardons et Pommes de Terre",
@@ -135,7 +151,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc"
 },
 {
 "n": "Fricassée de Crevettes au Curry, Poivrons, Ail et Gingembre",
@@ -144,7 +161,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Fruits de mer",
+"fin": "Réchauffer à la poêle 3 min, sans recuire les crevettes."
 },
 {
 "n": "Salade de Poulet à la Coriandre",
@@ -153,7 +172,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille",
+"fin": "Garder la sauce et la coriandre à part ; assembler au moment de servir."
 },
 {
 "n": "Viande sautée façon thaïlandaise",
@@ -162,7 +183,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille",
+"fin": "Réchauffer à la poêle bien chaude 3 à 4 min."
 },
 {
 "n": "Filet Mignon en croûte sauce St Agur",
@@ -171,7 +194,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "four",
-"saison": "tout"
+"saison": "tout",
+"prot": "Porc"
 },
 {
 "n": "Cassolette de Noix de Saint Jacques et Fruits de Mer",
@@ -180,7 +204,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Fruits de mer"
 },
 {
 "n": "Huîtres chaudes au Sabayon",
@@ -189,7 +214,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Fruits de mer"
 },
 {
 "n": "Vols au Vent aux Fruits de Mer",
@@ -198,7 +224,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Fruits de mer"
 },
 {
 "n": "Courgettes Farcies Façon Bolognaise",
@@ -207,7 +234,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Bœuf"
 },
 {
 "n": "Gratin de Patates Douces et Montbéliard",
@@ -216,7 +244,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc"
 },
 {
 "n": "La tourte du vendangeur",
@@ -225,7 +254,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc"
 },
 {
 "n": "Poêlée de courge butternut et de poulet",
@@ -234,7 +264,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Volaille"
 },
 {
 "n": "Quiche Norvégienne au Saumon et au Poireau",
@@ -243,7 +274,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Poisson"
 },
 {
 "n": "Samoussas au Poulet et au Curcuma",
@@ -252,7 +284,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille"
 },
 {
 "n": "Beignets de Crevettes à la Chinoise",
@@ -261,7 +294,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "friture",
-"saison": "tout"
+"saison": "tout",
+"prot": "Fruits de mer"
 },
 {
 "n": "Hamburger Maison",
@@ -270,7 +304,8 @@
 "tenue": "jourmeme",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Bœuf"
 },
 {
 "n": "Clafoutis Carottes et Poireaux",
@@ -279,7 +314,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Gâteau invisible aux Pommes de terre et au Comté",
@@ -288,7 +324,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Quiche Sans Pâte Courgette & Chèvre",
@@ -297,7 +334,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Tarte sans pâte aux courgettes",
@@ -306,7 +344,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Boulettes de Patate Douce (Thaï street food)",
@@ -315,7 +354,9 @@
 "tenue": "possible",
 "congele": true,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four à 180 °C pour qu'elles restent croustillantes."
 },
 {
 "n": "Accra végétariens aux Oignons",
@@ -324,7 +365,9 @@
 "tenue": "possible",
 "congele": true,
 "cuisson": "friture",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien",
+"fin": "Réchauffer 8 min au four à 200 °C (pas au micro-ondes)."
 },
 {
 "n": "Nems végétariens",
@@ -333,7 +376,9 @@
 "tenue": "possible",
 "congele": true,
 "cuisson": "friture",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four à 200 °C pour qu'ils restent croustillants."
 },
 {
 "n": "Patate douce au four, Chèvre et Miel",
@@ -342,7 +387,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc",
+"fin": "Ajouter le chèvre et le miel, puis passer 10 min au four."
 },
 {
 "n": "Tarte à la tomate et à la moutarde",
@@ -351,7 +398,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four à 180 °C pour garder la pâte croustillante."
 },
 {
 "n": "Tarte Tomate & Moutarde à l'ancienne",
@@ -360,7 +409,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four à 180 °C pour garder la pâte croustillante."
 },
 {
 "n": "Tarte à la Courgette et aux Oignons",
@@ -369,7 +420,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Porc",
+"fin": "Réchauffer 10 min au four à 180 °C."
 },
 {
 "n": "Tatin d'Endives au Roquefort et aux Noix",
@@ -378,7 +431,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four à 180 °C."
 },
 {
 "n": "Courge Butternut, Pois Chiches et Curry rouge",
@@ -450,7 +505,8 @@
 "tenue": "possible",
 "congele": true,
 "cuisson": "four",
-"saison": "tout"
+"saison": "tout",
+"fin": "Réchauffer 8 min au four à 200 °C."
 },
 {
 "n": "Poêlée de Patates Douces Sautées",
@@ -459,7 +515,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"fin": "Réchauffer à la poêle ; ajouter le persil au moment de servir."
 },
 {
 "n": "Poêlée de riz aux poireaux, champignons et parmesan",
@@ -468,7 +525,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"fin": "Réchauffer à la poêle avec un filet d'eau ; parmesan au moment de servir."
 },
 {
 "n": "Riz Cantonnais",
@@ -477,7 +535,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"fin": "Réchauffer à la poêle bien chaude, à cœur."
 },
 {
 "n": "Beignets de Courgette à la Grecque",
@@ -810,7 +869,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Bœuf"
 },
 {
 "n": "Dal de lentilles coco",
@@ -819,7 +879,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien"
 },
 {
 "n": "Poulet curry-coco",
@@ -828,7 +889,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille"
 },
 {
 "n": "Poêlée façon ratatouille et feta",
@@ -837,7 +899,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Pâtes à l’aubergine (alla Norma)",
@@ -846,7 +909,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Cuire les pâtes le jour même ; réchauffer la sauce, ricotta et parmesan au moment de servir."
 },
 {
 "n": "Pâtes sauce tomate à l’ail",
@@ -855,7 +920,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien",
+"fin": "Cuire les pâtes le jour même ; réchauffer la sauce."
 },
 {
 "n": "Salade de quinoa",
@@ -864,7 +931,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Aubergines rôties au yaourt",
@@ -873,7 +941,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer les aubergines ; ajouter la sauce au yaourt et les herbes au moment de servir."
 },
 {
 "n": "Chou-fleur rôti aux épices",
@@ -882,7 +952,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien",
+"fin": "Réchauffer 10 min au four ; ajouter le yaourt et les herbes au moment de servir."
 },
 {
 "n": "Tarte fine tomate-moutarde",
@@ -891,7 +963,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "four",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer 8 min au four à 200 °C pour garder la pâte croustillante."
 },
 {
 "n": "Shakshuka",
@@ -900,7 +974,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer la sauce préparée à l'avance et y cuire les œufs."
 },
 {
 "n": "Poêlée de courgettes à la feta",
@@ -909,7 +985,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien",
+"fin": "Réchauffer les courgettes ; ajouter la feta et le citron au moment de servir."
 },
 {
 "n": "Tofu sauté aux légumes",
@@ -918,7 +996,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien",
+"fin": "Réchauffer à la poêle ; cuire le riz le jour même ou le réchauffer à cœur."
 },
 {
 "n": "Nouilles sautées au poulet",
@@ -927,7 +1007,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Volaille",
+"fin": "Réchauffer à la poêle avec un filet d'eau."
 },
 {
 "n": "Pommes de terre sautées aux lardons",
@@ -936,7 +1018,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc",
+"fin": "Réchauffer à la poêle pour qu'elles redeviennent dorées ; persil au moment de servir."
 },
 {
 "n": "Saucisses fumées et pommes de terre rissolées",
@@ -945,7 +1029,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Porc",
+"fin": "Réchauffer à la poêle 5 min."
 },
 {
 "n": "Côtes de porc à la moutarde",
@@ -954,7 +1040,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"prot": "Porc",
+"fin": "Réchauffer la viande dans sa sauce ; cuire les pâtes le jour même."
 },
 {
 "n": "Velouté de courgette au fromage frais",
@@ -963,7 +1051,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Végétarien"
 },
 {
 "n": "Velouté de courge",
@@ -972,7 +1061,8 @@
 "tenue": "ideale",
 "congele": true,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien"
 },
 {
 "n": "Salade de riz",
@@ -981,7 +1071,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Poisson",
+"fin": "Assaisonner au moment de servir ; ajouter les œufs durs écalés le jour même."
 },
 {
 "n": "Salade de pâtes au thon",
@@ -990,7 +1082,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"prot": "Poisson",
+"fin": "Assaisonner au moment de servir."
 },
 {
 "n": "Poireaux vinaigrette",
@@ -999,7 +1093,9 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"prot": "Végétarien",
+"fin": "Garder la vinaigrette à part ; assaisonner au moment de servir."
 },
 {
 "n": "Houmous express",
@@ -1008,7 +1104,8 @@
 "tenue": "ideale",
 "congele": false,
 "cuisson": "cru",
-"saison": "tout"
+"saison": "tout",
+"prot": "Végétarien"
 },
 {
 "n": "Purée de patate douce",
@@ -1026,7 +1123,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "ete"
+"saison": "ete",
+"fin": "Réchauffer à la poêle avec le beurre ; ajouter les fruits secs au moment de servir."
 },
 {
 "n": "Brocoli sauté à l’ail, sauce soja",
@@ -1035,7 +1133,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "hiver"
+"saison": "hiver",
+"fin": "Réchauffer à la poêle 2 min ; sésame au moment de servir."
 },
 {
 "n": "Riz sauté aux œufs",
@@ -1044,7 +1143,8 @@
 "tenue": "possible",
 "congele": false,
 "cuisson": "plaque",
-"saison": "tout"
+"saison": "tout",
+"fin": "Réchauffer à la poêle bien chaude, à cœur."
 },
 {
 "n": "Yaourt pomme-cannelle",
