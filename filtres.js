@@ -60,5 +60,10 @@
   }
   function okTexte(t, f) { f = f || lire(); if (!f.length) return true; if (t == null) return false; return ok(t, f); }
   function libelle(f) { f = f || lire(); return f.map(function (id) { for (var i = 0; i < LISTE.length; i++) if (LISTE[i].id === id) return LISTE[i].court; return id; }).join(', '); }
-  window.CookFiltres = { LISTE: LISTE, lire: lire, ecrire: ecrire, raisons: raisons, ok: ok, okTexte: okTexte, texteFriscan: texteFriscan, texteFiche: texteFiche, libelle: libelle, norm: norm };
+  /* recettes avec des œufs crus : un avertissement s'affiche sur la fiche (règle d'Olivier, 18/11/2026 : à vérifier pour chaque nouvelle recette ;
+     ajouter le nom ici, ou « crus: 1 » sur une recette rapide de Friscan) */
+  var CRUS = re(['tiramisu', 'tirami su', 'glacage royal', 'glacage choux', 'nougat glace', 'cheesecake au citron sans cuisson', 'mousse au chocolat(?! aquafaba)', 'mayonnaise maison', 'aioli', 'steak tartare', 'tartare de boeuf']);
+  var AVERT_CRUS = '⚠️ Œufs crus : déconseillé aux femmes enceintes, aux jeunes enfants, aux personnes âgées ou fragiles. Prends des œufs très frais et garde la préparation au frigo.';
+  function oeufsCrus(nom, flag) { return !!flag || CRUS.test(norm(nom)); }
+  window.CookFiltres = { LISTE: LISTE, oeufsCrus: oeufsCrus, AVERT_CRUS: AVERT_CRUS, lire: lire, ecrire: ecrire, raisons: raisons, ok: ok, okTexte: okTexte, texteFriscan: texteFriscan, texteFiche: texteFiche, libelle: libelle, norm: norm };
 })();
