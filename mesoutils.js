@@ -78,5 +78,5 @@
     var vit = el('a', 'mo-vit', '👀 Revoir la présentation de Cookapli'); vit.href = './?vitrine=1'; bt.appendChild(vit);
     dessiner(); filtres();
   }
-  window.CookMesOutils = { monter: monter };
+  window.CookMesOutils = { monter: monter, toast: toast };
 })();

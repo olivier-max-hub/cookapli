@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 84</p>
+  <p class="legal ver">Cookapli · version 85</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -690,7 +690,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 <script src="../friscan/data.js?v=20"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
-<script src="mesoutils.js?v=3"></script>
+<script src="mesoutils.js?v=4"></script>
 <script src="../recettes/calories.js?v=2"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -1032,7 +1032,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   var modifie=false;
   function mesOutils(i){var pg=el("div","pg outils");pg.dataset.pid="perso";pg.appendChild(bandeau("perso",i));var d=el("p","pdesc");d.textContent=info("perso").sub;pg.appendChild(d);
     var c=el("div","mo-box");pg.appendChild(c);
-    if(window.CookMesOutils)CookMesOutils.monter(c,{change:function(){modifie=true},voir:function(){if(modifie)location.reload();else aller(PAGES.indexOf(livePid))}});
+    if(window.CookMesOutils)CookMesOutils.monter(c,{change:function(){modifie=true},voir:function(){var st2=A.lire(),choisi=st2&&!(st2.profil==="tout"&&!st2.perso);if(choisi){location.href="./";return}if(window.CookMesOutils)CookMesOutils.toast("Choisis d'abord le profil qui te ressemble");var y=pager.getBoundingClientRect().top+scrollY-90;scrollTo({top:Math.max(0,y),behavior:"smooth"})}});
     return pg}
   function apercu(pid,i){if(pid==="perso")return mesOutils(i);var p=info(pid),pg=el("div","pg apercu");pg.dataset.pid=pid;
     pg.appendChild(bandeau(pid,i));var d=el("p","pdesc");d.textContent=p.sub;pg.appendChild(d);
