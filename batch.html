@@ -72,6 +72,9 @@ p{margin:0}
 .semaine{display:grid;gap:4px;margin:0;padding:0;list-style:none}
 .semaine li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(15,107,120,.12)}
 .semaine li:last-child{border-bottom:0}
+.card.neuf{animation:neuf 2.4s ease-out}.semaine li.neuf{animation:neufl 2.4s ease-out}
+@keyframes neuf{0%,40%{box-shadow:0 0 0 4px #f2b84b}100%{box-shadow:var(--sh-card)}}@keyframes neufl{0%,40%{background:#fff1c9}100%{background:transparent}}
+@media (prefers-reduced-motion:reduce){.card.neuf,.semaine li.neuf{animation:none}}
 .semaine .j{flex:none;width:5.6em;font-weight:800;color:var(--acc-deep)}.semaine.dd .j{width:7.4em}.semaine .p{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
 .semaine .c{font-size:.85rem;font-weight:800;margin-top:2px}
 .semaine .c.frigo{color:var(--vert)}.semaine .c.cong{color:var(--froid)}
@@ -270,7 +273,13 @@ function changer(i){
   if(!alt.length){toast("Pas d'autre plat qui correspond à ton profil pour l'instant");return}
   var meme=alt.filter(function(c){return c.e.cuisson===cur[i].c.e.cuisson});melange(alt);melange(meme);
   var essais=meme.concat(alt);
-  for(var niv=0;niv<3;niv++)for(var j=0;j<essais.length;j++){var pick=cur.map(function(p){return p.c});pick[i]=essais[j];var P=placer(pick);if(valide(P,niv)){PLAN.plats=P;garder();dessiner2();return}}
+  var ancien=cur[i].c.n,jours=cur[i].sl.map(nomCr).join(" et ");
+  function fini(P,k){PLAN.plats=P;PLAN.marque=k;garder();dessiner2();setTimeout(function(){if(PLAN)PLAN.marque=null},2600);toast(jours+" : "+P.filter(function(p){return p.c.k===k})[0].c.n+" remplace "+ancien)}
+  /* d'abord : le nouveau plat prend exactement la place de l'ancien, les autres jours ne bougent pas */
+  function tient(c){return cur[i].sl.length<=maxp(c)&&cur[i].sl.every(function(x){return x.d<=lim(c)})}
+  for(var niv=0;niv<3;niv++)for(var j=0;j<essais.length;j++){if(!tient(essais[j]))continue;var P=cur.map(function(p,k){return k===i?{c:essais[j],sl:p.sl}:p});if(valide(P,niv)){fini(P,essais[j].k);return}}
+  /* sinon : on replace toute la semaine */
+  for(niv=0;niv<3;niv++)for(j=0;j<essais.length;j++){var pick=cur.map(function(p){return p.c});pick[i]=essais[j];P=placer(pick);if(valide(P,niv)){fini(P,essais[j].k);return}}
   toast("Pas d'autre plat qui garde une semaine équilibrée")}
 function soupe(){
   if(PLAN.soupe){PLAN.soupe=null;garder();dessiner2();return}
@@ -305,7 +314,7 @@ function nomCr(x){return JOURS[x.d]+(S.repas==="dejdin"?(x.m==="midi"?" midi":" 
 function stock(c,x){return x.d<=1||!c.e.congele?"frigo":"cong"}
 function carte(p,i,estSoupe){var c=p.c,e=c.e,port=S.pers*p.sl.length,kc=kcal(c),bu=budget(c);
   var cong=p.sl.some(function(x){return stock(c,x)==="cong"}),fr=p.sl.some(function(x){return stock(c,x)==="frigo"});
-  var h='<article class="card plat"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">':esc(c.emo||"🍲"))+'</div><div>'+
+  var h='<article class="card plat'+(PLAN.marque===c.k?' neuf':'')+'"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">':esc(c.emo||"🍲"))+'</div><div>'+
     '<h3><a href="'+esc(c.url)+'">'+esc(c.n)+'</a></h3>'+
     '<p class="jours">'+(estSoupe?"En entrée · ":"")+p.sl.map(nomCr).join(" et ")+' · '+port+' portion'+(port>1?"s":"")+'</p><div class="tags">'+
     (fr?'<span class="tag frigo">🧊 Frigo</span>':'')+(cong?'<span class="tag cong">❄️ Congélateur'+(fr?" ensuite":"")+'</span>':'')+
@@ -326,11 +335,11 @@ function dessiner2(){if(!PLAN)return;var P=PLAN.plats,n=creneaux().length,couv=P
   $("plats").innerHTML=P.map(function(p,i){return carte(p,i)}).join("")+(PLAN.soupe?carte(PLAN.soupe,0,true):"");
   $("soupe").textContent=PLAN.soupe?"− Retirer la soupe":"+ Ajouter une soupe ou une entrée";
   var cr=creneaux(),L=cr.map(function(x){var p=P.filter(function(p){return p.sl.some(function(y){return y.d===x.d&&y.m===x.m})})[0];
-    return '<li><span class="j">'+esc(nomCr(x))+'</span><span class="p"><span>'+(p?esc(p.c.n):'<i>—</i>')+'</span>'+(p?'<span class="c '+stock(p.c,x)+'">'+(stock(p.c,x)==="cong"?"❄️ Congélateur : à sortir la veille":"🧊 Frigo")+'</span>':'')+'</span></li>'});$("semaine").classList.toggle("dd",S.repas==="dejdin");
+    return '<li'+(p&&PLAN.marque===p.c.k?' class="neuf"':'')+'><span class="j">'+esc(nomCr(x))+'</span><span class="p"><span>'+(p?esc(p.c.n):'<i>—</i>')+'</span>'+(p?'<span class="c '+stock(p.c,x)+'">'+(stock(p.c,x)==="cong"?"❄️ Congélateur : à sortir la veille":"🧊 Frigo")+'</span>':'')+'</span></li>'});$("semaine").classList.toggle("dd",S.repas==="dejdin");
   $("semaine").innerHTML=L.join("");$("go3").disabled=!P.length}
 $("plats").onclick=function(e){var b=e.target.closest("[data-ch]");if(b){changer(+b.dataset.ch);return}if(e.target.closest("[data-soupe]"))soupe()};
 $("soupe").onclick=soupe;
-$("refaire").onclick=function(){nouvelle();dessiner2();toast("Voilà une autre semaine")};
+$("refaire").onclick=function(){PLAN&&(PLAN.marque=null);nouvelle();dessiner2();toast("Voilà une autre semaine")};
 $("go3").onclick=function(){aller(3)};
 
 /* ---------- écran 3 ---------- */
