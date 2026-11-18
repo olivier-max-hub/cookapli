@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 76</p>
+  <p class="legal ver">Cookapli · version 77</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -977,6 +977,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   var A=window.CookAccueil,$=function(id){return document.getElementById(id)},pager=$("pager"),live=$("pg0");if(!A||!pager||!live)return;
   var st=A.lire();
   (function(){var FL=window.CookFiltres,fa=FL?FL.lire():[],n=document.querySelector("#s-ideas .fnote");if(n&&fa.length){n.textContent="🥗 Recettes "+FL.libelle(fa);n.hidden=false}})();
+  try{history.scrollRestoration="manual"}catch(e){}
   var Q=new URLSearchParams(location.search),essai=Q.get("vitrine");/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
   var vitrine=!!essai||!st||(st.profil==="tout"&&!st.perso);
   var ORDRE=["famille","debutant","gourmand","antigaspi","equilibre","perso"];
@@ -1045,7 +1046,11 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   function construire(){var li=PAGES.indexOf(livePid);
     PAGES.forEach(function(pid,i){if(pid===livePid)return;var pg=apercu(pid,i);if(i<li)pager.insertBefore(pg,live);else pager.appendChild(pg)});
     var dots=$("pdots");dots.innerHTML=PAGES.map(function(){return "<i></i>"}).join("");
-    copieCarrousel();aller(li,true);maj();hauteur();if(vitrine)accroche()}
+    copieCarrousel();aller(li,true);maj();hauteur();if(vitrine)accroche();
+    /* à chaque ouverture ou rafraîchissement : retour sur la page du profil de l'utilisateur, en haut */
+    function retour(){der=-1;aller(li,true);maj();hauteur()}
+    addEventListener("load",function(){retour();setTimeout(retour,300)});
+    addEventListener("pageshow",function(e){if(e.persisted){scrollTo(0,0);retour()}})}
   function accroche(){var h=live.querySelector(".hero h1"),l=live.querySelector(".hero .lead");if(h)h.textContent="Cookapli c'est quoi ?";if(l)l.textContent="Cookapli c'est toi !"}
 
   /* deux recettes de saison, tirées au hasard pour chaque page */
