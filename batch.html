@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6b78">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Batch cooking 3 h · Cookapli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef8fb;--wash1:#f1fafc;--wash2:#e6f6f7;--wash3:#eaf5fb;--card:#fff;--line:#d3e6ea;--ink:#1f2a24;
+  --acc:#0f6b78;--acc-deep:#0b4f59;--acc-pale:#e3f6f8;--on:#fff;--sh-card:0 2px 8px rgba(0,0,0,.1);--sh-header:0 2px 10px rgba(0,0,0,.15);
+  --vert:#1f6b3d;--vert-pale:#eef7f0;--froid:#2b5d9b;--froid-pale:#e8f0fb;
+  --font:Nunito,"Segoe UI",Arial,sans-serif;color-scheme:light;
+}
+html{font-size:14px}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);font:1rem/1.45 var(--font);background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg);min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--acc);z-index:10}
+.wrap{max-width:700px;margin:0 auto}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:where(a,button,input,label):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--acc);color:var(--on);box-shadow:var(--sh-header);padding-block:8px 10px}
+.hdr .top{display:flex;align-items:center;gap:10px}
+.hdr a.back{display:inline-flex;align-items:center;min-height:44px;color:var(--on);font-weight:800;font-size:1.05rem;text-underline-offset:3px}
+.hdr h1{margin:0;font-size:1.6rem;line-height:1.1;font-weight:800}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.steps button{border:0;border-radius:99px;min-height:40px;background:rgba(255,255,255,.16);color:#fff;font:inherit;font-weight:800;font-size:.92rem;cursor:pointer;padding:4px 6px}
+.steps button[aria-current="step"]{background:#fff;color:var(--acc)}
+.steps button:disabled{opacity:.5;cursor:default}
+main{padding-block:16px 60px}
+h2{margin:0 0 6px;font-size:1.3rem;color:var(--acc);font-weight:800}
+p{margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-card);padding:14px}
+.stack{display:grid;gap:14px}
+.lead{color:#3d5559;font-weight:600}
+.q{display:grid;gap:8px}
+.q>b{font-size:1.08rem;color:var(--acc-deep)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:2px solid var(--acc);background:#fff;color:var(--acc);border-radius:99px;padding:8px 14px;font:inherit;font-weight:800;font-size:.98rem;cursor:pointer;min-height:44px}
+.chip[aria-pressed="true"]{background:var(--acc);color:#fff}
+.pers{display:inline-flex;align-items:center;gap:10px}
+.pers button{width:44px;height:44px;border-radius:50%;border:2px solid var(--acc);background:#fff;color:var(--acc);font:inherit;font-size:1.4rem;font-weight:800;cursor:pointer;line-height:1}
+.pers button:disabled{opacity:.4;cursor:default}
+.pers output{min-width:2ch;text-align:center;font-size:1.5rem;font-weight:800}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;border:2px solid var(--acc);border-radius:99px;background:var(--acc);color:var(--on);font:inherit;font-size:1.08rem;font-weight:800;cursor:pointer;text-decoration:none;padding:6px 16px;text-align:center}
+.btn.alt{background:#fff;color:var(--acc)}
+.btn.small{min-height:40px;font-size:.95rem;padding:4px 14px}
+.btn:disabled{opacity:.55;cursor:default}
+.recap{display:flex;flex-wrap:wrap;gap:6px 14px;font-weight:700;color:var(--acc-deep)}
+.avert{background:#fff6e0;border:1px solid #e9c44a;border-radius:14px;padding:10px 12px;font-size:.95rem;color:#3a2a00;font-weight:600}
+.plat{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:start}
+.plat .ph{width:96px;height:96px;border-radius:14px;overflow:hidden;background:linear-gradient(135deg,#cdeccb,#bfe8ee);display:grid;place-items:center;font-size:2.2rem}
+.plat .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.plat h3{margin:0;font-size:1.12rem;line-height:1.2;font-weight:800}
+.plat h3 a{color:inherit;text-decoration:none}
+.plat h3 a:hover{text-decoration:underline}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:99px;padding:2px 10px;font-size:.85rem;font-weight:800;background:#f0f3f4;color:#29383b}
+.tag.frigo{background:var(--vert-pale);color:var(--vert)}
+.tag.cong{background:var(--froid-pale);color:var(--froid)}
+.tag.kc{background:#e9f6e2;color:#2b5a1f}
+.tag.bu1{background:#e3f0ff;color:#1d4f8f}.tag.bu2{background:#d6e7ff;color:#1d4f8f}.tag.bu3{background:#c4dbff;color:#123f78}
+.jours{margin:6px 0 0;font-weight:800;color:var(--acc-deep)}
+.fin{margin:8px 0 0;background:var(--vert-pale);border-radius:12px;padding:6px 10px;font-weight:700;font-size:.93rem;color:#1f3a2a}
+.pact{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.semaine{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+.semaine li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-bottom:1px solid rgba(15,107,120,.12)}
+.semaine li:last-child{border-bottom:0}
+.semaine .j{flex:none;width:7.5em;font-weight:800;color:var(--acc-deep)}
+.semaine .c{flex:none;font-size:.85rem;font-weight:800}
+.semaine .c.frigo{color:var(--vert)}.semaine .c.cong{color:var(--froid)}
+.ray h3{margin:4px 0 4px;font-size:1.02rem;color:var(--acc-deep)}
+.ray ul{list-style:none;margin:0;padding:0}
+.ray li{border-bottom:1px solid rgba(15,107,120,.12)}
+.ray li:last-child{border-bottom:0}
+.it{display:flex;gap:10px;align-items:flex-start;padding:8px 2px;cursor:pointer}
+.it input{flex:none;width:24px;height:24px;margin:2px 0 0;accent-color:#1f9d55}
+.it span{display:flex;flex-direction:column;line-height:1.25}
+.it b{font-weight:800}
+.it small{color:#3d5559;font-weight:600;font-size:.86rem}
+.it .res{color:var(--vert);font-weight:800}
+.vide{text-align:center;color:#3d5559;font-weight:700;padding:20px 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,14px);width:min(520px,calc(100% - 32px));display:flex;align-items:center;gap:12px;background:#fff;color:#1f2a24;border:1px solid #d3e6ea;border-left:6px solid #0f6b78;border-radius:16px;padding:12px 14px;box-shadow:0 10px 28px rgba(15,107,120,.25);font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:30}
+#toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:#0f6b78;color:#fff;display:grid;place-items:center;font-weight:700}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+@media (max-width:420px){.plat{grid-template-columns:76px 1fr}.plat .ph{width:76px;height:76px}}
+</style>
+</head>
+<body>
+<header class="hdr gut">
+  <div class="wrap">
+    <div class="top"><a class="back" href="./">← Cookapli</a></div>
+    <h1>Batch cooking 3 h</h1>
+    <nav class="steps" aria-label="Étapes">
+      <button type="button" data-e="1">1. Ma semaine</button>
+      <button type="button" data-e="2">2. Mes plats</button>
+      <button type="button" data-e="3">3. Mes courses</button>
+    </nav>
+  </div>
+</header>
+<main class="gut"><div class="wrap">
+
+  <section id="e1" class="stack" aria-labelledby="h1s">
+    <div class="card stack">
+      <div><h2 id="h1s">Ma semaine</h2><p class="lead">3 h le week-end, et tes repas sont prêts. Dis-moi ce que tu veux couvrir.</p></div>
+      <div class="q"><b>Combien de personnes ?</b>
+        <div class="pers"><button type="button" id="pm" aria-label="Une personne de moins">−</button><output id="pv" aria-live="polite">2</output><button type="button" id="pp" aria-label="Une personne de plus">+</button></div></div>
+      <div class="q"><b>Quels repas ?</b>
+        <div class="chips" id="cRepas"><button type="button" class="chip" data-v="diner">Les dîners</button><button type="button" class="chip" data-v="dejdin">Déjeuners et dîners</button></div></div>
+      <div class="q"><b>Combien de jours ?</b>
+        <div class="chips" id="cJours"><button type="button" class="chip" data-v="3">3 jours</button><button type="button" class="chip" data-v="4">4 jours</button><button type="button" class="chip" data-v="5">5 jours</button></div></div>
+      <p class="recap" id="recap1"></p>
+      <button type="button" class="btn" id="go2">Voir mes plats ➜</button>
+    </div>
+  </section>
+
+  <section id="e2" class="stack" aria-labelledby="h2s" hidden>
+    <div class="card stack">
+      <div><h2 id="h2s">Mes plats</h2><p class="recap" id="recap2"></p></div>
+      <p class="avert" id="manque" hidden></p>
+      <p class="lead">Les plats à manger en début de semaine vont au frigo ; les autres au congélateur, à sortir la veille. Un plat ne te plaît pas ? Touche « Changer ».</p>
+    </div>
+    <div id="plats" class="stack" aria-live="polite"></div>
+    <div class="pact" style="margin:0"><button type="button" class="btn alt small" id="soupe">+ Ajouter une soupe ou une entrée</button><button type="button" class="btn alt small" id="refaire">↻ Proposer une autre semaine</button></div>
+    <div class="card"><h2>Ma semaine en un coup d'œil</h2><ul class="semaine" id="semaine"></ul></div>
+    <button type="button" class="btn" id="go3">Voir mes courses ➜</button>
+  </section>
+
+  <section id="e3" class="stack" aria-labelledby="h3s" hidden>
+    <div class="card stack">
+      <div><h2 id="h3s">Mes courses</h2><p class="lead" id="lead3"></p></div>
+      <button type="button" class="btn" id="ajout">🛒 Ajouter à ma liste de courses</button>
+      <a class="btn alt" href="courses.html" id="voirListe" hidden>Voir ma liste de courses</a>
+    </div>
+    <div class="card" id="liste"></div>
+  </section>
+
+</div></main>
+<div id="toast" role="status" aria-live="polite"><span></span></div>
+
+<script src="../friscan/data.js?v=20"></script>
+<script src="budget.js?v=3"></script>
+<script src="filtres.js?v=3"></script>
+<script src="accueil.js?v=12"></script>
+<script src="../recettes/calories.js?v=2"></script>
+<script>
+(function(){
+"use strict";
+var $=function(i){return document.getElementById(i)};
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(x){return String(x||"").replace(/œ/gi,"oe").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"")}
+function slug(s){return String(s).normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
+function rows(t){var R=[],r=[],f="",q=false;for(var i=0;i<t.length;i++){var c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==","){r.push(f);f=""}else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;r.push(f);f="";R.push(r);r=[]}else f+=c}if(f||r.length){r.push(f);R.push(r)}return R}
+function lsGet(k,d){try{var v=JSON.parse(localStorage.getItem(k)||"null");return v==null?d:v}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function toast(m){var t=$("toast");t.querySelector("span").textContent=m;t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},3500)}
+function melange(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
+
+var HAS=typeof ING!=="undefined";
+var KEY="cookapli.batch",HIST="cookapli.batch.hist";
+var JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi"];
+var mois=new Date().getMonth()+1,SAISON=mois>=5&&mois<=9?"ete":"hiver";
+
+/* ---------- réglages de la semaine ---------- */
+var profil=window.CookAccueil?CookAccueil.lire():null;
+var S=lsGet(KEY,null)||{};
+if(!S.pers)S.pers=profil&&profil.profil==="famille"?4:2;
+if(!S.repas)S.repas="diner";
+if(!S.jours)S.jours=5;
+function sauver(){lsSet(KEY,S)}
+
+/* ---------- guess / réserves (même logique que le Livre) ---------- */
+function nrm(t){return " "+String(t||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/œ/g,"oe").replace(/[^a-z0-9]+/g," ").trim()+" "}
+function guess(t){if(!HAS)return null;var txt=nrm(t),best=null,bi=1e9,bl=0;
+  Object.keys(ING).forEach(function(id){ING[id].k.forEach(function(k){var pat=" "+nrm(k).trim()+(k.slice(-1)===" "?" ":"");var i=txt.indexOf(pat);if(i>=0&&(i<bi||(i===bi&&pat.length>bl))){best=id;bi=i;bl=pat.length}})});return best}
+window.cookGuess=window.cookGuess||guess;
+var frigo=lsGet("friscan.fridge",[]);if(!Array.isArray(frigo))frigo=[];
+var placard=lsGet("friscan.placard",null);if(!Array.isArray(placard))placard=HAS&&typeof PLACARD_DEFAUT!=="undefined"?PLACARD_DEFAUT:[];
+var EQ=HAS&&typeof SUBST!=="undefined"?SUBST:{};
+function enReserve(id){if(!id)return false;return [id].concat(EQ[id]||[]).some(function(x){return placard.indexOf(x)>=0||frigo.some(function(p){return p.ing===x})})}
+function auFrigo(id){return !!id&&[id].concat(EQ[id]||[]).some(function(x){return frigo.some(function(p){return p.ing===x})})}
+
+/* ---------- quantités ---------- */
+var FR={"½":.5,"¼":.25,"¾":.75,"⅓":1/3,"⅔":2/3};
+function nombre(s){s=s.trim();if(FR[s]!=null)return FR[s];var m=s.match(/^(\d+)\s*([½¼¾⅓⅔])$/);if(m)return +m[1]+FR[m[2]];m=s.match(/^(\d+)\/(\d+)$/);if(m)return m[1]/m[2];return parseFloat(s.replace(",","."))}
+function joli(v,unite){if(v>=50&&/\b(g|ml|cl)\b/i.test(unite||""))return String(Math.round(v/5)*5);if(v>=10)return String(Math.round(v));var r=Math.round(v*2)/2;if(r===0)r=Math.round(v*4)/4||v;return String(r).replace(".",",")}
+function echelle(t,k){if(!t||k===1)return t;return String(t).replace(/(\d+\s*[½¼¾⅓⅔]|\d+\/\d+|\d+(?:[.,]\d+)?|[½¼¾⅓⅔])(\s*[a-zA-Zé.]*)/,function(m,n,u){var v=nombre(n);if(isNaN(v))return m;return joli(v*k,u)+u})}
+
+/* ---------- recettes candidates ---------- */
+var BATCH=[],LIVRE={},FICHES=lsGet("recettes-fiches",{f:{}}).f||{},CSV=null;
+try{CSV=localStorage.getItem("recettes-csv")}catch(e){}
+function lireCsv(t){LIVRE={};var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;LIVRE[norm(n)]={n:n,s:slug(n),c:cur,i:(r[6]||"").trim()}})}
+if(CSV)lireCsv(CSV);
+function persDe(f){var m=String((f&&f.m&&f.m.pers)||(f&&f.pers)||"").match(/\d+/);return m?+m[0]:0}
+var FA=window.CookFiltres?CookFiltres.lire():[];
+function candidat(e){
+  var c={e:e,n:e.n,k:e.src+":"+norm(e.n)};
+  if(e.src==="friscan"){if(!HAS||typeof RECETTES==="undefined")return null;var r=RECETTES.filter(function(x){return norm(x.n)===norm(e.n)})[0];if(!r)return null;
+    c.r=r;c.pers=r.pers;c.url="../friscan/#r-"+r.id;c.img=r.img?"../friscan/"+encodeURI(r.img):"";c.emo=r.e;
+    c.ing=r.ing.filter(function(x){return !x[2]}).map(function(x){return{id:x[0],t:(x[1]?x[1]+" ":"")+(x[3]||ING[x[0]].n),q:x[1]||"",nom:x[3]||ING[x[0]].n}});
+    c.texte=window.CookFiltres?CookFiltres.texteFriscan(r,ING):"";c.diff="";
+  }else{var L=LIVRE[norm(e.n)],sl=L?L.s:slug(e.n),f=FICHES[sl];
+    c.f=f;c.pers=persDe(f)||4;c.url="../recettes/#"+sl;c.img=L&&L.i?"../recettes/"+encodeURI(L.i):"";c.emo="🍲";
+    c.ing=f&&f.ing?f.ing.filter(function(x){return !x.l&&x.t&&!/facultati|optionnel|pour servir/i.test(x.t)}).map(function(x){return{id:guess(x.t),t:x.t}}):[];
+    c.texte=f&&window.CookFiltres?CookFiltres.texteFiche(e.n,f):(FA.length?null:e.n);c.diff=f&&f.m?String(f.m.diff||""):"";c.sansFiche=!f}
+  return c}
+function okProfil(c){
+  if(c.e.saison!=="tout"&&c.e.saison!==SAISON)return false;
+  if(FA.length&&!(window.CookFiltres&&CookFiltres.okTexte(c.texte,FA)))return false;
+  if(profil&&profil.profil==="debutant"&&/difficile/i.test(c.diff))return false;
+  return true}
+function liste(type){return BATCH.filter(function(e){return e.type===type&&e.tenue!=="jourmeme"}).map(candidat).filter(function(c){return c&&okProfil(c)})}
+
+/* ---------- composition de la semaine ---------- */
+function creneaux(){var L=[];for(var d=0;d<S.jours;d++){if(S.repas==="dejdin")L.push({d:d,m:"midi"});L.push({d:d,m:"soir"})}return L}
+function nbPlats(repas){return repas<=4?repas:repas<=8?4:5}
+function repartir(n,repas){var a=[];for(var i=0;i<n;i++)a.push(Math.floor(repas/n)+(i<repas%n?1:0));return a}
+function vege(c){return c.e.prot==="Végétarien"}
+/* ordre : les plats qui ne se congèlent pas d'abord (frigo), les « possibles » en tête */
+function rang(c){return c.e.tenue==="possible"?0:!c.e.congele?1:2}
+function placer(plats){var cr=creneaux().sort(function(a,b){return (a.m==="soir"?0:1)-(b.m==="soir"?0:1)||a.d-b.d}),i=0,parts=repartir(plats.length,Math.min(cr.length,plats.length*2));
+  var ord=plats.slice().sort(function(a,b){return rang(a)-rang(b)});
+  return ord.map(function(c,j){var sl=cr.slice(i,i+parts[j]).sort(function(a,b){return a.d-b.d||(a.m==="midi"?0:1)-(b.m==="midi"?0:1)});i+=parts[j];return{c:c,sl:sl}})}
+function valide(P,niv){var four=0,feux=0,poss=0,prots={},nv=0;
+  for(var i=0;i<P.length;i++){var c=P[i].c,e=c.e,last=P[i].sl.length?P[i].sl[P[i].sl.length-1].d:0;
+    if(e.cuisson==="four")four++;else if(e.cuisson==="plaque"||e.cuisson==="friture")feux++;
+    if(e.tenue==="possible"){poss++;if(last>1)return false}
+    else if(!e.congele&&last>2)return false;
+    if(vege(c))nv++;else if(niv<2){if(prots[e.prot])return false;prots[e.prot]=1}}
+  if(poss>2)return false;
+  if(niv<1&&(four>2||feux>2)&&P.length<=4)return false;
+  if(niv<1&&(four>3||feux>3))return false;
+  return true}
+function score(P){var s=0,vus={},nv=0;P.forEach(function(p){var c=p.c;if(vege(c))nv++;if(c.e.tenue==="ideale")s+=2;
+    c.ing.forEach(function(x){if(!x.id)return;if(auFrigo(x.id))s+=1.5;if(vus[x.id]&&!/^(sel|poivre|huile|ail|oignon|epices|beurre|farine|sucre)$/.test(x.id))s+=1;vus[x.id]=1})});
+  if(nv)s+=3;return s+Math.random()*2}
+function recents(){var h=lsGet(HIST,[]),lim=Date.now()-21*864e5,o={};(Array.isArray(h)?h:[]).forEach(function(x){if(x.t>lim)o[x.k]=1});return o}
+function composer(){
+  var C=liste("plat"),rec=recents(),neufs=C.filter(function(c){return !rec[c.k]});if(neufs.length>=nbPlats(creneaux().length))C=neufs;
+  var n=Math.min(nbPlats(creneaux().length),C.length);if(!n)return{plats:[],dispo:0};
+  for(var niv=0;niv<3;niv++){var best=null,bs=-1;
+    for(var t=0;t<400;t++){var pick=melange(C.slice()).slice(0,n),P=placer(pick);if(!valide(P,niv))continue;var sc=score(P);if(sc>bs){bs=sc;best=P}}
+    if(best)return{plats:best,dispo:C.length}}
+  return{plats:placer(melange(C.slice()).slice(0,n)),dispo:C.length}}
+function changer(i){
+  var cur=PLAN.plats,C=liste("plat"),pris={};cur.forEach(function(p){pris[p.c.k]=1});
+  var vus=PLAN.vus||(PLAN.vus={});vus[cur[i].c.k]=1;
+  var alt=C.filter(function(c){return !pris[c.k]&&!vus[c.k]});if(!alt.length){PLAN.vus={};vus=PLAN.vus;vus[cur[i].c.k]=1;alt=C.filter(function(c){return !pris[c.k]&&c.k!==cur[i].c.k})}
+  if(!alt.length){toast("Pas d'autre plat qui correspond à ton profil pour l'instant");return}
+  var meme=alt.filter(function(c){return c.e.cuisson===cur[i].c.e.cuisson});melange(alt);melange(meme);
+  var essais=meme.concat(alt);
+  for(var niv=0;niv<3;niv++)for(var j=0;j<essais.length;j++){var pick=cur.map(function(p){return p.c});pick[i]=essais[j];var P=placer(pick);if(valide(P,niv)){PLAN.plats=P;garder();dessiner2();return}}
+  toast("Pas d'autre plat qui garde une semaine équilibrée")}
+function soupe(){
+  if(PLAN.soupe){PLAN.soupe=null;garder();dessiner2();return}
+  var C=liste("entree").filter(function(c){return c.e.tenue==="ideale"}),so=C.filter(function(c){return /soupe|veloute|creme de/.test(norm(c.n))});
+  var L=melange((so.length?so:C).slice());if(!L.length){toast("Pas encore de soupe qui correspond à ton profil");return}
+  PLAN.soupe={c:L[0],sl:creneaux().filter(function(x){return x.m==="soir"}).slice(0,2)};garder();dessiner2()}
+
+/* ---------- état sauvegardé ---------- */
+var PLAN=null;
+function garder(){S.plan={plats:PLAN.plats.map(function(p){return{k:p.c.k,sl:p.sl}}),soupe:PLAN.soupe?{k:PLAN.soupe.c.k,sl:PLAN.soupe.sl}:null,dispo:PLAN.dispo,cfg:cfgAct()};sauver()}
+function restaurer(){if(!S.plan||!S.plan.plats)return null;var tous={};["plat","entree"].forEach(function(t){BATCH.filter(function(e){return e.type===t}).forEach(function(e){var c=candidat(e);if(c)tous[c.k]=c})});
+  var P=S.plan.plats.map(function(x){return tous[x.k]?{c:tous[x.k],sl:x.sl}:null});if(P.some(function(x){return!x}))return null;
+  return{plats:P,soupe:S.plan.soupe&&tous[S.plan.soupe.k]?{c:tous[S.plan.soupe.k],sl:S.plan.soupe.sl}:null,dispo:S.plan.dispo}}
+
+/* ---------- écran 1 ---------- */
+function dessiner1(){$("pv").textContent=S.pers;$("pm").disabled=S.pers<=1;$("pp").disabled=S.pers>=12;
+  [].forEach.call($("cRepas").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.v===S.repas))});
+  [].forEach.call($("cJours").children,function(b){b.setAttribute("aria-pressed",String(+b.dataset.v===S.jours))});
+  var n=creneaux().length;$("recap1").textContent=n+" repas pour "+S.pers+" personne"+(S.pers>1?"s":"")+" · "+nbPlats(n)+" plats à cuisiner"}
+$("pm").onclick=function(){S.pers=Math.max(1,S.pers-1);sauver();dessiner1()};
+$("pp").onclick=function(){S.pers=Math.min(12,S.pers+1);sauver();dessiner1()};
+$("cRepas").onclick=function(e){var b=e.target.closest("[data-v]");if(!b)return;S.repas=b.dataset.v;sauver();dessiner1()};
+$("cJours").onclick=function(e){var b=e.target.closest("[data-v]");if(!b)return;S.jours=+b.dataset.v;sauver();dessiner1()};
+function cfgAct(){return [S.pers,S.repas,S.jours,FA.join(","),SAISON].join("|")}
+$("go2").onclick=function(){if(!PLAN||!S.plan||S.plan.cfg!==cfgAct())nouvelle();aller(2)};
+
+/* ---------- écran 2 ---------- */
+function nouvelle(){var r=composer();PLAN={plats:r.plats,soupe:null,dispo:r.dispo};garder()}
+function kcal(c){try{if(c.r&&window.CookBudget&&CookBudget.kcalFriscan)return CookBudget.kcalFriscan(c.r,ING);if(c.f&&window.CookCalc)return CookCalc.kcal(c.f)}catch(e){}return 0}
+function budget(c){try{if(!window.CookBudget||!CookBudget.pret())return null;if(c.r)return CookBudget.recetteFriscan(c.r,ING);if(c.f&&window.CookCalc)return CookCalc.budget(c.f,guess)}catch(e){}return null}
+function nomCr(x){return JOURS[x.d]+(S.repas==="dejdin"?(x.m==="midi"?" midi":" soir"):"")}
+function stock(c,x){return x.d<=1||!c.e.congele?"frigo":"cong"}
+function carte(p,i,estSoupe){var c=p.c,e=c.e,port=S.pers*p.sl.length,kc=kcal(c),bu=budget(c);
+  var cong=p.sl.some(function(x){return stock(c,x)==="cong"}),fr=p.sl.some(function(x){return stock(c,x)==="frigo"});
+  var h='<article class="card plat"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">':esc(c.emo||"🍲"))+'</div><div>'+
+    '<h3><a href="'+esc(c.url)+'">'+esc(c.n)+'</a></h3>'+
+    '<p class="jours">'+(estSoupe?"En entrée · ":"")+p.sl.map(nomCr).join(" et ")+' · '+port+' portion'+(port>1?"s":"")+'</p><div class="tags">'+
+    (fr?'<span class="tag frigo">🧊 Frigo</span>':'')+(cong?'<span class="tag cong">❄️ Congélateur'+(fr?" ensuite":"")+'</span>':'')+
+    '<span class="tag">'+({four:"🔥 Four",plaque:"🍳 Feux",cru:"🥗 Sans cuisson",friture:"🍳 Friture"}[e.cuisson]||"")+'</span>'+
+    (kc?'<span class="tag kc" title="Estimation indicative, sans valeur médicale">≈ '+kc+' kcal / pers.</span>':'')+
+    (bu?'<span class="tag bu'+bu.niv.n+'" title="Budget par personne : estimation à partir de prix moyens">'+bu.niv.s+'</span>':'')+'</div>'+
+    (e.fin?'<p class="fin">Le jour même : '+esc(e.fin)+'</p>':'')+
+    (c.sansFiche?'<p class="fin" style="background:#fff6e0">Fiche pas encore chargée : ouvre le Livre de recettes une fois, puis reviens.</p>':'')+
+    '<div class="pact">'+(estSoupe?'<button type="button" class="btn alt small" data-soupe>Retirer</button>':'<button type="button" class="btn alt small" data-ch="'+i+'">↻ Changer</button>')+'<a class="btn alt small" href="'+esc(c.url)+'">Voir la fiche</a></div></div></article>';
+  return h}
+function dessiner2(){if(!PLAN)return;var P=PLAN.plats,n=creneaux().length,couv=P.reduce(function(a,p){return a+p.sl.length},0);
+  $("recap2").textContent=couv+" repas · "+S.pers+" personne"+(S.pers>1?"s":"")+" · "+P.length+" plats";
+  var m=$("manque");
+  if(!P.length){m.hidden=false;m.textContent="Aucun plat de saison ne correspond encore à ton profil. De nouvelles recettes arrivent bientôt.";}
+  else if(couv<n){m.hidden=false;m.textContent=PLAN.dispo+" plat"+(PLAN.dispo>1?"s":"")+" seulement correspond"+(PLAN.dispo>1?"ent":"")+" à ton profil cette saison : ta semaine couvre "+couv+" repas sur "+n+".";}
+  else m.hidden=true;
+  $("plats").innerHTML=P.map(function(p,i){return carte(p,i)}).join("")+(PLAN.soupe?carte(PLAN.soupe,0,true):"");
+  $("soupe").textContent=PLAN.soupe?"− Retirer la soupe":"+ Ajouter une soupe ou une entrée";
+  var cr=creneaux(),L=cr.map(function(x){var p=P.filter(function(p){return p.sl.some(function(y){return y.d===x.d&&y.m===x.m})})[0];
+    return '<li><span class="j">'+esc(nomCr(x))+'</span><span style="flex:1">'+(p?esc(p.c.n):'<i>—</i>')+'</span>'+(p?'<span class="c '+stock(p.c,x)+'">'+(stock(p.c,x)==="cong"?"❄️ à sortir la veille":"🧊 frigo")+'</span>':'')+'</li>'});
+  $("semaine").innerHTML=L.join("");$("go3").disabled=!P.length}
+$("plats").onclick=function(e){var b=e.target.closest("[data-ch]");if(b){changer(+b.dataset.ch);return}if(e.target.closest("[data-soupe]"))soupe()};
+$("soupe").onclick=soupe;
+$("refaire").onclick=function(){nouvelle();dessiner2();toast("Voilà une autre semaine")};
+$("go3").onclick=function(){aller(3)};
+
+/* ---------- écran 3 ---------- */
+var LIGNES=[];
+function courses(){var P=PLAN.plats.concat(PLAN.soupe?[PLAN.soupe]:[]),M={},ord=[];
+  P.forEach(function(p){var c=p.c,k=(S.pers*p.sl.length)/(c.pers||S.pers);
+    c.ing.forEach(function(x){var cle=x.id||"t:"+norm(x.t),q=c.r?(x.q?echelle(x.q,k):""):echelle(x.t,k);
+      if(!M[cle]){M[cle]={id:x.id,nom:x.id?ING[x.id].n:x.t,q:[],src:[],res:enReserve(x.id),r:x.id&&ING[x.id].r||"autre"};ord.push(cle)}
+      if(q&&M[cle].q.indexOf(q)<0)M[cle].q.push(q);if(M[cle].src.indexOf(c.n)<0)M[cle].src.push(c.n)})});
+  return ord.map(function(k){var o=M[k];o.k=k;o.on=!o.res;return o})}
+function dessiner3(){LIGNES=courses();var RC=HAS&&typeof RAYONS_COURSES!=="undefined"?RAYONS_COURSES:{},G={},ordre=Object.keys(RC).concat(["autre"]);
+  LIGNES.forEach(function(l,i){l.i=i;(G[l.r]=G[l.r]||[]).push(l)});
+  var nb=LIGNES.filter(function(l){return l.on}).length,nr=LIGNES.filter(function(l){return l.res}).length;
+  $("lead3").textContent="Tous les ingrédients de ta semaine, quantités calculées pour tes portions."+(nr?" Ce qui est déjà dans tes réserves est décoché.":"");
+  if(!LIGNES.length){$("liste").innerHTML='<p class="vide">Les ingrédients s\'afficheront ici.</p>';return}
+  $("liste").innerHTML=ordre.filter(function(r){return G[r]}).map(function(r){return '<div class="ray"><h3>'+esc(RC[r]?RC[r].n:"Autres")+'</h3><ul>'+G[r].map(function(l){
+    return '<li><label class="it"><input type="checkbox" data-i="'+l.i+'"'+(l.on?" checked":"")+'><span><b>'+esc(l.nom)+'</b><small>'+esc(l.q.join(" + "))+(l.q.length?" · ":"")+esc(l.src.join(", "))+'</small>'+(l.res?'<small class="res">✓ déjà dans tes réserves</small>':'')+'</span></label></li>'}).join("")+'</ul></div>'}).join("");
+  majAjout()}
+function majAjout(){var nb=LIGNES.filter(function(l){return l.on}).length;$("ajout").disabled=!nb;$("ajout").textContent=nb?"🛒 Ajouter "+nb+" article"+(nb>1?"s":"")+" à ma liste de courses":"Rien à acheter : tout est en réserve"}
+$("liste").onchange=function(e){var c=e.target.closest("[data-i]");if(!c)return;LIGNES[+c.dataset.i].on=c.checked;majAjout()};
+$("ajout").onclick=function(){var l=lsGet("cookapli.courses",[]);if(!Array.isArray(l))l=[];var n=0;
+  LIGNES.filter(function(x){return x.on}).forEach(function(x){var same=l.filter(function(y){return !y.done&&(x.id?y.ing===x.id:!y.ing&&norm(y.name)===norm(x.nom))})[0];
+    var src=x.src.map(function(s){return s}).concat(["Batch cooking"]);
+    if(same){x.q.forEach(function(q){if(same.qty.indexOf(q)<0)same.qty.push(q)});src.forEach(function(s){if(same.src.indexOf(s)<0)same.src.push(s)})}
+    else l.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:x.nom,raw:x.nom,ing:x.id||null,qty:x.q.slice(),src:src,done:false,added:Date.now()});n++});
+  lsSet("cookapli.courses",l);
+  var h=lsGet(HIST,[]);if(!Array.isArray(h))h=[];var t=Date.now();PLAN.plats.forEach(function(p){h.push({k:p.c.k,t:t})});lsSet(HIST,h.filter(function(x){return x.t>t-60*864e5}));
+  toast(n+" article"+(n>1?"s":"")+" ajouté"+(n>1?"s":"")+" à ta liste de courses");$("voirListe").hidden=false;$("ajout").textContent="✓ Ajouté à ta liste";$("ajout").disabled=true};
+
+/* ---------- navigation ---------- */
+var etape=1;
+function aller(n){if(n>1&&!PLAN)n=1;etape=n;[1,2,3].forEach(function(k){$("e"+k).hidden=k!==n});
+  [].forEach.call(document.querySelectorAll(".steps button"),function(b){var k=+b.dataset.e;if(k===n)b.setAttribute("aria-current","step");else b.removeAttribute("aria-current");b.disabled=k>1&&!PLAN});
+  if(n===1)dessiner1();if(n===2)dessiner2();if(n===3)dessiner3();
+  try{history.replaceState(null,"","#"+["","semaine","plats","courses"][n])}catch(e){}window.scrollTo(0,0)}
+document.querySelector(".steps").onclick=function(e){var b=e.target.closest("[data-e]");if(!b||b.disabled)return;var n=+b.dataset.e;if(n===2&&!PLAN)nouvelle();aller(n)};
+
+/* ---------- chargement ---------- */
+function demarrer(){PLAN=restaurer();if(PLAN&&S.plan.cfg!==cfgAct())PLAN=null;var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
+fetch("batch.json?v=2").then(function(r){return r.json()}).then(function(j){BATCH=(j.recettes||[]);demarrer();
+  /* Livre : liste et fiches à jour (même cache que le Livre de recettes) */
+  var M=typeof MES_RECETTES!=="undefined"?MES_RECETTES:null;if(!M)return;
+  Promise.all([M.csv?fetch(M.csv+"&t="+Date.now()).then(function(r){return r.ok?r.text():null}).catch(function(){return null}):null,
+    M.fiches?fetch(M.fiches+"?all=1").then(function(r){return r.ok?r.json():null}).catch(function(){return null}):null]).then(function(res){
+    var ch=false;if(res[0]){lireCsv(res[0]);try{localStorage.setItem("recettes-csv",res[0])}catch(e){}ch=true}
+    if(res[1]&&res[1].fiches){FICHES=res[1].fiches;lsSet("recettes-fiches",{f:FICHES,t:Date.now()});ch=true}
+    if(ch){var P=restaurer();if(P)PLAN=P;if(etape===2)dessiner2();else if(etape===3)dessiner3()}})
+}).catch(function(){$("e1").innerHTML='<div class="card"><p class="vide">Le batch cooking n\'a pas pu se charger. Vérifie ta connexion puis recharge la page.</p></div>'});
+if(window.CookBudget)CookBudget.charger().then(function(d){if(d&&PLAN&&etape===2)dessiner2()});
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
+</body>
+</html>

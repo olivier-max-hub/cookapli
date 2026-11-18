@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 86</p>
+  <p class="legal ver">Cookapli · version 87</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -785,6 +785,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
   document.addEventListener("click",function(e){
     var b=e.target.closest("[data-tool]");if(!b)return;
     if(b.dataset.tool==="occasion"&&window.feteMascotte){window.feteMascotte();return}
+    if(b.dataset.tool==="batch"){location.href="batch.html";return}
     toast(NAMES[b.dataset.tool]+" arrive bientôt dans Cookapli");
   });
 })();
