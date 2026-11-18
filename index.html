@@ -552,6 +552,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 .pg.vitrine .fnote{display:none}
 .fvide{grid-column:1/-1;text-align:center;font-weight:700;color:#3d5559;margin:8px 0}
 .pg:not(.vitrine) .hero .lead{display:none!important}
+.pg.outils .mo-box{background:rgba(255,255,255,.9);border-radius:22px;padding:14px 14px 16px;box-shadow:var(--sh-card)}
 </style>
 </head>
 <body>
@@ -674,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 74</p>
+  <p class="legal ver">Cookapli · version 75</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -689,6 +690,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 <script src="../friscan/data.js?v=18"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=2"></script>
+<script src="mesoutils.js?v=1"></script>
 <script src="../recettes/calories.js?v=1"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -978,19 +980,19 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   var Q=new URLSearchParams(location.search),essai=Q.get("vitrine");/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
   var vitrine=!!essai||!st||(st.profil==="tout"&&!st.perso);
   var ORDRE=["famille","debutant","gourmand","antigaspi","equilibre","perso"];
-  var livePid=vitrine?"vitrine":(st.perso||st.profil==="tout")?"perso":st.profil;
-  if(ORDRE.indexOf(livePid)<0&&livePid!=="vitrine")livePid="perso";
+  /* la dernière page est « Mes outils » ; un accueil modifié reste sur la page de son profil de départ */
+  var livePid=vitrine?"vitrine":(ORDRE.indexOf(st.profil)>=0&&st.profil!=="perso")?st.profil:"famille";
   var PAGES=vitrine?["vitrine"].concat(ORDRE):ORDRE.slice();
   var FONDS={famille:"fond/famille.webp",debutant:"fond/debutant.webp",gourmand:"fond/gourmand.webp",antigaspi:"fond/antigaspi.webp",equilibre:"fond/equilibre.webp"};
   var CACHE={livre:1,celebrations:1};/* le Livre a sa grande tuile « Voir toutes les recettes » ; Célébrations attend */
-  function info(pid){if(pid==="perso")return{n:"Personnaliser",sub:"Choisis toi-même tes outils et leur ordre",blocs:A.profil("tout").blocs};if(pid==="vitrine")return{n:"Tous les outils",sub:"",blocs:A.profil("tout").blocs};return A.profil(pid)}
+  function info(pid){if(pid==="perso")return{n:"Mes outils",sub:"Ton profil, tes outils, ton régime et tes allergies",blocs:[]};if(pid==="vitrine")return{n:"Tous les outils",sub:"",blocs:A.profil("tout").blocs};return A.profil(pid)}
   function el(t,c,h){var e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e}
   function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
   /* bandeau du haut de chaque page, avec la flèche vers la page suivante */
   function bandeau(pid,i){var p=info(pid),b=el("div","pband"),dernier=i===PAGES.length-1;
     if(pid==="vitrine")b.innerHTML='<span class="pb-t"><small>Ton espace</small><b>Choisis tes outils</b></span><button type="button" class="pb-go">Personnalise ton espace <span class="arr" aria-hidden="true">➜</span></button>';
-    else b.innerHTML='<span class="pb-t"><small>'+(pid===livePid?"Ton profil ✓":"Profil")+'</small><b>'+esc(p.n)+'</b></span>'+(dernier?'':'<button type="button" class="pb-next" aria-label="Profil suivant"><span class="arr" aria-hidden="true">➜</span></button>');
+    else b.innerHTML='<span class="pb-t"><small>'+(pid===livePid?"Ton profil ✓":"Profil")+'</small><b>'+esc(p.n)+(pid===livePid&&st&&st.perso?' · modifié':'')+'</b></span>'+(dernier?'':'<button type="button" class="pb-next" aria-label="Profil suivant"><span class="arr" aria-hidden="true">➜</span></button>');
     b.dataset.i=i;return b}
   /* boutons du bas : Choisir ce profil (à gauche) et Voir tous les outils (à droite, couleurs inversées) */
   function boutons(row,pid){row.innerHTML="";if(pid==="vitrine"){row.hidden=true;return}
@@ -999,7 +1001,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     else if(pid===livePid){a.textContent="✓ C'est ton profil";a.disabled=true}
     else{a.textContent="Choisir ce profil";a.onclick=function(){A.choisirProfil(pid);if(essai)location.href="./";else location.reload()}}
     row.appendChild(a);
-    if(pid!=="perso"){var t=el("a","btn inv","Voir tous les outils");t.href="perso.html";row.appendChild(t)}}
+    if(pid!=="perso"){var t=el("a","btn inv","Voir tous les outils");t.href="#";t.onclick=function(e){e.preventDefault();aller(PAGES.length-1);var y=pager.getBoundingClientRect().top+scrollY-90;scrollTo({top:Math.max(0,y),behavior:"smooth"})};row.appendChild(t)}}
   function cl(sel){var o=live.querySelector(sel);if(!o)return null;var c=o.cloneNode(true);c.removeAttribute("id");
     [].forEach.call(c.querySelectorAll("[id]"),function(x){x.removeAttribute("id")});c.classList.remove("off");c.style.order="";c.removeAttribute("hidden");return c}
 
@@ -1023,7 +1025,12 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
 
   /* aperçus des autres profils */
   var carous=[];
-  function apercu(pid,i){var p=info(pid),pg=el("div","pg apercu");pg.dataset.pid=pid;
+  var modifie=false;
+  function mesOutils(i){var pg=el("div","pg outils");pg.dataset.pid="perso";pg.appendChild(bandeau("perso",i));var d=el("p","pdesc");d.textContent=info("perso").sub;pg.appendChild(d);
+    var c=el("div","mo-box");pg.appendChild(c);
+    if(window.CookMesOutils)CookMesOutils.monter(c,{change:function(){modifie=true},voir:function(){if(modifie)location.reload();else aller(PAGES.indexOf(livePid))}});
+    return pg}
+  function apercu(pid,i){if(pid==="perso")return mesOutils(i);var p=info(pid),pg=el("div","pg apercu");pg.dataset.pid=pid;
     pg.appendChild(bandeau(pid,i));var d=el("p","pdesc");d.textContent=p.sub;pg.appendChild(d);
     var blocs=p.blocs;
     if(blocs.indexOf("reserves")>=0){var hr=cl(".hero");if(hr){var f=hr.querySelector("form");if(f)f.onsubmit=function(e){e.preventDefault();var src=$("t-have"),inp=$("have-input");if(!src||!inp)return;inp.value=f.querySelector("input").value;src.dispatchEvent(new Event("submit",{cancelable:true}))};pg.appendChild(hr)}}
@@ -1052,7 +1059,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   function idx(){return Math.max(0,Math.min(PAGES.length-1,Math.round(pager.scrollLeft/pas())))}
   function aller(i,net){pager.scrollTo({left:i*pas(),behavior:net?"auto":"smooth"})}
   var der=-1;
-  function maj(){var i=idx();if(i===der)return;der=i;
+  function maj(){var i=idx();if(i===der)return;if(modifie&&PAGES[der]==="perso"&&PAGES[i]!=="perso"){location.reload();return}der=i;
     [].forEach.call(document.querySelectorAll("#pdots i"),function(d,k){d.classList.toggle("on",k===i)});
     var fd=FONDS[PAGES[i]];document.body.classList.toggle("fond-profil",!!fd);
     if(fd){var f=$("fondProfil");f.style.backgroundImage="url("+fd+")";var h=document.querySelector(".hdr");if(h)document.documentElement.style.setProperty("--hb",Math.round(h.getBoundingClientRect().bottom+6)+"px")}}

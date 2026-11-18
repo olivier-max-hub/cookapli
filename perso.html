@@ -92,66 +92,13 @@ section[hidden]{display:none}
   </div>
 </header>
 <main class="gut">
-  <div class="wrap">
-    <section aria-labelledby="h1p">
-      <h2 id="h1p">Ton profil</h2>
-      <div class="pchips" id="profils" role="group" aria-label="Profil"></div>
-    </section>
-    <section aria-labelledby="h2p">
-      <h2 id="h2p">Les outils de ton profil</h2>
-      <ul class="vlist" id="blocsProfil"></ul>
-    </section>
-    <section aria-labelledby="h3p" id="secAutres">
-      <h2 id="h3p">Autres outils</h2>
-      <ul class="vlist" id="blocsAutres"></ul>
-    </section>
-    <section aria-labelledby="h4p">
-      <h2 id="h4p">Régime et allergies</h2>
-      <ul class="vlist" id="filtres"></ul>
-      <p class="avert"><b>⚠️ Allergies :</b> Cookapli repère les ingrédients des recettes, mais ne connaît pas la composition exacte des produits que tu achètes (traces, bouillons, sauces…). Vérifie toujours les étiquettes.</p>
-    </section>
-    <div class="btns">
-      <a class="btn" href="./">Voir mon accueil</a>
-      <button type="button" class="btn alt" id="reset">Revenir aux outils du profil</button>
-    </div>
-  </div>
+  <div class="wrap" id="mesOutils"></div>
 </main>
-<div id="toast" role="status" aria-live="polite"></div>
 <script src="accueil.js?v=12"></script>
 <script src="filtres.js?v=2"></script>
+<script src="mesoutils.js?v=1"></script>
 <script src="commentaire.js?v=6" data-mode="tete" data-header=".toprow" data-place="fin" data-context="Cookapli · Mes outils" defer></script>
-<script>
-(function(){
-  var A=window.CookAccueil,F=window.CookFiltres,$=function(id){return document.getElementById(id)};
-  var s=A.lire()||A.choisirProfil("famille");if(s.profil==="tout"&&!s.perso)s=A.choisirProfil("famille");
-  /* outils proposés dans la liste (les autres blocs sont toujours là ou pas encore prêts) */
-  var OUTILS={quecuisiner:["🍳","Des recettes testées","ce que tu peux cuisiner avec tes réserves"],chrono:["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],antigaspi:["♻️","Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],courses:["🛒","Courses auto","en un clic, ce qui manque pour ta recette"],equilibre:["⚖️","Calories / personne","compose ton menu et estime ses calories"],batch:["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"]};
-  var ICF={vege:"🥕",vegan:"🌱",gluten:"🌾",coque:"🌰",arachide:"🥜",poisson:"🐟",fruitsmer:"🦐"};
-  function toast(m,annuler){var t=$("toast");t.innerHTML="";var sp=document.createElement("span");sp.textContent=m;t.appendChild(sp);
-    if(annuler){var b=document.createElement("button");b.type="button";b.textContent="Annuler";b.onclick=function(){annuler();t.classList.remove("on")};t.appendChild(b)}
-    t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},4000)}
-  function ligne(ic,titre,sous,coche,onchange){var li=document.createElement("li"),l=document.createElement("label");l.className="vl";
-    l.innerHTML='<span class="vl-i" aria-hidden="true"></span><span class="vl-t"><b></b><small></small></span><input type="checkbox" class="vl-c">';
-    l.querySelector(".vl-i").textContent=ic;l.querySelector("b").textContent=titre;l.querySelector("small").textContent=sous;
-    var c=l.querySelector("input");c.checked=coche;c.onchange=function(){onchange(c.checked)};li.appendChild(l);return li}
-  function dessiner(){
-    var P=$("profils");P.textContent="";
-    A.PROFILS.filter(function(p){return p.id!=="tout"}).forEach(function(p){var b=document.createElement("button");b.type="button";b.className="pchip";
-      var on=p.id===s.profil;b.setAttribute("aria-pressed",String(on));b.textContent=p.n+(on&&s.perso?" (modifié)":"");
-      b.onclick=function(){if(on&&!s.perso)return;var avant=JSON.stringify(s);s=A.choisirProfil(p.id);dessiner();
-        toast("C'est noté. Ton accueil te ressemble",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};P.appendChild(b)});
-    var prof=A.profil(s.profil).blocs,BP=$("blocsProfil"),BA=$("blocsAutres");BP.textContent="";BA.textContent="";
-    s.blocs.forEach(function(x){var o=OUTILS[x.id];if(!o)return;
-      var li=ligne(o[0],o[1],o[2],x.on,function(v){x.on=v;s.perso=true;A.ecrire(s);toast("C'est noté. Ton accueil te ressemble")});
-      (prof.indexOf(x.id)>=0?BP:BA).appendChild(li)});
-    $("secAutres").hidden=!BA.children.length}
-  function filtres(){if(!F)return;var box=$("filtres"),f=F.lire();box.textContent="";
-    F.LISTE.forEach(function(x){box.appendChild(ligne(ICF[x.id]||"•",x.n,x.d,f.indexOf(x.id)>=0,function(v){f=F.lire().filter(function(i){return i!==x.id});if(v)f.push(x.id);F.ecrire(f);toast("C'est noté. Les propositions te ressemblent")}))})}
-  $("reset").onclick=function(){var avant=JSON.stringify(s);s=A.choisirProfil(s.profil==="tout"?"famille":s.profil);dessiner();
-    toast("Les outils du profil sont rétablis",function(){s=JSON.parse(avant);A.ecrire(s);dessiner()})};
-  dessiner();filtres();
-})();
-</script>
+<script>CookMesOutils.monter(document.getElementById("mesOutils"))</script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
 </body>
 </html>
