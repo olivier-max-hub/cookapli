@@ -220,7 +220,8 @@ function liste(type){return BATCH.filter(function(e){return e.type===type&&e.ten
 
 /* ---------- composition de la semaine ---------- */
 function creneaux(){var L=[];for(var d=0;d<S.jours;d++){if(S.repas==="dejdin")L.push({d:d,m:"midi"});L.push({d:d,m:"soir"})}return L}
-function nbPlats(repas){return repas<=4?repas:repas<=8?4:5}
+/* un plat différent par repas tant que possible (au plus 5 plats : c'est ce qui tient en 3 h) */
+function nbPlats(repas){return Math.min(5,repas)}
 function repartir(n,repas){var a=[];for(var i=0;i<n;i++)a.push(Math.floor(repas/n)+(i<repas%n?1:0));return a}
 function vege(c){return c.e.prot==="Végétarien"}
 /* ordre : les plats qui ne se congèlent pas d'abord (frigo), les « possibles » en tête */
