@@ -60,6 +60,13 @@ p{margin:0}
 #toast>span{flex:1}
 #toast button{flex:none;border:1px solid #0f6b78;background:#e3f6f8;color:#0b4f59;border-radius:99px;padding:6px 14px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer}
 @media (prefers-reduced-motion:reduce){#toast,.sw i::after{transition:none}}
+.filtres{display:grid;gap:6px}
+.filtres h3{margin:6px 0 0;font-size:1.05rem;color:var(--acc-deep,#0b4f59)}
+.fl{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:var(--card);box-shadow:var(--sh-card);cursor:pointer}
+.fl input{width:24px;height:24px;accent-color:#1f9d55;flex:none;margin:0}
+.fl span{display:flex;flex-direction:column;line-height:1.2}
+.fl b{font-size:1.08rem;color:#000}.fl small{font-size:.85rem}
+.avert{background:#fff6e0;border:1px solid #e9c44a;border-radius:14px;padding:10px 12px;font-size:.92rem;color:#3a2a00}
 </style>
 </head>
 <body>
@@ -83,6 +90,12 @@ p{margin:0}
       <button type="button" class="btn alt" id="tous">Afficher tous les outils sur mon écran d’accueil</button>
       <div class="blocs" id="blocs"></div>
     </section>
+    <section aria-labelledby="h3p">
+      <h2 id="h3p">3. Mes préférences alimentaires</h2>
+      <p class="note">Les recettes qui ne conviennent pas disparaissent de l'accueil, de Friscan et du Livre de recettes.</p>
+      <div class="filtres" id="filtres"></div>
+      <p class="avert"><b>⚠️ Allergies :</b> Cookapli repère les ingrédients des recettes, mais ne connaît pas la composition exacte des produits que tu achètes (traces, bouillons, sauces…). Vérifie toujours les étiquettes.</p>
+    </section>
     <div class="btns">
       <a class="btn" href="./">Voir mon accueil</a>
       <button type="button" class="btn alt" id="reset">Réinitialiser les réglages du profil</button>
@@ -90,7 +103,19 @@ p{margin:0}
   </div>
 </main>
 <div id="toast" role="status" aria-live="polite"></div>
+<script>
+/* préférences alimentaires : enregistrées tout de suite */
+addEventListener("DOMContentLoaded",function(){var F=window.CookFiltres,box=document.getElementById("filtres");if(!F||!box)return;var f=F.lire();
+  [["regime","Régime"],["allergie","Allergies et intolérances"]].forEach(function(g){var h=document.createElement("h3");h.textContent=g[1];box.appendChild(h);
+    F.LISTE.filter(function(x){return x.g===g[0]}).forEach(function(x){var l=document.createElement("label");l.className="fl";
+      var c=document.createElement("input");c.type="checkbox";c.checked=f.indexOf(x.id)>=0;
+      c.onchange=function(){f=F.lire().filter(function(i){return i!==x.id});if(c.checked)f.push(x.id);F.ecrire(f);
+        var t=document.getElementById("toast");if(t){t.innerHTML="<span></span>";t.firstChild.textContent=c.checked?x.n+" : c'est noté, tes recettes s'adaptent":x.n+" : retiré";t.classList.add("on");clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove("on")},2600)}};
+      var sp=document.createElement("span");sp.innerHTML="<b></b><small></small>";sp.firstChild.textContent=x.n;sp.lastChild.textContent=x.d;
+      l.appendChild(c);l.appendChild(sp);box.appendChild(l)})})});
+</script>
 <script src="accueil.js?v=11"></script>
+<script src="filtres.js?v=1"></script>
 <script src="../friscan/data.js?v=18"></script>
 <script src="commentaire.js?v=6" data-mode="tete" data-header=".toprow" data-place="fin" data-context="Cookapli · Personnaliser mon accueil" defer></script>
 <script>
