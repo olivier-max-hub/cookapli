@@ -20,7 +20,7 @@
     '.mo-t small{font-size:.86rem;color:#3d5559;font-weight:600}.mo-c{flex:none;width:26px;height:26px;margin:0;accent-color:#1f9d55;cursor:pointer}' +
     '.mo-avert{background:#fff6e0;border:1px solid #e9c44a;border-radius:14px;padding:10px 12px;font-size:.92rem;color:#3a2a00;margin:8px 0 0}' +
     '.mo-btns{display:grid;gap:10px}.mo-btn{display:flex;align-items:center;justify-content:center;min-height:48px;border:2px solid #0f6b78;border-radius:99px;background:#0f6b78;color:#fff;font:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;text-decoration:none}' +
-    '.mo-btn.alt{background:#fff;color:#0f6b78}.mo [hidden]{display:none!important}' +
+    '.mo-btn.alt{background:#fff;color:#0f6b78}.mo-vit{display:block;text-align:center;margin-top:4px;color:#0b4f59;font-weight:800;text-underline-offset:3px}.mo [hidden]{display:none!important}' +
     '#moToast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,14px);width:min(520px,calc(100% - 32px));display:flex;align-items:center;gap:12px;background:#fff;color:#1f2a24;border:1px solid #d3e6ea;border-left:6px solid #0f6b78;border-radius:16px;padding:12px 14px;box-shadow:0 8px 24px rgba(0,0,0,.18);font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60}' +
     '#moToast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}#moToast::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:#0f6b78;color:#fff;display:grid;place-items:center;font-weight:700}' +
     '#moToast>span{flex:1}#moToast button{flex:none;border:1px solid #0f6b78;background:#e3f6f8;color:#0b4f59;border-radius:99px;padding:6px 14px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer}';
@@ -72,6 +72,7 @@
     reset.onclick = function () { var avant = JSON.stringify(s); s = A.choisirProfil(s.profil === 'tout' ? 'famille' : s.profil); dessiner();
       toast('Les outils du profil sont rétablis', function () { s = JSON.parse(avant); A.ecrire(s); dessiner(); signal('outil'); }); signal('outil'); };
     bt.appendChild(voir); bt.appendChild(reset);
+    var vit = el('a', 'mo-vit', '👀 Revoir la présentation de Cookapli'); vit.href = './?vitrine=1'; bt.appendChild(vit);
     dessiner(); filtres();
   }
   window.CookMesOutils = { monter: monter };
