@@ -536,7 +536,8 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 .vlist{order:2;list-style:none;margin:2px 0 0;padding:0 4px;display:flex;flex-direction:column}
 .vlist li{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 2px;border-bottom:1px solid rgba(15,107,120,.14)}
 .vlist li:last-child{border-bottom:0}
-.vlist .vl-t{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+.vlist .vl-i{flex:none;width:28px;text-align:center;font-size:1.25rem;font-weight:800;color:#1c5d99;line-height:1}
+.vlist .vl-t{flex:1;display:flex;flex-direction:column;line-height:1.2;min-width:0}
 .vlist .vl-t b{font-size:1.05rem;font-weight:800;color:var(--acc-deep)}
 .vlist .vl-t small{font-size:.88rem;color:#3d5559;font-weight:600}
 .vlist .vl-ok{flex:none;width:26px;height:26px;border-radius:7px;background:#1f9d55;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:1rem;box-shadow:0 2px 6px rgba(31,157,85,.35)}
@@ -661,7 +662,7 @@ body.fond-profil .pg .choisir .btn.inv{background:rgba(255,255,255,.92)}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 67</p>
+  <p class="legal ver">Cookapli · version 68</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -971,7 +972,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
 
   /* bandeau du haut de chaque page, avec la flèche vers la page suivante */
   function bandeau(pid,i){var p=info(pid),b=el("div","pband"),dernier=i===PAGES.length-1;
-    if(pid==="vitrine")b.innerHTML='<span class="pb-t"><small>Ton espace</small><b>Tous les outils</b></span><button type="button" class="pb-go">Personnalise ton espace <span class="arr" aria-hidden="true">➜</span></button>';
+    if(pid==="vitrine")b.innerHTML='<span class="pb-t"><small>Ton espace</small><b>Choisis tes outils</b></span><button type="button" class="pb-go">Personnalise ton espace <span class="arr" aria-hidden="true">➜</span></button>';
     else b.innerHTML='<span class="pb-t"><small>'+(pid===livePid?"Ton profil ✓":"Profil")+'</small><b>'+esc(p.n)+'</b></span>'+(dernier?'':'<button type="button" class="pb-next" aria-label="Profil suivant"><span class="arr" aria-hidden="true">➜</span></button>');
     b.dataset.i=i;return b}
   /* boutons du bas : Choisir ce profil (à gauche) et Voir tous les outils (à droite, couleurs inversées) */
@@ -991,10 +992,10 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   live.insertBefore(bandeau(livePid,PAGES.indexOf(livePid)),live.firstChild);
   if(livePid!=="vitrine"){var d0=el("p","pdesc");d0.textContent=info(livePid).sub;live.insertBefore(d0,live.children[1])}
   boutons($("choix0"),livePid);
-  if(vitrine&&essai==="liste"){live.classList.add("vliste");
-    var L=[["Des recettes testées en cuisine","aucune recette inventée"],["Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["Max 30 min","des recettes prêtes en 30 minutes"],["Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["Courses auto","ce qui manque part tout seul dans ta liste"],["Calories / personne","pour chaque recette"],["Budget / personne","€, €€ ou €€€ pour chaque recette"],["Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["Un chef qui te guide","les étapes lues à voix haute"],["Inspiration de saison","les bons produits du moment"]];
+  if(vitrine){live.classList.add("vliste");
+    var L=[["🥕","Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["🍳","De vraies recettes testées","aucune recette inventée"],["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],["♻️","Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["🛒","Courses auto","ajoute d'un coup ce qui manque pour ta recette"],["📷","Scanne tes articles chez toi ou en magasin","+ d'articles en réserve = + de recettes pour toi"],["⚖️","Calories / personne","pour chaque recette"],["€","Budget / personne","€, €€ ou €€€ pour chaque recette"],["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["📅","Planifie tes menus pour la semaine","prévois à l'avance, pas de prise de tête"],["🎙️","Un chef qui te guide","les étapes lues à voix haute"],["🍂","Inspiration de saison","les bons produits du moment"]];
     var ul=el("ul","vlist");ul.setAttribute("aria-label","Ce que Cookapli fait pour toi");
-    L.forEach(function(x){var li=el("li",null,'<span class="vl-t"><b>'+esc(x[0])+'</b><small>'+esc(x[1])+'</small></span><span class="vl-ok" role="img" aria-label="inclus">✓</span>');ul.appendChild(li)});
+    L.forEach(function(x){var li=el("li",null,'<span class="vl-i" aria-hidden="true">'+x[0]+'</span><span class="vl-t"><b>'+esc(x[1])+'</b><small>'+esc(x[2])+'</small></span><span class="vl-ok" role="img" aria-label="inclus">✓</span>');ul.appendChild(li)});
     var tl=$("s-tools");tl.parentNode.insertBefore(ul,tl)}
   if(vitrine){live.classList.add("vitrine");var ar=$("allRec");if(ar)ar.hidden=true;
     var eq=$("t-equilibre");if(eq&&!live.querySelector(".g-budget")){var bu=el("span","tile g-budget",'<span><b>Budget / personne</b></span><span class="ill" aria-hidden="true">€</span>');bu.style.order=eq.style.order;eq.parentNode.insertBefore(bu,eq.nextSibling)}}
@@ -1016,7 +1017,8 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   function construire(){var li=PAGES.indexOf(livePid);
     PAGES.forEach(function(pid,i){if(pid===livePid)return;var pg=apercu(pid,i);if(i<li)pager.insertBefore(pg,live);else pager.appendChild(pg)});
     var dots=$("pdots");dots.innerHTML=PAGES.map(function(){return "<i></i>"}).join("");
-    copieCarrousel();aller(li,true);maj();hauteur()}
+    copieCarrousel();aller(li,true);maj();hauteur();if(vitrine)accroche()}
+  function accroche(){var h=live.querySelector(".hero h1"),l=live.querySelector(".hero .lead");if(h)h.textContent="Cookapli c'est quoi ?";if(l)l.textContent="Cookapli c'est toi !"}
 
   /* deux recettes de saison, tirées au hasard pour chaque page */
   function melange(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),x=a[i];a[i]=a[j];a[j]=x}return a}
