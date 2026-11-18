@@ -675,7 +675,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 82</p>
+  <p class="legal ver">Cookapli · version 83</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -794,7 +794,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 (function(){
   var box=document.getElementById("carou"),prev=document.getElementById("carou-prev"),next=document.getElementById("carou-next");
   if(!box)return;
-  var SITE="../recettes/",CATS_LIVRE=["Apéritif","Entrée"],KEY="cookapli.carrousel.saison",FRI="../friscan/";
+  var SITE="../recettes/",CATS_LIVRE=["Apéritif","Entrée"],KEY="cookapli.carrousel.saison2",FRI="../friscan/";
   var FRI_COUL=(typeof CATS!=="undefined"&&CATS)||{};
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
   function slug(s){return s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
@@ -875,7 +875,8 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     var t=res[0],fi=(res[1]&&res[1].fiches)||{},out=[],cur="";
     rows(t).slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var img=(r[6]||"").trim();
       var sl=slug(n),f=fi[sl];
-      if(img)out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
+      /* les « Préparations » (salées, sucrées) sont des techniques, pas des recettes à proposer */
+      if(img&&!/pr[eé]paration/i.test(cur))out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
     if(!out.length)return;
     try{localStorage.setItem(KEY,JSON.stringify({list:out,t:Date.now()}))}catch(e){}
     derniere=out;render(out);
