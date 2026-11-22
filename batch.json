@@ -1,6 +1,6 @@
 {
-"v": 2,
-"note": "Classement batch cooking validé par Olivier le 18/11/2026. Les préparations ne sont jamais utilisées.",
+"v": 3,
+"note": "Classement batch cooking validé par Olivier le 18/11/2026. Les préparations ne sont jamais utilisées. Recettes vegan ajoutées le 22/11/2026.",
 "recettes": [
 {
 "n": "Flan au Butternut",
@@ -1181,6 +1181,523 @@
 "congele": false,
 "cuisson": "cru",
 "saison": "tout"
+},
+{
+"n": "Velouté de potimarron au lait de coco et gingembre",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Houmous maison crémeux et crudités croquantes",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Couper les crudités au moment de servir."
+},
+{
+"n": "Bruschettas méditerranéennes aux tomates confites et basilic",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "four",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Soupe miso traditionnelle au tofu soyeux et algues wakamé",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Tartare d'avocat, mangue et coriandre fraîche",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "cru",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Carpaccio de courgettes au citron, pignons et levure maltée",
+"src": "livre",
+"type": "entree",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "cru",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Velouté de lentilles corail à l'indienne",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Salade de pois chiches méditerranéenne façon « Thon » (Chickpea Tuna)",
+"src": "livre",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Gaspacho andalou classique et croûtons à l'ail",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "ete",
+"prot": "Vegan",
+"fin": "Préparer les croûtons au moment de servir."
+},
+{
+"n": "Minestrone italien aux haricots blancs et légumes de saison",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Cuire les pâtes au moment de servir."
+},
+{
+"n": "Houmous de betterave",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Soupe crémeuse aux haricots blancs",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Velouté de carottes au gingembre",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Salade méditerranéenne de pois chiches",
+"src": "livre",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "cru",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Soupe poireaux-pommes de terre",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Rillettes végétales lentilles-noix",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Bouillon thaï aux nouilles de riz",
+"src": "livre",
+"type": "entree",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Cuire les nouilles de riz au moment de servir."
+},
+{
+"n": "Velouté de butternut aux lentilles corail",
+"src": "livre",
+"type": "entree",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Dhal de lentilles corail crémeux et riz basmati",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Chili sin carne aux haricots rouges et protéines de soja",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Curry vert thaï aux légumes croquants et tofu doré",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Bolognaise végétale aux lentilles vertes et champignons",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Cuire les pâtes au moment de servir."
+},
+{
+"n": "Pad Thaï végétal au tofu mariné et cacahuètes",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Risotto crémeux aux champignons forestiers et thym",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Poêlée de gnocchis croustillants aux légumes rôtis et pesto vert",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Tagliatelles crémeuses aux champignons",
+"src": "livre",
+"type": "plat",
+"tenue": "jourmeme",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Lasagnes fondantes aux épinards, « ricotta » de tofu et sauce tomate",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Hachis Parmentier végétal aux lentilles et patates douces",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Bourguignon de champignons et tofu fumé au vin rouge",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Curry de patates douces et pois chiches",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Ratatouille provençale",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Tomates farcies végétales",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Buddha bowl au quinoa",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Assembler le bol et ajouter la sauce au moment de servir."
+},
+{
+"n": "Couscous aux légumes et pois chiches",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan",
+"fin": "Préparer la semoule au moment de servir."
+},
+{
+"n": "Nouilles sautées au tofu",
+"src": "livre",
+"type": "plat",
+"tenue": "possible",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Lasagnes aux légumes et béchamel végétale",
+"src": "livre",
+"type": "plat",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Banana Bread moelleux aux pépites de chocolat et noix",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Cookies américains crousti-moelleux aux pépites de chocolat",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Muffins au citron",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Crème dessert à la vanille maison",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Panna cotta coco et coulis de fruits rouges",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Riz au lait crémeux à la cannelle et zestes d'orange",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Crumble aux pommes fondantes, cannelle et flocons d'avoine",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Pancakes américains ultra-fluffy au sirop d'érable",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": true,
+"cuisson": "plaque",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Chia pudding exotique à la mangue et noix de coco",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "cru",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Fondant au chocolat noir express et cœur coulant",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": true,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Tarte aux pommes",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Fondant poire-chocolat",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "four",
+"saison": "hiver",
+"prot": "Vegan"
+},
+{
+"n": "Far breton vegan aux pruneaux",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": false,
+"cuisson": "four",
+"saison": "tout",
+"prot": "Vegan"
+},
+{
+"n": "Glace chocolat-noisette",
+"src": "livre",
+"type": "dessert",
+"tenue": "ideale",
+"congele": true,
+"cuisson": "cru",
+"saison": "ete",
+"prot": "Vegan"
+},
+{
+"n": "Tarte aux fraises et crème pâtissière végétale",
+"src": "livre",
+"type": "dessert",
+"tenue": "possible",
+"congele": false,
+"cuisson": "four",
+"saison": "ete",
+"prot": "Vegan"
 }
 ]
 }

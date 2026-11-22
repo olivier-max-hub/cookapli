@@ -94,6 +94,7 @@ p{margin:0}
 #toast::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:#0f6b78;color:#fff;display:grid;place-items:center;font-weight:700}
 @media (prefers-reduced-motion:reduce){#toast{transition:none}}
 @media (max-width:420px){.plat{grid-template-columns:76px 1fr}.plat .ph{width:76px;height:76px}}
+.ph{position:relative}.ph .iamini{position:absolute;right:4px;bottom:4px;font-weight:700;font-size:.62rem;line-height:1;background:rgba(0,0,0,.6);color:#fff;border-radius:99px;padding:2px 5px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -201,20 +202,21 @@ function echelle(t,k){if(!t||k===1)return t;return String(t).replace(/(\d+\s*[½
 /* ---------- recettes candidates ---------- */
 var BATCH=[],LIVRE={},FICHES=lsGet("recettes-fiches",{f:{}}).f||{},CSV=null;
 try{CSV=localStorage.getItem("recettes-csv")}catch(e){}
-function lireCsv(t){LIVRE={};var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var im="";for(var k=5;k<r.length;k++)if(/\.(jpe?g|png|webp|gif)\s*$/i.test(r[k]||"")){im=r[k].trim();break}LIVRE[norm(n)]={n:n,s:slug(n),c:cur,i:im}})}
+function lireCsv(t){LIVRE={};var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var im="",ia="";for(var k=5;k<r.length;k++){var cx=(r[k]||"").trim();if(!im&&/\.(jpe?g|png|webp|gif)$/i.test(cx))im=cx;if(/^(rl\s*\/\s*ia|ia)$/i.test(cx))ia=/rl/i.test(cx)?"rl":"ia"}LIVRE[norm(n)]={n:n,s:slug(n),c:cur,t:(r[3]||"").trim(),i:im,ia:ia}})}
 if(CSV)lireCsv(CSV);
 function persDe(f){var m=String((f&&f.m&&f.m.pers)||(f&&f.pers)||"").match(/\d+/);return m?+m[0]:0}
 var FA=window.CookFiltres?CookFiltres.lire():[];
 function candidat(e){
   var c={e:e,n:e.n,k:e.src+":"+norm(e.n)};
   if(e.src==="friscan"){if(!HAS||typeof RECETTES==="undefined")return null;var r=RECETTES.filter(function(x){return norm(x.n)===norm(e.n)})[0];if(!r)return null;
-    c.r=r;c.pers=r.pers;c.url="../friscan/#r-"+r.id;c.img=r.img?"../friscan/"+encodeURI(r.img):"";c.emo=r.e;
+    c.r=r;c.pers=r.pers;c.url="../friscan/#r-"+r.id;c.img=r.img?"../friscan/"+encodeURI(r.img):"";c.ia=r.ia?"ia":"";c.emo=r.e;
     c.ing=r.ing.filter(function(x){return !x[2]}).map(function(x){return{id:x[0],t:(x[1]?x[1]+" ":"")+(x[3]||ING[x[0]].n),q:x[1]||"",nom:x[3]||ING[x[0]].n}});
     c.texte=window.CookFiltres?CookFiltres.texteFriscan(r,ING):"";c.diff="";
   }else{var L=LIVRE[norm(e.n)],sl=L?L.s:slug(e.n),f=FICHES[sl];
-    c.f=f;c.pers=persDe(f)||4;c.url="../recettes/#"+sl;c.img=L&&L.i?"../recettes/"+encodeURI(L.i):"";c.emo="🍲";
+    if(!L&&e.prot==="Vegan")return null; /* recette vegan pas encore dans le Livre */
+    c.f=f;c.pers=persDe(f)||4;c.url="../recettes/#"+sl;c.img=L&&L.i?"../recettes/"+encodeURI(L.i):"";c.ia=L&&L.ia||"";c.emo="🍲";
     c.ing=f&&f.ing?f.ing.filter(function(x){return !x.l&&x.t&&!/facultati|optionnel|pour servir/i.test(x.t)}).map(function(x){return{id:guess(x.t),t:x.t}}):[];
-    c.texte=f&&window.CookFiltres?CookFiltres.texteFiche(e.n,f):(FA.length?null:e.n);c.diff=f&&f.m?String(f.m.diff||""):"";c.sansFiche=!f}
+    c.texte=f&&window.CookFiltres?CookFiltres.texteFiche(e.n,f,L&&L.t):(FA.length?null:e.n);c.diff=f&&f.m?String(f.m.diff||""):"";c.sansFiche=!f}
   return c}
 function okProfil(c){
   if(c.e.saison!=="tout"&&c.e.saison!==SAISON)return false;
@@ -228,7 +230,7 @@ function creneaux(){var L=[];for(var d=0;d<S.jours;d++){if(S.repas==="dejdin")L.
 /* un plat différent par repas tant que possible (au plus 5 plats : c'est ce qui tient en 3 h) */
 function nbPlats(repas){return Math.min(5,repas)}
 function repartir(n,repas){var a=[];for(var i=0;i<n;i++)a.push(Math.floor(repas/n)+(i<repas%n?1:0));return a}
-function vege(c){return c.e.prot==="Végétarien"}
+function vege(c){return c.e.prot==="Végétarien"||c.e.prot==="Vegan"}
 /* ordre : les plats qui ne se congèlent pas d'abord (frigo), les « possibles » en tête */
 function rang(c){return c.e.tenue==="possible"?0:!c.e.congele?1:2}
 /* placement : jamais le même plat deux jours de suite ni deux fois le même jour ;
@@ -317,7 +319,7 @@ function nomCr(x){return JOURS[x.d]+(S.repas==="dejdin"?(x.m==="midi"?" midi":" 
 function stock(c,x){return x.d<=1||!c.e.congele?"frigo":"cong"}
 function carte(p,i,estSoupe){var c=p.c,e=c.e,port=S.pers*p.sl.length,kc=kcal(c),bu=budget(c);
   var cong=p.sl.some(function(x){return stock(c,x)==="cong"}),fr=p.sl.some(function(x){return stock(c,x)==="frigo"});
-  var h='<article class="card plat'+(PLAN.marque===c.k?' neuf':'')+'"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">':esc(c.emo||"🍲"))+'</div><div>'+
+  var h='<article class="card plat'+(PLAN.marque===c.k?' neuf':'')+'"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">'+(c.ia?'<span class="iamini" title="'+(c.ia==="rl"?"L’image du plat est réelle, l’environnement est créé par l’IA.":"Photo d’illustration créée par IA, en attendant une vraie photo du plat.")+'">image IA?</span>':''):esc(c.emo||"🍲"))+'</div><div>'+
     '<h3><a href="'+esc(c.url)+'">'+esc(c.n)+'</a></h3>'+
     '<p class="jours">'+(estSoupe?"En entrée · ":"")+p.sl.map(nomCr).join(" et ")+' · '+port+' portion'+(port>1?"s":"")+'</p><div class="tags">'+
     (fr?'<span class="tag frigo">🧊 Frigo</span>':'')+(cong?'<span class="tag cong">❄️ Congélateur'+(fr?" ensuite":"")+'</span>':'')+
@@ -384,7 +386,7 @@ document.querySelector(".steps").onclick=function(e){var b=e.target.closest("[da
 
 /* ---------- chargement ---------- */
 function demarrer(){PLAN=restaurer();if(PLAN&&PLAN.plats.length<Math.min(nbPlats(creneaux().length),PLAN.dispo||0))S.plan.cfg="";if(PLAN&&S.plan.cfg!==cfgAct()){PLAN=null;if(location.hash!=="#semaine")nouvelle()}var h=location.hash;aller(PLAN&&h==="#courses"?3:PLAN&&h!=="#semaine"?2:1)}
-fetch("batch.json?v=2").then(function(r){return r.json()}).then(function(j){BATCH=(j.recettes||[]);demarrer();
+fetch("batch.json?v=3").then(function(r){return r.json()}).then(function(j){BATCH=(j.recettes||[]);demarrer();
   /* Livre : liste et fiches à jour (même cache que le Livre de recettes) */
   var M=typeof MES_RECETTES!=="undefined"?MES_RECETTES:null;if(!M)return;
   Promise.all([M.csv?fetch(M.csv+"&t="+Date.now()).then(function(r){return r.ok?r.text():null}).catch(function(){return null}):null,

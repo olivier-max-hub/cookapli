@@ -44,8 +44,8 @@
   function ecrire(f) { try { localStorage.setItem(CLE, JSON.stringify(f || [])); } catch (e) {} }
   /* raisons pour lesquelles un texte d'ingrédients ne convient pas (liste vide = ça convient) */
   function raisons(texte, f) {
-    f = f || lire(); var t = norm(texte), out = [];
-    f.forEach(function (id) { var r = R[id]; if (r && r.test(t)) out.push(id); });
+    f = f || lire(); var t = norm(texte), out = [], vg = t.indexOf(' vgnok ') >= 0;
+    f.forEach(function (id) { if (vg && /^(vege|vegan|poisson|fruitsmer)$/.test(id)) return; var r = R[id]; if (r && r.test(t)) out.push(id); });
     return out;
   }
   function ok(texte, f) { return raisons(texte, f).length === 0; }
@@ -54,9 +54,10 @@
     return [r.n].concat((r.ing || []).map(function (i) { var g = ING && ING[i[0]]; return (g ? g.n : String(i[0]).replace(/_/g, ' ')) + ' ' + (i[3] || ''); })).join(' , ');
   }
   /* fiche du Livre : ing = [{t: '200 g de farine'}, …] ; sans fiche, on ne peut pas savoir */
-  function texteFiche(nom, fiche) {
+  /* type = colonne « Type » du tableau : « Vegan » vaut garantie (végan, végétarien, sans poisson ni fruits de mer) */
+  function texteFiche(nom, fiche, type) {
     if (!fiche || !fiche.ing || !fiche.ing.length) return null;
-    return [nom].concat(fiche.ing.map(function (i) { return typeof i === 'string' ? i : (i.t || ''); })).join(' , ');
+    return (/vegan/i.test(type || '') ? ' vgnok , ' : '') + [nom].concat(fiche.ing.map(function (i) { return typeof i === 'string' ? i : (i.t || ''); })).join(' , ');
   }
   function okTexte(t, f) { f = f || lire(); if (!f.length) return true; if (t == null) return false; return ok(t, f); }
   function libelle(f) { f = f || lire(); return f.map(function (id) { for (var i = 0; i < LISTE.length; i++) if (LISTE[i].id === id) return LISTE[i].court; return id; }).join(', '); }

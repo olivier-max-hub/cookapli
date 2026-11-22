@@ -114,6 +114,7 @@ main{padding-block:16px 40px}
 .ccard small{color:#000;font-weight:700;font-size:.85rem}
 .ccard .vegrow{display:flex;justify-content:center;padding:6px 8px;background:#fff}
 .ccard .vegtag{display:inline-block;background:#1f7a43;color:#fff;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;line-height:1;padding:5px 12px;border-radius:7px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ccard .vegtag.vegan{background:#4d7c0f}
 .ccard .cinfo.lite{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
 .ccard .cinfo.lite span{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:.78rem;line-height:1;padding:5px 8px;border-radius:99px;background:#e3f6f8;color:#0b4f59;white-space:nowrap}
 .ccard .cinfo.lite .kc{background:#1f7a43;color:#fff}
@@ -421,7 +422,7 @@ function buildMine(csvT, fiches) {
     for (const l of fi.ing) { if (l.l) continue; const r = lineIng(l.t || ''); if (!r.skip) lines.push({ t: l.t, id: r.id || null }); }
     const fm = fi.m || {}, tp = minutes(fm.prep), tc = minutes(fm.cuisson);
     if (lines.length && !/pr[eé]paration/i.test(cur)) out.push({ n: name, cat: cur, slug, pers: fm.pers || '', lines, img: imgCol(row), ia: iaCol(row), tot: tp == null ? null : tp + (tc || 0),
-      veg: /vegetarien|vegan/.test(slugify(cur + ' ' + (row[3] || '') + ' ' + name)), f: { ing: fi.ing.map(x => ({ t: x.t, l: x.l })), m: { pers: fm.pers }, pers: fi.pers, r: fi.r } });
+      veg: /vegetarien|vegan/.test(slugify(cur + ' ' + (row[3] || '') + ' ' + name)), vegan: /(^|-)vegan(-|$)/.test(slugify((row[3] || '') + ' ' + name)), f: { ing: fi.ing.map(x => ({ t: x.t, l: x.l })), m: { pers: fm.pers }, pers: fi.pers, r: fi.r } });
   }
   return out;
 }
@@ -460,15 +461,16 @@ const okCalc = () => typeof CookCalc !== 'undefined';
 function liteLivre(r) { return lite(r.tot, r.pers, r.f && okCalc() ? CookCalc.kcal(r.f) : null, r.f && okCalc() ? CookCalc.budget(r.f, guessIng) : null); }
 function liteRapide(r) { const ok = window.CookBudget && CookBudget.kcalFriscan; return lite(r.min, String(r.pers), ok ? CookBudget.kcalFriscan(r, IG) : null, ok && CookBudget.pret() ? CookBudget.recetteFriscan(r, IG) : null); }
 const VEG = '<span class="vegrow"><span class="vegtag">Végétarien</span></span>';
+const VEGAN = '<span class="vegrow"><span class="vegtag vegan">Vegan</span></span>';
 /* contenu d'une miniature : photo, nom, ligne d'info, pastilles, puis « extra » (ingrédients manquants…) */
 function carteLivre(r, extra) {
   const [c1, c2] = (typeof MINE_COLORS !== 'undefined' && MINE_COLORS[r.cat]) || ['#d6f0e6', '#8fd6bd'];
   const img = r.img ? `<img src="${esc(SITE_LIVRE + encodeURI(r.img))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
-  return `${r.veg ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}${img && r.ia ? `<i class="iamini" title="${r.ia === 'rl' ? 'L’image du plat est réelle, l’environnement est créé par l’IA.' : 'Photo d’illustration créée par IA'}">IA</i>` : ''}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
+  return `${r.veg ? (r.vegan ? VEGAN : VEG) : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}${img && r.ia ? `<i class="iamini" title="${r.ia === 'rl' ? 'L’image du plat est réelle, l’environnement est créé par l’IA.' : 'Photo d’illustration créée par IA'}">image IA?</i>` : ''}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
 }
 function carteRapide(r, extra) {
   const [c1, c2] = (typeof CATS !== 'undefined' && CATS[r.cat]) || ['#d9d0f5', '#b9a8ee'];
-  const img = r.img ? `<img src="../friscan/${esc(r.img)}" alt="" loading="lazy" width="720" height="720">${r.ia ? '<i class="iamini" title="Photo d’illustration créée par IA">IA</i>' : ''}` : r.e;
+  const img = r.img ? `<img src="../friscan/${esc(r.img)}" alt="" loading="lazy" width="720" height="720">${r.ia ? '<i class="iamini" title="Photo d’illustration créée par IA">image IA?</i>' : ''}` : r.e;
   return `${/vegetarien/.test(slugify(r.cat || '')) ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img}</span><span class="ctxt"><b>${esc(r.n)}</b><small>⏱️ Recette rapide</small>${liteRapide(r)}${extra || ''}</span>`;
 }
 if (window.CookBudget) CookBudget.charger().then(d => { if (d) { renderRecettes(); renderPresque(); } });
