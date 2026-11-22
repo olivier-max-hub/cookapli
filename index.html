@@ -683,7 +683,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 88</p>
+  <p class="legal ver">Cookapli · version 89</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -890,7 +890,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     var mo=document.getElementById("mois2");if(mo&&window.COOK_MOIS)mo.textContent=window.COOK_MOIS;
     if(!list.length){if(fa.length)box.innerHTML='<p class="fvide">Pas encore de recette de saison qui respecte tes préférences.</p>';return}
     box.innerHTML=shuffle(list.slice()).map(function(r){if(r.rap)return carteRapide(r.rap);
-      return '<a class="card slide" style="--top:hsl('+hue(r.c)+' 65% 55%)" href="'+SITE+'#'+esc(r.s)+'">'+(/vegetarien|vegan/.test(slug((r.c||"")+" "+(r.t||"")+" "+(r.n||"")))?'<div class="vegrow"><span class="vegtag">Végétarien</span></div>':'')+'<div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()"></div><div class="t"><b>'+esc(r.n)+'</b>'+(r.m?pills(r.m,r.f):'<small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small>')+'</div></a>';
+      return '<a class="card slide" style="--top:hsl('+hue(r.c)+' 65% 55%)" href="'+SITE+'#'+esc(r.s)+'">'+(/vegetarien|vegan/.test(slug((r.c||"")+" "+(r.t||"")+" "+(r.n||"")))?'<div class="vegrow"><span class="vegtag">Végétarien</span></div>':'')+'<div class="thumb" style="background:var(--c-aperitif-1)"><img src="'+SITE+encodeURI(r.i)+'" alt="" loading="lazy" onerror="this.remove()">'+(r.ia?'<span class="iamini" title="'+(r.ia==="rl"?"L’image du plat est réelle, l’environnement est créé par l’IA.":IA_TXT)+'">IA</span>':'')+'</div><div class="t"><b>'+esc(r.n)+'</b>'+(r.m?pills(r.m,r.f):'<small>'+esc(r.c)+(r.t?' · '+esc(r.t):'')+'</small>')+'</div></a>';
     }).join("");
     box.scrollLeft=0;arrows();
   }
@@ -912,10 +912,10 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     fUrl?fetch(fUrl+"?all=1").then(function(r){return r.ok?r.json():null}).catch(function(){return null}):Promise.resolve(null)
   ]).then(function(res){
     var t=res[0],fi=(res[1]&&res[1].fiches)||{},out=[],cur="";
-    rows(t).slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var img=(r[6]||"").trim();
+    rows(t).slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var img="",ia="";for(var k=5;k<r.length;k++){var cx=(r[k]||"").trim();if(!img&&/\.(jpe?g|png|webp|gif)$/i.test(cx))img=cx;if(/^(rl\s*\/\s*ia|ia)$/i.test(cx))ia=/rl/i.test(cx)?"rl":"ia"}
       var sl=slug(n),f=fi[sl];
       /* les « Préparations » (salées, sucrées) sont des techniques, pas des recettes à proposer */
-      if(img&&!/pr[eé]paration/i.test(cur))out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
+      if(img&&!/pr[eé]paration/i.test(cur))out.push({n:n,s:sl,c:cur,t:(r[3]||"").trim(),i:img,ia:ia,m:f&&f.m?{prep:f.m.prep,cuisson:f.m.cuisson,pers:f.m.pers,diff:f.m.diff}:null,f:f&&f.ing?{ing:f.ing.map(function(x){return{t:x.t,l:x.l}}),m:{pers:f.m&&f.m.pers},pers:f.pers,r:f.r}:null})});
     if(!out.length)return;
     try{localStorage.setItem(KEY,JSON.stringify({list:out,t:Date.now()}))}catch(e){}
     derniere=out;render(out);

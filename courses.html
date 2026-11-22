@@ -407,6 +407,9 @@ function minutes(v) {
   v.split('+').forEach(p => { p = p.replace(/(\d+)\s*(?:à|a|ou)\s*(\d+)/g, '$2'); let m = p.match(/(\d+)\s*h(?:eures?)?\s*(\d+)?/); if (m) { t += m[1] * 60 + (+m[2] || 0); ok = true; return; } m = p.match(/(\d+)/); if (m) { t += +m[1]; ok = true; } });
   return ok ? t : null;
 }
+/* la photo est la cellule « images/… .jpg » (sa colonne peut bouger) ; la mention IA est « IA » ou « RL / IA » */
+const imgCol = r => (r.slice(5).find(x => /\.(jpe?g|png|webp|gif)\s*$/i.test(x || '')) || '').trim();
+const iaCol = r => { const x = r.slice(5).find(v => /^\s*(rl\s*\/\s*ia|ia)\s*$/i.test(v || '')); return x ? (/rl/i.test(x) ? 'rl' : 'ia') : ''; };
 function buildMine(csvT, fiches) {
   const out = []; let cur = '';
   for (const row of csvRows(csvT).slice(5)) {
@@ -417,7 +420,7 @@ function buildMine(csvT, fiches) {
     const lines = [];
     for (const l of fi.ing) { if (l.l) continue; const r = lineIng(l.t || ''); if (!r.skip) lines.push({ t: l.t, id: r.id || null }); }
     const fm = fi.m || {}, tp = minutes(fm.prep), tc = minutes(fm.cuisson);
-    if (lines.length && !/pr[eé]paration/i.test(cur)) out.push({ n: name, cat: cur, slug, pers: fm.pers || '', lines, img: (row[6] || '').trim(), tot: tp == null ? null : tp + (tc || 0),
+    if (lines.length && !/pr[eé]paration/i.test(cur)) out.push({ n: name, cat: cur, slug, pers: fm.pers || '', lines, img: imgCol(row), ia: iaCol(row), tot: tp == null ? null : tp + (tc || 0),
       veg: /vegetarien|vegan/.test(slugify(cur + ' ' + (row[3] || '') + ' ' + name)), f: { ing: fi.ing.map(x => ({ t: x.t, l: x.l })), m: { pers: fm.pers }, pers: fi.pers, r: fi.r } });
   }
   return out;
@@ -461,7 +464,7 @@ const VEG = '<span class="vegrow"><span class="vegtag">Végétarien</span></span
 function carteLivre(r, extra) {
   const [c1, c2] = (typeof MINE_COLORS !== 'undefined' && MINE_COLORS[r.cat]) || ['#d6f0e6', '#8fd6bd'];
   const img = r.img ? `<img src="${esc(SITE_LIVRE + encodeURI(r.img))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
-  return `${r.veg ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
+  return `${r.veg ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}${img && r.ia ? `<i class="iamini" title="${r.ia === 'rl' ? 'L’image du plat est réelle, l’environnement est créé par l’IA.' : 'Photo d’illustration créée par IA'}">IA</i>` : ''}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
 }
 function carteRapide(r, extra) {
   const [c1, c2] = (typeof CATS !== 'undefined' && CATS[r.cat]) || ['#d9d0f5', '#b9a8ee'];

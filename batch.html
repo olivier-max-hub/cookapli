@@ -201,7 +201,7 @@ function echelle(t,k){if(!t||k===1)return t;return String(t).replace(/(\d+\s*[½
 /* ---------- recettes candidates ---------- */
 var BATCH=[],LIVRE={},FICHES=lsGet("recettes-fiches",{f:{}}).f||{},CSV=null;
 try{CSV=localStorage.getItem("recettes-csv")}catch(e){}
-function lireCsv(t){LIVRE={};var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;LIVRE[norm(n)]={n:n,s:slug(n),c:cur,i:(r[6]||"").trim()}})}
+function lireCsv(t){LIVRE={};var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();if(!n)return;cur=(r[1]||"").trim()||cur;var im="";for(var k=5;k<r.length;k++)if(/\.(jpe?g|png|webp|gif)\s*$/i.test(r[k]||"")){im=r[k].trim();break}LIVRE[norm(n)]={n:n,s:slug(n),c:cur,i:im}})}
 if(CSV)lireCsv(CSV);
 function persDe(f){var m=String((f&&f.m&&f.m.pers)||(f&&f.pers)||"").match(/\d+/);return m?+m[0]:0}
 var FA=window.CookFiltres?CookFiltres.lire():[];
