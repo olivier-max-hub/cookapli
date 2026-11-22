@@ -402,6 +402,14 @@ body,button,input,select{font-family:Nunito,"Segoe UI",Arial,sans-serif}
 /* champ de saisie à la place de la tuile Mes réserves, icône à côté du texte */
 .haveq{grid-column:1/-1;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:6px;background:#fff;border:2px solid var(--acc);border-radius:99px;padding:4px 4px 4px 14px;box-shadow:var(--sh-card);position:relative;margin-bottom:24px}
 .haveq:focus-within{outline:3px solid var(--acc);outline-offset:2px}
+/* suggestions du champ « J'ai… » : les mêmes que dans « Mes réserves » */
+.haveq{position:relative}
+.hsugg{position:fixed;z-index:60;background:#fff;border-radius:14px;box-shadow:0 6px 20px rgba(0,0,0,.18);overflow:hidden;color:var(--ink);text-align:left}
+.hsugg[hidden]{display:none}
+.hsugg button{display:flex;gap:10px;align-items:center;width:100%;height:auto;border:0;border-radius:0;background:none;color:var(--ink);padding:10px 14px;text-align:left;cursor:pointer;font:inherit;font-size:1.05rem;font-weight:700}
+.hsugg button+button{border-top:1px solid var(--line)}
+.hsugg small{position:static;margin:0 0 0 auto;color:#000;font-size:.9rem;white-space:nowrap}
+.hsugg button:hover,.hsugg button:focus-visible{background:#eef8fb;outline:none}
 .haveq-ill{font-size:1.3rem;line-height:1}
 .haveq input{min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;font-weight:600;color:var(--ink);padding:9px 2px}
 .haveq input:focus{outline:none}
@@ -675,7 +683,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 87</p>
+  <p class="legal ver">Cookapli · version 88</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -765,6 +773,36 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     input.value=list.join(", ");syncChips();save();
   });
   input.addEventListener("input",function(){syncChips();save()});
+  /* suggestions pendant la saisie (comme dans « Mes réserves ») : un appui ajoute le produit à tes réserves */
+  var nrm=function(t){return String(t||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/œ/g,"oe").replace(/[^a-z0-9]+/g," ").trim()};
+  var cible=null;function boite(f){var x=document.getElementById("hsugg");if(!x){x=document.createElement("div");x.id="hsugg";x.className="hsugg";x.hidden=true;document.body.appendChild(x)}if(f)cible=f;return x}
+  function suggerer(inp){var f=inp.closest(".haveq"),box=boite(f),typed=inp.value.split(",").pop().trim(),v=nrm(typed);
+    if(!v){box.hidden=true;return}
+    var cap=function(t){return t.charAt(0).toUpperCase()+t.slice(1)};
+    var rank=function(d){return nrm(d.n).indexOf(v)===0?0:d.k.some(function(k){return nrm(k).indexOf(v)===0})?1:2};
+    var hits=Object.keys(ING).map(function(id){return [id,ING[id]]}).filter(function(e){var d=e[1];return !d.old&&(nrm(d.n).indexOf(v)>=0||d.k.some(function(k){return nrm(k).indexOf(v)===0}))})
+      .sort(function(a,b){return rank(a[1])-rank(b[1])}).slice(0,5).map(function(e){var id=e[0],d=e[1];
+        if(nrm(d.n).indexOf(v)>=0)return{id:id,d:d,label:d.n,sub:""};
+        var k=d.k.filter(function(x){return nrm(x).indexOf(v)===0})[0],kn=nrm(k);
+        return{id:id,d:d,label:v===kn||v.indexOf(kn+" ")===0?cap(typed):cap(k.trim()),sub:d.n}});
+    var e=function(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+    box.innerHTML=hits.map(function(h){return '<button type="button" data-s="'+h.id+'" data-n="'+e(h.label)+'">'+h.d.e+" "+e(h.label)+(h.sub?"<small>"+e(h.sub)+"</small>":"")+"</button>"}).join("")+'<button type="button" data-s="">➕ Ajouter « '+e(typed)+' »</button>';
+    var rc=f.getBoundingClientRect();box.style.left=rc.left+"px";box.style.width=rc.width+"px";box.style.top=(rc.bottom+6)+"px";box.hidden=false}
+  function ajouter(f,b){var inp=f.querySelector("input"),parts=inp.value.split(","),typed=parts.pop().trim();if(!typed&&!b.dataset.s)return;
+    var id=b.dataset.s||(window.cookGuess?window.cookGuess(typed):null),name=b.dataset.s?(b.dataset.n||ING[id].n):typed;
+    var L=[];try{L=JSON.parse(localStorage.getItem("friscan.fridge")||"[]")}catch(err){}if(!Array.isArray(L))L=[];
+    L.unshift({uid:Date.now().toString(36)+Math.random().toString(36).slice(2,6),name:name,ing:id||null,other:!id,added:Date.now()});
+    try{localStorage.setItem("friscan.fridge",JSON.stringify(L))}catch(err){}
+    inp.value=parts.join(",").replace(/,\s*$/,"");if(inp!==input){input.value=inp.value}save();syncChips();boite(f).hidden=true;majReserves();
+    toast(name+" ajouté à tes réserves")}
+  document.addEventListener("input",function(e){if(e.target.matches&&e.target.matches(".haveq input"))suggerer(e.target)});
+  function placer(){var x=document.getElementById("hsugg");if(!x||x.hidden||!cible)return;var rc=cible.getBoundingClientRect();x.style.left=rc.left+"px";x.style.width=rc.width+"px";x.style.top=(rc.bottom+6)+"px"}
+  addEventListener("scroll",placer,{passive:true});addEventListener("resize",placer);if(window.visualViewport)visualViewport.addEventListener("resize",placer);
+  document.addEventListener("click",function(e){var b=e.target.closest(".hsugg button");if(b){e.preventDefault();if(cible)ajouter(cible,b);return}
+    if(!e.target.closest(".haveq"))boite().hidden=true});
+  document.addEventListener("keydown",function(e){if(!(e.target.matches&&e.target.matches(".haveq input")))return;var f=e.target.closest(".haveq"),box=boite(f);
+    if(e.key==="Escape"&&box){box.hidden=true;return}
+    if(e.key==="Enter"&&box&&!box.hidden){var b=box.querySelector("button");if(b){e.preventDefault();e.stopPropagation();ajouter(f,b)}}},true);
   $("t-have").addEventListener("submit",function(e){
     e.preventDefault();
     var list=items();

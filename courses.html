@@ -101,7 +101,30 @@ main{padding-block:16px 40px}
 
 /* Recettes */
 .search{width:100%;padding:11px 16px;border:1px solid var(--line);border-radius:99px;background:var(--card);font-size:1.05rem;box-shadow:var(--sh-card)}
-.rlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.rlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px}
+.rlist>.hint,.rlist>.empty{grid-column:1/-1}
+/* miniatures des recettes : même présentation que « Max 30 min » (photo, nom, pastilles du carrousel) */
+.ccard{display:flex;flex-direction:column;background:#fff;border:0;border-radius:20px;overflow:hidden;text-decoration:none;color:var(--acc-deep);box-shadow:0 3px 10px rgba(0,0,0,.12);padding:0;font:inherit;text-align:left;cursor:pointer;width:100%}
+.ccard[aria-pressed="true"]{box-shadow:0 0 0 3px var(--acc),0 3px 10px rgba(0,0,0,.12)}
+.ccard .cimg{position:relative;aspect-ratio:1;display:grid;place-items:center;font-size:3.4rem;background:linear-gradient(135deg,var(--c1),var(--c2))}
+.ccard .cimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ccard .iamini{position:absolute;right:6px;bottom:6px;font-style:normal;font-weight:700;font-size:.75rem;line-height:1;background:rgba(0,0,0,.6);color:#fff;border-radius:99px;padding:2px 6px}
+.ccard .ctxt{padding:8px 10px 10px;display:grid;gap:4px}
+.ccard b{font-size:1.15rem;line-height:1.1}
+.ccard small{color:#000;font-weight:700;font-size:.85rem}
+.ccard .vegrow{display:flex;justify-content:center;padding:6px 8px;background:#fff}
+.ccard .vegtag{display:inline-block;background:#1f7a43;color:#fff;font-weight:700;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;line-height:1;padding:5px 12px;border-radius:7px;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+.ccard .cinfo.lite{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+.ccard .cinfo.lite span{display:inline-flex;align-items:center;gap:3px;font-weight:700;font-size:.78rem;line-height:1;padding:5px 8px;border-radius:99px;background:#e3f6f8;color:#0b4f59;white-space:nowrap}
+.ccard .cinfo.lite .kc{background:#1f7a43;color:#fff}
+.ccard .cinfo.lite .bu1{background:#1c5d99;color:#fff}.ccard .cinfo.lite .bu2{background:#8a5200;color:#fff}.ccard .cinfo.lite .bu3{background:#a3261e;color:#fff}
+.ccard .miss{margin-top:4px}
+.ccard .miss span{font-size:.82rem}
+.cwrap{display:grid;align-content:start}
+.cwrap .ccard{position:relative;z-index:1;height:100%;cursor:default}
+.cwrap .addmiss{margin:-14px 0 0;padding:20px 8px 8px;border:0;border-radius:0 0 18px 18px;background:var(--acc);color:#fff;font:inherit;font-weight:700;font-size:.9rem;line-height:1.15;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,.12)}
+.cwrap .addmiss:disabled{background:#cdeccb;color:var(--acc-deep);cursor:default}
+@media (prefers-reduced-motion:no-preference){.ccard{transition:transform .15s}button.ccard:active{transform:scale(.98)}}
 .rcard{display:flex;flex-direction:column;gap:2px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 14px;box-shadow:var(--sh-card);cursor:pointer}
 .rcard b{font-size:1.05rem;line-height:1.2}
 .rcard small{color:var(--mute);font-size:.95rem}
@@ -185,9 +208,9 @@ body.withbar .ckc-fab{bottom:calc(var(--bar) + 26px + env(safe-area-inset-bottom
     </section>
 
     <section class="view" id="v-presque" aria-label="Recettes presque prêtes" hidden>
-      <p class="hint">Les recettes pour lesquelles il ne te manque qu'un ou deux ingrédients, d'après tes réserves Friscan (frigo et placard).</p>
+      <p class="hint">Les recettes pour lesquelles il ne te manque qu'un ou deux ingrédients, d'après tes réserves (frigo et placard).</p>
       <div id="p-note"></div>
-      <div class="view" id="p-list"></div>
+      <div class="rlist" id="p-list"></div>
     </section>
 
   </div>
@@ -199,6 +222,8 @@ body.withbar .ckc-fab{bottom:calc(var(--bar) + 26px + env(safe-area-inset-bottom
 
 <!-- Référentiel d'ingrédients partagé avec Friscan (même site) -->
 <script src="../friscan/data.js?v=20"></script>
+<script src="budget.js?v=3"></script>
+<script src="../recettes/calories.js?v=2"></script>
 <script src="commentaire.js?v=6" data-mode="tete" data-header=".hdr .top" data-place="fin" data-context="Cookapli · Liste de courses" data-extra="Ta liste de courses reste sur ton téléphone." defer></script>
 <script>
 'use strict';
@@ -348,7 +373,7 @@ $('#b-ranger').onclick = () => {
   for (const it of taken.filter(x => !x.stocked)) f.unshift({ uid: uid(), name: it.ing ? IG[it.ing].n : it.name, ing: it.ing || null, other: !it.ing, added: Date.now() });
   store.set('friscan.fridge', f);
   list = list.filter(x => !x.done); save(); renderList(); renderPresque();
-  toast(`${pl(taken.length, 'article rangé', 'articles rangés')} dans tes réserves Friscan`, () => { store.set('friscan.fridge', beforeF); list = beforeL; save(); renderList(); renderPresque(); });
+  toast(`${pl(taken.length, 'article rangé', 'articles rangés')} dans tes réserves`, () => { store.set('friscan.fridge', beforeF); list = beforeL; save(); renderList(); renderPresque(); });
 };
 $('#b-copy').onclick = async () => {
   const groups = {};
@@ -375,6 +400,13 @@ function csvRows(t) {
   if (f !== '' || r.length) { r.push(f); rows.push(r); }
   return rows;
 }
+/* « 1 h 20 » → 80, « 20 à 25 min » → 25, « Sans cuisson » → 0, vide → null */
+function minutes(v) {
+  v = String(v || '').toLowerCase(); if (!v.trim()) return null; if (/sans cuisson/.test(v)) return 0;
+  let t = 0, ok = false;
+  v.split('+').forEach(p => { p = p.replace(/(\d+)\s*(?:à|a|ou)\s*(\d+)/g, '$2'); let m = p.match(/(\d+)\s*h(?:eures?)?\s*(\d+)?/); if (m) { t += m[1] * 60 + (+m[2] || 0); ok = true; return; } m = p.match(/(\d+)/); if (m) { t += +m[1]; ok = true; } });
+  return ok ? t : null;
+}
 function buildMine(csvT, fiches) {
   const out = []; let cur = '';
   for (const row of csvRows(csvT).slice(5)) {
@@ -384,14 +416,17 @@ function buildMine(csvT, fiches) {
     if (!fi || !fi.ing) continue;
     const lines = [];
     for (const l of fi.ing) { if (l.l) continue; const r = lineIng(l.t || ''); if (!r.skip) lines.push({ t: l.t, id: r.id || null }); }
-    if (lines.length) out.push({ n: name, cat: cur, slug, pers: (fi.m && fi.m.pers) || '', lines });
+    const fm = fi.m || {}, tp = minutes(fm.prep), tc = minutes(fm.cuisson);
+    if (lines.length && !/pr[eé]paration/i.test(cur)) out.push({ n: name, cat: cur, slug, pers: fm.pers || '', lines, img: (row[6] || '').trim(), tot: tp == null ? null : tp + (tc || 0),
+      veg: /vegetarien|vegan/.test(slugify(cur + ' ' + (row[3] || '') + ' ' + name)), f: { ing: fi.ing.map(x => ({ t: x.t, l: x.l })), m: { pers: fm.pers }, pers: fi.pers, r: fi.r } });
   }
   return out;
 }
 async function loadMine() {
   const cache = store.get('cookapli.recettes', null);
-  if (cache && cache.list && cache.list.length) mine = cache.list;
-  if (cache && Date.now() - cache.t < 6 * 3600e3) return;
+  const frais = cache && cache.v === 2;
+  if (frais && cache.list && cache.list.length) mine = cache.list;
+  if (frais && Date.now() - cache.t < 6 * 3600e3) return;
   if (!SRC || !SRC.csv) { rState = mine.length ? '' : 'Tes recettes ne sont pas accessibles depuis cette page.'; return; }
   rState = mine.length ? '' : 'Chargement de tes recettes…'; renderRecettes();
   try {
@@ -401,25 +436,52 @@ async function loadMine() {
     ]);
     const out = buildMine(csvT, (fj && fj.fiches) || {});
     if (!out.length) throw 0;
-    mine = out; rState = ''; store.set('cookapli.recettes', { list: out, t: Date.now() });
+    mine = out; rState = ''; store.set('cookapli.recettes', { v: 2, list: out, t: Date.now() });
   } catch (e) {
     rState = mine.length ? 'Hors connexion : dernière version enregistrée de tes recettes.' : 'Tes recettes n’ont pas pu être chargées. Vérifie ta connexion puis recharge la page.';
   }
   renderRecettes(); renderPresque();
 }
 
+/* ---------- miniatures (même présentation que « Max 30 min ») ---------- */
+const SITE_LIVRE = SRC && SRC.site ? SRC.site : '../recettes/';
+function lite(min, pers, kc, bu) {
+  let h = '';
+  if (min) h += `<span title="Préparation et cuisson">⏱️ ${min >= 60 ? Math.floor(min / 60) + ' h' + (min % 60 ? ' ' + String(min % 60).padStart(2, '0') : '') : min + ' min'}</span>`;
+  if (kc) h += `<span class="kc" title="Calories par personne, estimation indicative sans valeur médicale">≈ ${kc} kcal</span>`;
+  if (bu) h += `<span class="bu${bu.niv.n}" title="Budget par personne : ${esc(bu.niv.t)} (estimation à partir de prix moyens)">${bu.niv.s}</span>`;
+  if (pers) h += `<span title="Personnes">👤 ${esc(pers)}</span>`;
+  return h ? `<span class="cinfo lite">${h}</span>` : '';
+}
+const okCalc = () => typeof CookCalc !== 'undefined';
+function liteLivre(r) { return lite(r.tot, r.pers, r.f && okCalc() ? CookCalc.kcal(r.f) : null, r.f && okCalc() ? CookCalc.budget(r.f, guessIng) : null); }
+function liteRapide(r) { const ok = window.CookBudget && CookBudget.kcalFriscan; return lite(r.min, String(r.pers), ok ? CookBudget.kcalFriscan(r, IG) : null, ok && CookBudget.pret() ? CookBudget.recetteFriscan(r, IG) : null); }
+const VEG = '<span class="vegrow"><span class="vegtag">Végétarien</span></span>';
+/* contenu d'une miniature : photo, nom, ligne d'info, pastilles, puis « extra » (ingrédients manquants…) */
+function carteLivre(r, extra) {
+  const [c1, c2] = (typeof MINE_COLORS !== 'undefined' && MINE_COLORS[r.cat]) || ['#d6f0e6', '#8fd6bd'];
+  const img = r.img ? `<img src="${esc(SITE_LIVRE + encodeURI(r.img))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
+  return `${r.veg ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
+}
+function carteRapide(r, extra) {
+  const [c1, c2] = (typeof CATS !== 'undefined' && CATS[r.cat]) || ['#d9d0f5', '#b9a8ee'];
+  const img = r.img ? `<img src="../friscan/${esc(r.img)}" alt="" loading="lazy" width="720" height="720">${r.ia ? '<i class="iamini" title="Photo d’illustration créée par IA">IA</i>' : ''}` : r.e;
+  return `${/vegetarien/.test(slugify(r.cat || '')) ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img}</span><span class="ctxt"><b>${esc(r.n)}</b><small>⏱️ Recette rapide</small>${liteRapide(r)}${extra || ''}</span>`;
+}
+if (window.CookBudget) CookBudget.charger().then(d => { if (d) { renderRecettes(); renderPresque(); } });
+
 let picked = null;
 function renderRecettes() {
   $('#r-state').textContent = rState || (mine.length ? `${mine.length} recettes. Choisis-en une pour ajouter ce qui te manque.` : '');
   const q = norm($('#r-q').value).trim();
   const items = mine.filter(r => !q || norm(r.n + ' ' + r.cat).includes(q));
-  $('#r-list').innerHTML = items.map(r => `<button type="button" class="rcard" data-slug="${esc(r.slug)}" aria-pressed="${picked === r.slug}"><b>${esc(r.n)}</b><small>${esc(r.cat)} · ${r.lines.length} ingrédients</small></button>`).join('')
+  $('#r-list').innerHTML = items.map(r => `<button type="button" class="ccard" data-slug="${esc(r.slug)}" aria-pressed="${picked === r.slug}">${carteLivre(r)}</button>`).join('')
     || (mine.length ? '<p class="hint">Aucune recette ne correspond.</p>' : '');
   const r = mine.find(x => x.slug === picked), p = $('#r-panel');
   if (!r) { p.hidden = true; return; }
   p.hidden = false;
   p.innerHTML = `<h2>${esc(r.n)}</h2>
-    <p class="hint">Coché : ce qui part dans ta liste. Ce que tu as déjà dans Friscan est décoché.${r.pers ? ` Quantités pour ${esc(r.pers)} personne${r.pers > 1 ? 's' : ''}, comme sur la fiche.` : ''}</p>
+    <p class="hint">Coché : ce qui part dans ta liste. Ce que tu as déjà dans tes réserves est décoché.${r.pers ? ` Quantités pour ${esc(r.pers)} personne${r.pers > 1 ? 's' : ''}, comme sur la fiche.` : ''}</p>
     <ul class="ings">${r.lines.map((l, i) => {
       const h = l.id && have(l.id);
       return `<li><label><input type="checkbox" data-i="${i}" ${h ? '' : 'checked'}><span>${esc(l.t)}${h ? `<span class="tag have">${inPlacard(l.id) ? 'dans le placard' : 'au frigo'}</span>` : ''}${!l.id ? '<span class="tag unk">non reconnu</span>' : ''}</span></label></li>`;
@@ -436,7 +498,7 @@ function renderRecettes() {
   };
 }
 $('#r-list').addEventListener('click', e => {
-  const b = e.target.closest('.rcard'); if (!b) return;
+  const b = e.target.closest('.ccard'); if (!b) return;
   picked = picked === b.dataset.slug ? null : b.dataset.slug; renderRecettes();
   if (picked) $('#r-panel').scrollIntoView({ block: 'nearest', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
 });
@@ -444,24 +506,23 @@ $('#r-q').addEventListener('input', renderRecettes);
 
 /* ---------- presque prêtes (même règle que Friscan : 1 ou 2 manquants) ---------- */
 function allRecipes() {
-  const a = mine.map(r => ({ n: r.n, sub: r.cat, mineSlug: r.slug, ings: [...new Set(r.lines.filter(l => l.id).map(l => l.id))], qty: id => (r.lines.find(l => l.id === id) || {}).t || '' }));
-  const b = HAS && typeof RECETTES !== 'undefined' ? RECETTES.map(r => ({ n: r.n, sub: 'Recette rapide Friscan · ' + r.min + ' min', ings: r.ing.filter(x => !x[2]).map(x => x[0]), qty: id => { const x = r.ing.find(y => y[0] === id); return x && x[1] ? x[1] : ''; } })) : [];
+  const a = mine.map(r => ({ n: r.n, sub: r.cat, mineSlug: r.slug, carte: x => carteLivre(r, x), ings: [...new Set(r.lines.filter(l => l.id).map(l => l.id))], qty: id => (r.lines.find(l => l.id === id) || {}).t || '' }));
+  const b = HAS && typeof RECETTES !== 'undefined' ? RECETTES.map(r => ({ n: r.n, sub: 'Recette rapide · ' + r.min + ' min', carte: x => carteRapide(r, x), ings: r.ing.filter(x => !x[2]).map(x => x[0]), qty: id => { const x = r.ing.find(y => y[0] === id); return x && x[1] ? x[1] : ''; } })) : [];
   return [...a, ...b];
 }
 function renderPresque() {
   const f = fridge();
   const note = $('#p-note');
-  if (!HAS) { note.innerHTML = '<p class="note">Les données de Friscan ne sont pas disponibles sur cette page.</p>'; $('#p-list').innerHTML = ''; return; }
-  note.innerHTML = f.length ? '' : `<p class="note">Tes réserves Friscan sont vides sur cet appareil. Le calcul se base seulement sur ton placard. <a href="../friscan/#scan">Scanner mon frigo</a></p>`;
+  if (!HAS) { note.innerHTML = '<p class="note">Tes réserves ne sont pas disponibles sur cette page.</p>'; $('#p-list').innerHTML = ''; return; }
+  note.innerHTML = f.length ? '' : `<p class="note">Tes réserves sont vides sur cet appareil. Le calcul se base seulement sur ton placard. <a href="../friscan/#scan">Scanner mon frigo</a></p>`;
   const res = allRecipes().map(r => ({ r, miss: r.ings.filter(id => !have(id)), used: r.ings.filter(inFridge).length }))
     .filter(x => x.miss.length >= 1 && x.miss.length <= 2 && x.r.ings.length >= 3)
     .sort((a, b) => a.miss.length - b.miss.length || b.used - a.used || a.r.n.localeCompare(b.r.n, 'fr'))
     .slice(0, 40);
   const nb = $('#n-presque'); nb.hidden = !res.length; nb.textContent = res.length;
-  $('#p-list').innerHTML = res.map((x, i) => `<div class="pcard"><div class="txt"><b>${esc(x.r.n)}</b><small>${esc(x.r.sub)}${x.used ? ` · utilise ${x.used} produit${x.used > 1 ? 's' : ''} de tes réserves` : ''}</small>
-      <div class="miss">${x.miss.map(id => `<span>${IG[id].e} ${esc(IG[id].n)}</span>`).join('')}</div></div>
-      <button class="btn small" type="button" data-p="${i}">🛒 Ajouter ${x.miss.length > 1 ? 'les 2 manquants' : 'le manquant'} à ma liste</button></div>`).join('')
-    || '<div class="empty"><b>Aucune recette à 1 ou 2 ingrédients près</b>Scanne ou ajoute des produits dans Friscan, la liste se mettra à jour.</div>';
+  $('#p-list').innerHTML = res.map((x, i) => `<div class="cwrap"><div class="ccard">${x.r.carte(`<small>${x.used ? `Utilise ${x.used} produit${x.used > 1 ? 's' : ''} de tes réserves` : 'D’après ton placard'}</small><div class="miss">${x.miss.map(id => `<span>${IG[id].e} ${esc(IG[id].n)}</span>`).join('')}</div>`)}</div>
+      <button class="addmiss" type="button" data-p="${i}">🛒 Ajouter ${x.miss.length > 1 ? 'les 2 manquants' : 'le manquant'} à ma liste</button></div>`).join('')
+    || '<div class="empty"><b>Aucune recette à 1 ou 2 ingrédients près</b>Scanne ou ajoute des produits dans tes réserves, la liste se mettra à jour.</div>';
   $('#p-list').onclick = e => {
     const b = e.target.closest('[data-p]'); if (!b) return;
     const x = res[+b.dataset.p];
