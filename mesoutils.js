@@ -48,8 +48,8 @@
     var s = vierge ? { v: 1, profil: 'famille', perso: false, blocs: A.preset('famille'), connus: A.BLOCS.map(function (b) { return b.id; }) } : lu;
     box.classList.add('mo'); box.innerHTML = '';
     var sp = el('section', null, '<h2>Ton profil</h2><div class="mo-chips" role="group" aria-label="Profil"></div>'),
-      so = el('section', null, '<h2>Les outils de ton profil</h2><ul class="mo-list"></ul>'),
-      sa = el('section', null, '<h2>Autres outils</h2><ul class="mo-list"></ul>'),
+      so = el('section', null, '<h2>Les outils par défaut de ton profil</h2><ul class="mo-list"></ul>'),
+      sa = el('section', null, '<h2>Les autres outils pour t\'aider</h2><ul class="mo-list"></ul>'),
       sb = el('section', null, '<h2>Bientôt disponible</h2><ul class="mo-list mo-bientot"></ul>'),
       sf = el('section', null, '<h2>Régime et allergies</h2><ul class="mo-list"></ul><p class="mo-avert"><b>⚠️ Allergies :</b> Cookapli repère les ingrédients des recettes, mais ne connaît pas la composition exacte des produits que tu achètes (traces, bouillons, sauces…). Vérifie toujours les étiquettes.</p>'),
       bt = el('div', 'mo-btns');
