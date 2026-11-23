@@ -148,6 +148,7 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .g-occasion .stars{position:absolute;right:8px;top:6px;width:96px;height:84px;pointer-events:none}
 .g-chrono{background:linear-gradient(135deg,var(--c-salee-1),var(--c-salee-2))}
 .g-gaspi{background:linear-gradient(135deg,var(--c-veg-1),var(--c-veg-2))}
+.g-planif{background:linear-gradient(135deg,#e4e2fb,#c9c3f3)}
 .g-equilibre{background:linear-gradient(135deg,#2e9a5a,#1f7a43)} /* même vert que la tuile Équilibre alimentaire du Livre de recettes */
 .tile.g-equilibre,.tile.g-equilibre b,.tile.g-equilibre small{color:#fff}
 .tile.g-equilibre:focus-visible{outline-color:#1f7a43}
@@ -318,6 +319,7 @@ body.fond-profil .g-courses{background:linear-gradient(135deg,color-mix(in srgb,
 body.fond-profil .g-batch{background:linear-gradient(135deg,color-mix(in srgb,var(--c-entree-1) 70%,transparent),color-mix(in srgb,var(--c-entree-2) 70%,transparent))}
 body.fond-profil .g-occasion{background:linear-gradient(135deg,color-mix(in srgb,#fff0f5 70%,transparent),color-mix(in srgb,var(--c-acc-2) 70%,transparent))}
 body.fond-profil .g-chrono{background:linear-gradient(135deg,color-mix(in srgb,var(--c-salee-1) 70%,transparent),color-mix(in srgb,var(--c-salee-2) 70%,transparent))}
+body.fond-profil .g-planif{background:linear-gradient(135deg,color-mix(in srgb,#e4e2fb 70%,transparent),color-mix(in srgb,#c9c3f3 70%,transparent))}
 body.fond-profil .g-gaspi{background:linear-gradient(135deg,color-mix(in srgb,var(--c-veg-1) 70%,transparent),color-mix(in srgb,var(--c-veg-2) 70%,transparent))}
 body.fond-profil .g-equilibre{background:linear-gradient(135deg,color-mix(in srgb,#2e9a5a 70%,transparent),color-mix(in srgb,#1f7a43 70%,transparent))}
 body.fond-profil .batch{background:color-mix(in srgb,var(--acc) 70%,transparent)}
@@ -616,6 +618,9 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
         <a class="tile g-cook" id="t-cook" href="../recettes/">
           <span><b>Des recettes pour toi</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
+        <a class="tile g-planif" id="t-planif" href="planning.html">
+          <span><b>Planificateur semaine</b><small>Tes repas du lundi au dimanche, midi et soir, avec tes propres plats</small></span><span class="ill" aria-hidden="true">🗓️</span>
+        </a>
         <a class="tile g-chrono" id="t-chrono" href="../friscan/#chrono">
           <span><b>Max 30 min</b><small>Des recettes rapides, prêtes en 30 minutes</small></span><span class="ill" aria-hidden="true">⏱️</span>
         </a>
@@ -693,7 +698,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 91</p>
+  <p class="legal ver">Cookapli · version 92</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -708,7 +713,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 <script src="../friscan/data.js?v=20"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
-<script src="mesoutils.js?v=5"></script>
+<script src="mesoutils.js?v=6"></script>
 <script src="../recettes/calories.js?v=2"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -945,7 +950,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
-<script src="accueil.js?v=13"></script>
+<script src="accueil.js?v=14"></script>
 <script>
 /* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
 (function(){

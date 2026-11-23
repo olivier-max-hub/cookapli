@@ -8,6 +8,7 @@
   var BLOCS = [
     { id: 'reserves', href: '../friscan/#frigo', n: 'Mes réserves', sel: '#t-have', depuis: 1 },
     { id: 'quecuisiner', href: '../recettes/', n: 'Des recettes pour toi', sel: '#t-cook', depuis: 1 },
+    { id: 'planif', href: 'planning.html', n: 'Planificateur semaine', sel: '#t-planif', depuis: 92 },
     { id: 'chrono', href: '../friscan/#chrono', n: 'Max 30 min', sel: '#t-chrono', depuis: 1 },
     { id: 'antigaspi', n: 'Zéro gaspi', sel: '#t-gaspi', depuis: 1 },
     { id: 'courses', href: 'courses.html', n: 'Courses auto', sel: '#t-courses', depuis: 1 },
@@ -19,7 +20,7 @@
     { id: 'inspiration', href: './#s-ideas', n: "Besoin d'inspiration ?", sel: '#s-ideas', grand: 1, depuis: 1 }
   ];
   var PROFILS = [
-    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'quecuisiner', 'courses', 'chrono', 'livre', 'inspiration'] },
+    { id: 'famille', n: 'Famille au quotidien', sub: 'Menus de la semaine et courses', blocs: ['reserves', 'batch', 'quecuisiner', 'planif', 'courses', 'antigaspi', 'livre', 'inspiration'] },
     { id: 'debutant', n: 'Je débute', sub: 'Des recettes simples et rapides', blocs: ['reserves', 'quecuisiner', 'chrono', 'courses', 'inspiration', 'livre'] },
     { id: 'gourmand', n: 'Gourmand passionné', sub: 'Inspiration et repas de fête', blocs: ['reserves', 'quecuisiner', 'courses', 'celebrations', 'inspiration', 'saison', 'livre'] },
     { id: 'antigaspi', n: 'Anti-gaspi, petit budget', sub: 'Rien ne se perd', blocs: ['reserves', 'quecuisiner', 'antigaspi', 'chrono', 'courses', 'livre', 'inspiration'] },

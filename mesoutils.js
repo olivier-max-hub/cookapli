@@ -4,6 +4,7 @@
 (function () {
   var OUTILS = {
     quecuisiner: ['🍳', 'Des recettes pour toi', 'ce que tu peux cuisiner avec tes réserves'],
+    planif: ['🗓️', 'Planificateur semaine', 'tes repas du lundi au dimanche, midi et soir'],
     chrono: ['⏱️', 'Max 30 min', 'des recettes prêtes en 30 minutes'],
     antigaspi: ['♻️', 'Zéro gaspi', "on cuisine d'abord ce qui doit partir vite"],
     courses: ['🛒', 'Courses auto', 'en un clic, ce qui manque pour ta recette'],

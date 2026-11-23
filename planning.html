@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f6b78">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Planificateur semaine · Cookapli</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef8fb;--wash1:#f1fafc;--wash2:#e6f6f7;--wash3:#eaf5fb;--card:#fff;--line:#d3e6ea;--ink:#1f2a24;
+  --acc:#0f6b78;--acc-deep:#0b4f59;--acc-pale:#e3f6f8;--on:#fff;--sh-card:0 2px 8px rgba(0,0,0,.1);--sh-header:0 2px 10px rgba(0,0,0,.15);
+  --midi:#fff1c9;--midi-b:#e9b949;--midi-t:#6b4a00;--soir:#e4e2fb;--soir-b:#8f86e0;--soir-t:#352d86;
+  --font:Nunito,"Segoe UI",Arial,sans-serif;color-scheme:light;
+}
+html{font-size:14px}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;color:var(--ink);font:1rem/1.45 var(--font);background:linear-gradient(160deg,var(--wash1),var(--wash2) 55%,var(--wash3)) fixed,var(--bg);min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--acc);z-index:10}
+body.sheet-on{overflow:hidden}
+.wrap{max-width:700px;margin:0 auto}
+.gut{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+:where(a,button,input,label):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--acc);color:var(--on);box-shadow:var(--sh-header);padding-block:8px 12px}
+.hdr a.back{display:inline-flex;align-items:center;min-height:44px;color:var(--on);font-weight:800;font-size:1.05rem;text-underline-offset:3px}
+.hdr h1{margin:0;font-size:1.6rem;line-height:1.1;font-weight:800}
+.hdr p{margin:4px 0 0;font-weight:700;font-size:.95rem}
+main{padding-block:16px 60px}
+p{margin:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--sh-card);padding:14px}
+.stack{display:grid;gap:14px}
+.lead{color:#000;font-weight:700}
+.note{color:#000;font-weight:700;font-size:.92rem}
+.note a{color:var(--acc-deep)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.compte{font-weight:800;color:var(--acc-deep);font-size:1.05rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;border:2px solid var(--acc);border-radius:99px;background:var(--acc);color:var(--on);font:inherit;font-size:1.05rem;font-weight:800;cursor:pointer;text-decoration:none;padding:6px 16px;text-align:center}
+.btn.alt{background:#fff;color:var(--acc)}
+.btn.small{min-height:40px;font-size:.95rem;padding:4px 14px}
+.btn.danger{border-color:#b3261e;color:#b3261e;background:#fff}
+/* un jour = une carte ; midi et soir bien séparés */
+.jour{padding:0;overflow:hidden}
+.jour h2{margin:0;padding:10px 14px;font-size:1.25rem;font-weight:800;color:#fff;background:var(--acc);display:flex;align-items:center;gap:8px}
+.jour.auj h2{background:var(--acc-deep)}
+.jour h2 .auj{margin-left:auto;background:#fff;color:var(--acc-deep);border-radius:99px;padding:2px 10px;font-size:.8rem}
+.repas{display:grid;grid-template-columns:76px 1fr;align-items:stretch;border-top:1px solid var(--line)}
+.repas:first-of-type{border-top:0}
+.repas .lab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-weight:800;font-size:.95rem;padding:8px 4px}
+.repas .lab span{font-size:1.4rem;line-height:1}
+.repas.midi .lab{background:var(--midi);color:var(--midi-t);border-right:4px solid var(--midi-b)}
+.repas.soir .lab{background:var(--soir);color:var(--soir-t);border-right:4px solid var(--soir-b)}
+.slot{display:flex;align-items:center;gap:12px;width:100%;min-height:72px;padding:10px 12px;border:0;background:#fff;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+.slot:hover{background:#f6fbfc}
+.slot .ph{flex:none;width:54px;height:54px;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:1.6rem;background:linear-gradient(135deg,#cdeccb,#bfe8ee);position:relative}
+.slot .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.slot .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.slot .tx b{text-align:left;font-size:1.05rem;line-height:1.2;font-weight:800;overflow-wrap:anywhere}
+.slot .chev{flex:none;color:var(--acc);font-weight:800;font-size:.9rem;display:flex;align-items:center;gap:4px}
+.slot.vide .ph{background:#f0f6f7;border:2px dashed #9cc3c9;color:var(--acc);font-size:1.5rem}
+.slot.vide .tx b{color:var(--acc);font-weight:800}
+.tag{display:inline-flex;align-items:center;gap:4px;align-self:flex-start;border-radius:99px;padding:1px 9px;font-size:.8rem;font-weight:800;background:#f0f3f4;color:#000}
+.tag.perso{background:#ffe9d6;color:#7a3a00}
+.tag.livre{background:var(--acc-pale);color:var(--acc-deep)}
+.tag.rapide{background:#dcecfd;color:#1d4f8f}
+.tag.vg{background:#1f7a43;color:#fff}.tag.vg.vegan{background:#4d7c0f}
+.iamini{position:absolute;right:3px;bottom:3px;font-weight:700;font-size:.55rem;line-height:1;background:rgba(0,0,0,.6);color:#fff;border-radius:99px;padding:2px 4px;white-space:nowrap}
+/* fenêtre de choix */
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(10,30,34,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet .box{background:#fff;width:min(700px,100%);max-height:92vh;border-radius:22px 22px 0 0;display:flex;flex-direction:column;box-shadow:0 -6px 24px rgba(0,0,0,.2);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet .sh{padding:14px 16px 10px;border-bottom:1px solid var(--line);display:grid;gap:10px}
+.sheet .sh .t{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sheet .sh h3{margin:0;font-size:1.3rem;color:var(--acc-deep);font-weight:800}
+.sheet .x{flex:none;width:44px;height:44px;border-radius:50%;border:2px solid var(--acc);background:#fff;color:var(--acc);font:inherit;font-size:1.3rem;font-weight:800;cursor:pointer}
+.sheet .sb{overflow:auto;padding:12px 16px 18px;display:grid;gap:12px;align-content:start}
+.cur{background:#f6fbfc;border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:grid;gap:8px}
+.cur b{font-size:1.05rem}
+.cur .acts{display:flex;flex-wrap:wrap;gap:8px}
+.champ{display:flex;align-items:center;gap:8px;border:2px solid var(--acc);border-radius:99px;padding:2px 6px 2px 14px;background:#fff}
+.champ input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:1.05rem;font-weight:600;padding:10px 0;color:var(--ink)}
+.champ input:focus{outline:none}
+.champ input::placeholder{color:#5d6f73}
+.perso-btn{display:flex;align-items:center;gap:10px;width:100%;border:2px dashed #e0904a;background:#fff7ef;border-radius:14px;padding:10px 12px;font:inherit;font-weight:800;color:#7a3a00;cursor:pointer;text-align:left;min-height:52px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px}
+.chip{flex:none;border:2px solid var(--acc);background:#fff;color:var(--acc);border-radius:99px;padding:6px 14px;font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;min-height:40px}
+.chip[aria-pressed="true"]{background:var(--acc);color:#fff}
+.res{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.res button{display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--line);background:#fff;border-radius:14px;padding:8px 10px;font:inherit;text-align:left;cursor:pointer;color:var(--ink);min-height:64px}
+.res button:hover{background:#f6fbfc}
+.res button[aria-current="true"]{border:2px solid var(--acc);background:var(--acc-pale)}
+.res .ph{flex:none;width:48px;height:48px;border-radius:10px;overflow:hidden;display:grid;place-items:center;font-size:1.4rem;background:linear-gradient(135deg,#cdeccb,#bfe8ee);position:relative}
+.res .ph img{width:100%;height:100%;object-fit:cover;display:block}
+.res .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.res .tx b{font-weight:800;line-height:1.2}
+.res .tx small{font-size:.85rem;font-weight:700;color:#000}
+.sec{margin:4px 0 0;font-size:1rem;font-weight:800;color:var(--acc-deep)}
+.vide{text-align:center;color:#000;font-weight:700;padding:14px 0}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,14px);width:min(520px,calc(100% - 32px));display:flex;align-items:center;gap:12px;background:#fff;color:#1f2a24;border:1px solid #d3e6ea;border-left:6px solid #0f6b78;border-radius:16px;padding:12px 14px;box-shadow:0 10px 24px rgba(0,0,0,.18);font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:60}
+#toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#toast::before{content:"✓";flex:none;width:28px;height:28px;border-radius:50%;background:#0f6b78;color:#fff;display:grid;place-items:center;font-weight:700}
+#toast span{flex:1}
+#toast button{flex:none;border:1px solid #0f6b78;background:#e3f6f8;color:#0b4f59;border-radius:99px;padding:6px 14px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer}
+@media (prefers-reduced-motion:reduce){#toast{transition:none}}
+@media (max-width:380px){.repas{grid-template-columns:62px 1fr}.slot .ph{width:46px;height:46px}}
+</style>
+</head>
+<body>
+<header class="hdr gut">
+  <div class="wrap">
+    <a class="back" href="./">← Cookapli</a>
+    <h1>Planificateur semaine</h1>
+    <p>Tes repas du lundi au dimanche, midi et soir</p>
+  </div>
+</header>
+<main class="gut"><div class="wrap stack">
+  <div class="card stack">
+    <p class="lead">Touche un repas pour choisir une recette Cookapli ou écrire ton propre plat. Touche-le de nouveau pour le changer.</p>
+    <p class="note" id="filtres" hidden></p>
+    <div class="top"><span class="compte" id="compte"></span><button type="button" class="btn danger small" id="vider">Vider la semaine</button></div>
+  </div>
+  <div id="semaine" class="stack" aria-live="polite"></div>
+  <p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:10px">Planificateur semaine · version 1</p>
+</div></main>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shT">
+  <div class="box">
+    <div class="sh">
+      <div class="t"><h3 id="shT"></h3><button type="button" class="x" id="shX" aria-label="Fermer">✕</button></div>
+      <label class="champ"><span aria-hidden="true">🔍</span><input id="q" type="search" autocomplete="off" enterkeyhint="done" placeholder="Cherche une recette ou écris ton plat" aria-label="Chercher une recette ou écrire le nom de ton plat"></label>
+      <div class="chips" id="cats" role="group" aria-label="Type de plat"></div>
+    </div>
+    <div class="sb" id="sb"></div>
+  </div>
+</div>
+<div id="toast" role="status" aria-live="polite"><span></span></div>
+
+<script src="../friscan/data.js?v=20"></script>
+<script src="budget.js?v=3"></script>
+<script src="filtres.js?v=3"></script>
+<script src="accueil.js?v=14"></script>
+<script src="../recettes/calories.js?v=3"></script>
+<script>
+(function(){
+"use strict";
+var $=function(i){return document.getElementById(i)};
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(x){return String(x||"").replace(/œ/gi,"oe").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+function slug(s){return norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")}
+function rows(t){var R=[],r=[],f="",q=false;for(var i=0;i<t.length;i++){var c=t[i];if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}else if(c=='"')q=true;else if(c==","){r.push(f);f=""}else if(c=="\n"||c=="\r"){if(c=="\r"&&t[i+1]=="\n")i++;r.push(f);f="";R.push(r);r=[]}else f+=c}if(f||r.length){r.push(f);R.push(r)}return R}
+function lsGet(k,d){try{var v=JSON.parse(localStorage.getItem(k)||"null");return v==null?d:v}catch(e){return d}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function toast(m,annuler){var t=$("toast");t.innerHTML="";var s=document.createElement("span");s.textContent=m;t.appendChild(s);
+  if(annuler){var b=document.createElement("button");b.type="button";b.textContent="Annuler";b.onclick=function(){annuler();t.classList.remove("on")};t.appendChild(b)}
+  t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},annuler?6000:3500)}
+
+var JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"],REPAS=[["midi","☀️","Midi"],["soir","🌙","Soir"]];
+var KEY="cookapli.planning",P=lsGet(KEY,null);if(!P||!P.j)P={v:1,j:{}};
+function sauver(){lsSet(KEY,P)}
+function slotDe(d,m){return P.j[d]&&P.j[d][m]||null}
+function poser(d,m,v){if(!P.j[d])P.j[d]={};if(v)P.j[d][m]=v;else delete P.j[d][m];sauver()}
+
+/* ---------- profil de l'utilisateur : préférences alimentaires et niveau ---------- */
+var FA=window.CookFiltres?CookFiltres.lire():[];
+var prof=window.CookAccueil?CookAccueil.lire():null,DEBUTANT=!!(prof&&prof.profil==="debutant");
+if(FA.length){$("filtres").hidden=false;$("filtres").innerHTML="🥗 Recettes proposées : "+esc(CookFiltres.libelle(FA))+" · <a href=\"perso.html\">modifier</a>"}
+
+/* ---------- recettes Cookapli : Livre de recettes + recettes rapides ---------- */
+var M=typeof MES_RECETTES!=="undefined"?MES_RECETTES:null,HAS=typeof ING!=="undefined";
+var LIVRE=[],FICHES=lsGet("recettes-fiches",{f:{}}).f||{},CSV=null;try{CSV=localStorage.getItem("recettes-csv")}catch(e){}
+function groupe(cat){var c=norm(cat);if(/preparation/.test(c))return null;if(/aperitif|entree/.test(c))return"entree";if(/dessert|biscuit|gouter|sucre/.test(c))return"dessert";if(/accompagn/.test(c))return"accomp";return"plat"}
+function lireCsv(t){LIVRE=[];var cur="";rows(t||"").slice(5).forEach(function(r){var n=(r[2]||"").trim();cur=(r[1]||"").trim()||cur;if(!n)return;var im="",ia="";
+  for(var k=5;k<r.length;k++){var cx=(r[k]||"").trim();if(!im&&/\.(jpe?g|png|webp|gif)$/i.test(cx))im=cx;if(/^(rl\s*\/\s*ia|ia)$/i.test(cx))ia=1}
+  var g=groupe(cur);if(!g)return;var ty=(r[3]||"").trim(),all=slug(cur)+"-"+slug(ty)+"-"+slug(n);
+  LIVRE.push({k:"l",id:slug(n),n:n,cat:/^plat(-|$)/.test(slug(cur))?"Plat":cur,g:g,t:ty,img:im?"../recettes/"+encodeURI(im):"",ia:ia,vg:/(^|-)vegan(-|$)/.test(slug(ty)+"-"+slug(n))?2:/vegetarien|vegan|(^|-)vege(-|$)/.test(all)?1:0,url:"../recettes/#"+slug(n)})})}
+if(CSV)lireCsv(CSV);
+function dureeMin(v){var n=norm(v).replace(/[^a-z0-9+]+/g," ").trim();if(!n||/^(sans cuisson|0( min| mn)?)$/.test(n))return 0;var tot=0,ok=false;String(v).split("+").forEach(function(p){p=norm(p).replace(/(\d+) ?(?:a|à|ou) ?(\d+)/g,"$2");var m=p.match(/(\d+) ?h(?:eures?)?(?: ?(\d+))?/);if(m){tot+=m[1]*60+(+m[2]||0);ok=true;return}m=p.match(/(\d+)/);if(m){tot+=+m[1];ok=true}});return ok?tot:null}
+function infosLivre(r){var f=FICHES[r.id];r.f=f;r.min=null;r.kc=0;if(f&&f.m){var a=dureeMin(f.m.prep),b=dureeMin(f.m.cuisson);if(a!=null&&b!=null)r.min=a+b}
+  if(f&&window.CookCalc)try{r.kc=CookCalc.kcal(f)||0}catch(e){}return r}
+function okLivre(r){if(DEBUTANT&&r.f&&r.f.m&&/difficile/i.test(r.f.m.diff||""))return false;if(!FA.length)return true;if(!window.CookFiltres)return true;return CookFiltres.okTexte(r.f?CookFiltres.texteFiche(r.n,r.f,r.t):null,FA)}
+var RAPIDES=(HAS&&typeof RECETTES!=="undefined"?RECETTES:[]).filter(function(r){return r.ok}).map(function(r){var g=groupe(r.cat)||"plat",kc=0;
+  try{if(window.CookBudget&&CookBudget.kcalFriscan)kc=CookBudget.kcalFriscan(r,ING)||0}catch(e){}
+  return{k:"r",id:r.id,n:r.n,cat:r.cat,g:g,e:r.e,img:r.img?"../friscan/"+r.img:"",ia:r.ia?1:0,vg:/v[ée]g[ée]tarien/i.test(r.cat)?1:0,min:r.min,kc:kc,url:"../friscan/#r-"+r.id,src:r}});
+function okRapide(x){return !FA.length||!window.CookFiltres||CookFiltres.ok(CookFiltres.texteFriscan(x.src,ING),FA)}
+function toutes(){var L=LIVRE.map(infosLivre).filter(okLivre),R=RAPIDES.filter(okRapide),vus={};
+  return L.concat(R).filter(function(x){var k=norm(x.n);if(vus[k])return false;vus[k]=1;return true}).sort(function(a,b){return a.n.localeCompare(b.n,"fr")})}
+function trouver(v){if(!v||v.k==="p")return null;var L=v.k==="l"?LIVRE:RAPIDES;for(var i=0;i<L.length;i++)if(L[i].id===v.id)return L[i];return null}
+
+/* ---------- affichage de la semaine ---------- */
+var auj=(new Date().getDay()+6)%7;
+function vignette(x,emo){var h='<span class="ph" aria-hidden="true">';if(x&&x.img)h+='<img src="'+esc(x.img)+'" alt="" loading="lazy" onerror="this.remove()">'+(x.ia?'<span class="iamini">image IA?</span>':"");else h+=emo||(x&&x.e)||"🍽️";return h+"</span>"}
+function tagsDe(v,x){if(v.k==="p")return'<span class="tag perso">✏️ Plat perso</span>';var t=v.k==="l"?'<span class="tag livre">📖 Livre de recettes</span>':'<span class="tag rapide">⏱️ Recette rapide</span>';
+  if(x&&x.vg)t+=' <span class="tag vg'+(x.vg===2?" vegan":"")+'">'+(x.vg===2?"Vegan":"Végétarien")+"</span>";return'<span style="display:flex;flex-wrap:wrap;gap:4px">'+t+"</span>"}
+function dessiner(){var box=$("semaine"),h="",n=0;
+  JOURS.forEach(function(j,d){h+='<section class="card jour'+(d===auj?" auj":"")+'" aria-label="'+j+'"><h2>'+j+(d===auj?'<span class="auj">Aujourd’hui</span>':"")+"</h2>";
+    REPAS.forEach(function(R){var v=slotDe(d,R[0]),x=trouver(v);if(v)n++;
+      h+='<div class="repas '+R[0]+'"><div class="lab"><span aria-hidden="true">'+R[1]+"</span>"+R[2]+"</div>";
+      if(!v)h+='<button type="button" class="slot vide" data-d="'+d+'" data-m="'+R[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+' : choisir un plat"><span class="ph" aria-hidden="true">+</span><span class="tx"><b>Choisir un plat</b></span></button>';
+      else h+='<button type="button" class="slot" data-d="'+d+'" data-m="'+R[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+" : "+esc(v.n)+', modifier">'+vignette(x,v.k==="p"?"✏️":null)+'<span class="tx"><b>'+esc(v.n)+"</b>"+tagsDe(v,x)+'</span><span class="chev">Modifier ›</span></button>';
+      h+="</div>"});
+    h+="</section>"});
+  box.innerHTML=h;$("compte").textContent=n+" repas planifié"+(n>1?"s":"")+" sur 14";$("vider").hidden=!n}
+$("semaine").addEventListener("click",function(e){var b=e.target.closest(".slot");if(b)ouvrir(+b.dataset.d,b.dataset.m)});
+$("vider").onclick=function(){var avant=JSON.stringify(P);P={v:1,j:{}};sauver();dessiner();toast("La semaine est vidée",function(){P=JSON.parse(avant);sauver();dessiner()})};
+
+/* ---------- fenêtre de choix d'un plat ---------- */
+var CATS=[["plat","Plats"],["entree","Entrées"],["accomp","Accompagnements"],["dessert","Desserts"],["tout","Tout"]];
+var cur=null,catSel="plat",LISTE=[];
+$("cats").innerHTML=CATS.map(function(c){return'<button type="button" class="chip" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("");
+$("cats").addEventListener("click",function(e){var b=e.target.closest("[data-c]");if(!b)return;catSel=b.dataset.c;resultats()});
+function ouvrir(d,m){cur={d:d,m:m};LISTE=toutes();catSel="plat";$("q").value="";
+  $("shT").textContent=JOURS[d]+" · "+(m==="midi"?"Midi":"Soir");$("sheet").hidden=false;document.body.classList.add("sheet-on");resultats();
+  setTimeout(function(){if(!slotDe(d,m))$("q").focus();else $("shX").focus()},60)}
+function fermer(){$("sheet").hidden=true;document.body.classList.remove("sheet-on");var b=cur&&document.querySelector('.slot[data-d="'+cur.d+'"][data-m="'+cur.m+'"]');cur=null;if(b)b.focus()}
+$("shX").onclick=fermer;
+$("sheet").addEventListener("click",function(e){if(e.target===$("sheet"))fermer()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("sheet").hidden)fermer()});
+$("q").addEventListener("input",resultats);
+$("q").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();var t=$("q").value.trim();if(t)choisirPerso(t)}});
+function mots(t){return norm(t).split(/[^a-z0-9]+/).filter(function(w){return w.length>=4&&!/^(avec|pour|sans|sauce|maison|facon|leur|dans)$/.test(w)})}
+function ligne(x,v){var on=v&&v.k===x.k&&v.id===x.id,inf=[];if(x.min)inf.push("⏱️ "+x.min+" min");if(x.kc)inf.push("≈ "+x.kc+" kcal");inf.push(x.k==="l"?"📖 "+x.cat:"⏱️ Recette rapide");
+  return'<li><button type="button" data-k="'+x.k+'" data-id="'+esc(x.id)+'"'+(on?' aria-current="true"':"")+">"+vignette(x)+'<span class="tx"><b>'+esc(x.n)+(on?" ✓":"")+"</b><small>"+esc(inf.join(" · "))+"</small></span></button></li>"}
+function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m),q=$("q").value.trim(),nq=norm(q),h="";
+  [].forEach.call($("cats").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.c===catSel))});
+  if(v){var x=trouver(v);h+='<div class="cur"><span class="note">Actuellement :</span><b>'+esc(v.n)+"</b>"+(v.k==="p"?'<span class="note">C’est ton plat perso. Tu peux le garder, le renommer en écrivant un autre nom ci-dessus, ou le remplacer par une recette Cookapli ci-dessous.</span>':"")+
+    '<div class="acts">'+(x?'<a class="btn alt small" href="'+esc(x.url)+'">Voir la recette</a>':"")+'<button type="button" class="btn danger small" id="retirer">Retirer ce plat</button></div></div>'}
+  if(q)h+='<button type="button" class="perso-btn" id="perso"><span aria-hidden="true" style="font-size:1.4rem">✏️</span><span>Ajouter « '+esc(q)+" » comme plat perso</span></button>";
+  else if(!v)h+='<p class="note">Ton plat n’est pas dans Cookapli ? Écris son nom dans le champ ci-dessus.</p>';
+  var L=LISTE.filter(function(x){return(catSel==="tout"||x.g===catSel)&&(!nq||norm(x.n+" "+x.cat).indexOf(nq)>=0)});
+  /* plat perso : recettes Cookapli proches de son nom, pour le remplacer facilement */
+  if(v&&v.k==="p"&&!q){var W=mots(v.n),pr=W.length?LISTE.filter(function(x){var n=norm(x.n);return W.some(function(w){return n.indexOf(w)>=0})}).slice(0,6):[];
+    if(pr.length)h+='<p class="sec">Recettes Cookapli proches de « '+esc(v.n)+" »</p><ul class=\"res\">"+pr.map(function(x){return ligne(x,v)}).join("")+"</ul>"}
+  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>";
+  h+=L.length?'<ul class="res">'+L.slice(0,80).map(function(x){return ligne(x,v)}).join("")+"</ul>":'<p class="vide">'+(LISTE.length?"Aucune recette Cookapli ne correspond."+(q?" Ajoute-le comme plat perso.":""):"Chargement des recettes…")+"</p>";
+  $("sb").innerHTML=h;$("sb").scrollTop=0}
+$("sb").addEventListener("click",function(e){if(!cur)return;
+  if(e.target.closest("#perso")){choisirPerso($("q").value.trim());return}
+  if(e.target.closest("#retirer")){var d=cur.d,m=cur.m,avant=slotDe(d,m);poser(d,m,null);dessiner();fermer();toast("Plat retiré",function(){poser(d,m,avant);dessiner()});return}
+  var b=e.target.closest("[data-k]");if(!b)return;var L=b.dataset.k==="l"?LIVRE:RAPIDES,x=L.filter(function(y){return y.id===b.dataset.id})[0];if(!x)return;
+  enregistrer({k:x.k,id:x.id,n:x.n})});
+function choisirPerso(t){if(!t)return;enregistrer({k:"p",n:t.slice(0,80)})}
+function enregistrer(v){var d=cur.d,m=cur.m,avant=slotDe(d,m);poser(d,m,v);dessiner();fermer();
+  toast(JOURS[d]+" "+(m==="midi"?"midi":"soir")+" : "+v.n,function(){poser(d,m,avant);dessiner()})}
+
+dessiner();
+/* Livre de recettes et fiches à jour (même cache que le Livre) */
+if(M)Promise.all([M.csv?fetch(M.csv+"&t="+Date.now()).then(function(r){return r.ok?r.text():null}).catch(function(){return null}):null,
+  M.fiches?fetch(M.fiches+"?all=1").then(function(r){return r.ok?r.json():null}).catch(function(){return null}):null]).then(function(res){
+  if(res[0]){lireCsv(res[0]);try{localStorage.setItem("recettes-csv",res[0])}catch(e){}}
+  if(res[1]&&res[1].fiches){FICHES=res[1].fiches;lsSet("recettes-fiches",{f:FICHES,t:Date.now()})}
+  dessiner();if(cur){LISTE=toutes();resultats()}});
+if(window.CookBudget&&CookBudget.charger)CookBudget.charger();
+})();
+</script>
+<script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
+</body>
+</html>
