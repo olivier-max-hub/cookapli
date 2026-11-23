@@ -54,6 +54,13 @@ p{margin:0}
 .repas .lab span{font-size:1.4rem;line-height:1}
 .repas.midi .lab{background:var(--midi);color:var(--midi-t);border-right:4px solid var(--midi-b)}
 .repas.soir .lab{background:var(--soir);color:var(--soir-t);border-right:4px solid var(--soir-b)}
+.items{display:flex;flex-direction:column;min-width:0}
+.items .slot+.slot{border-top:1px dashed var(--line)}
+.slot .crs{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:#000}
+.ajouts{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px}
+.items .slot+.ajouts{border-top:1px dashed var(--line)}
+.ajout{border:2px solid var(--acc);background:#fff;color:var(--acc);border-radius:99px;padding:4px 11px;font:inherit;font-weight:800;font-size:.88rem;cursor:pointer;min-height:38px}
+.ajout.pl{background:var(--acc);color:#fff}
 .slot{display:flex;align-items:center;gap:12px;width:100%;min-height:72px;padding:10px 12px;border:0;background:#fff;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
 .slot:hover{background:#f6fbfc}
 .slot .ph{flex:none;width:54px;height:54px;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:1.6rem;background:linear-gradient(135deg,#cdeccb,#bfe8ee);position:relative}
@@ -118,12 +125,12 @@ p{margin:0}
 </header>
 <main class="gut"><div class="wrap stack">
   <div class="card stack">
-    <p class="lead">Touche un repas pour choisir une recette Cookapli ou écrire ton propre plat. Touche-le de nouveau pour le changer.</p>
+    <p class="lead">Pour chaque repas, ajoute une entrée, un plat et un dessert : une recette Cookapli ou ton propre plat. Touche un plat pour le changer.</p>
     <p class="note" id="filtres" hidden></p>
     <div class="top"><span class="compte" id="compte"></span><button type="button" class="btn danger small" id="vider">Vider la semaine</button></div>
   </div>
   <div id="semaine" class="stack" aria-live="polite"></div>
-  <p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:10px">Planificateur semaine · version 1</p>
+  <p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:10px">Planificateur semaine · version 2</p>
 </div></main>
 
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shT">
@@ -141,7 +148,7 @@ p{margin:0}
 <script src="../friscan/data.js?v=20"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
-<script src="accueil.js?v=14"></script>
+<script src="accueil.js?v=15"></script>
 <script src="../recettes/calories.js?v=3"></script>
 <script>
 (function(){
@@ -158,10 +165,15 @@ function toast(m,annuler){var t=$("toast");t.innerHTML="";var s=document.createE
   t.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){t.classList.remove("on")},annuler?6000:3500)}
 
 var JOURS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"],REPAS=[["midi","☀️","Midi"],["soir","🌙","Soir"]];
-var KEY="cookapli.planning",P=lsGet(KEY,null);if(!P||!P.j)P={v:1,j:{}};
+var PLATS=[["e","Entrée","une entrée","entree"],["p","Plat","un plat","plat"],["d","Dessert","un dessert","dessert"]];
+var KEY="cookapli.planning",P=lsGet(KEY,null);if(!P||!P.j)P={v:2,j:{}};
+/* version 1 : un seul plat par repas → il devient le « plat » du repas */
+if(P.v!==2){Object.keys(P.j).forEach(function(d){["midi","soir"].forEach(function(m){var o=P.j[d][m];if(o&&o.k)P.j[d][m]={p:o}})});P.v=2;lsSet(KEY,P)}
 function sauver(){lsSet(KEY,P)}
-function slotDe(d,m){return P.j[d]&&P.j[d][m]||null}
-function poser(d,m,v){if(!P.j[d])P.j[d]={};if(v)P.j[d][m]=v;else delete P.j[d][m];sauver()}
+function slotDe(d,m,c){return P.j[d]&&P.j[d][m]&&P.j[d][m][c]||null}
+function repasVide(d,m){return!(P.j[d]&&P.j[d][m]&&Object.keys(P.j[d][m]).length)}
+function poser(d,m,c,v){if(!P.j[d])P.j[d]={};if(!P.j[d][m])P.j[d][m]={};if(v)P.j[d][m][c]=v;else delete P.j[d][m][c];sauver()}
+function nomPlat(c){return PLATS.filter(function(x){return x[0]===c})[0]}
 
 /* ---------- profil de l'utilisateur : préférences alimentaires et niveau ---------- */
 var FA=window.CookFiltres?CookFiltres.lire():[];
@@ -180,13 +192,21 @@ if(CSV)lireCsv(CSV);
 function dureeMin(v){var n=norm(v).replace(/[^a-z0-9+]+/g," ").trim();if(!n||/^(sans cuisson|0( min| mn)?)$/.test(n))return 0;var tot=0,ok=false;String(v).split("+").forEach(function(p){p=norm(p).replace(/(\d+) ?(?:a|à|ou) ?(\d+)/g,"$2");var m=p.match(/(\d+) ?h(?:eures?)?(?: ?(\d+))?/);if(m){tot+=m[1]*60+(+m[2]||0);ok=true;return}m=p.match(/(\d+)/);if(m){tot+=+m[1];ok=true}});return ok?tot:null}
 function infosLivre(r){var f=FICHES[r.id];r.f=f;r.min=null;r.kc=0;if(f&&f.m){var a=dureeMin(f.m.prep),b=dureeMin(f.m.cuisson);if(a!=null&&b!=null)r.min=a+b}
   if(f&&window.CookCalc)try{r.kc=CookCalc.kcal(f)||0}catch(e){}return r}
+function nrm(t){return" "+norm(t).replace(/[^a-z0-9]+/g," ").trim()+" "}
+function guess(t){if(!HAS)return null;var txt=nrm(t),best=null,bi=1e9,bl=0;Object.keys(ING).forEach(function(id){ING[id].k.forEach(function(k){var pat=" "+nrm(k).trim()+(k.slice(-1)===" "?" ":"");var i=txt.indexOf(pat);if(i>=0&&(i<bi||(i===bi&&pat.length>bl))){best=id;bi=i;bl=pat.length}})});return best}
+function prixPret(){return!!(window.CookBudget&&CookBudget.pret())}
+function budgetDe(x){try{if(!prixPret())return null;if(x.k==="l")return x.f&&window.CookCalc?CookCalc.budget(x.f,guess):null;return CookBudget.recetteFriscan(x.src,ING)}catch(e){return null}}
+var PETIT_BUDGET=!!(prof&&prof.profil==="antigaspi");
 function okLivre(r){if(DEBUTANT&&r.f&&r.f.m&&/difficile/i.test(r.f.m.diff||""))return false;if(!FA.length)return true;if(!window.CookFiltres)return true;return CookFiltres.okTexte(r.f?CookFiltres.texteFiche(r.n,r.f,r.t):null,FA)}
 var RAPIDES=(HAS&&typeof RECETTES!=="undefined"?RECETTES:[]).filter(function(r){return r.ok}).map(function(r){var g=groupe(r.cat)||"plat",kc=0;
   try{if(window.CookBudget&&CookBudget.kcalFriscan)kc=CookBudget.kcalFriscan(r,ING)||0}catch(e){}
   return{k:"r",id:r.id,n:r.n,cat:r.cat,g:g,e:r.e,img:r.img?"../friscan/"+r.img:"",ia:r.ia?1:0,vg:/v[ée]g[ée]tarien/i.test(r.cat)?1:0,min:r.min,kc:kc,url:"../friscan/#r-"+r.id,src:r}});
 function okRapide(x){return !FA.length||!window.CookFiltres||CookFiltres.ok(CookFiltres.texteFriscan(x.src,ING),FA)}
 function toutes(){var L=LIVRE.map(infosLivre).filter(okLivre),R=RAPIDES.filter(okRapide),vus={};
-  return L.concat(R).filter(function(x){var k=norm(x.n);if(vus[k])return false;vus[k]=1;return true}).sort(function(a,b){return a.n.localeCompare(b.n,"fr")})}
+  var T=L.concat(R).filter(function(x){var k=norm(x.n);if(vus[k])return false;vus[k]=1;return true});
+  T.forEach(function(x){x.bu=budgetDe(x);x.pp=x.bu&&x.bu.pp?x.bu.pp:Infinity});
+  /* profil « Petit budget » : de la moins chère à la plus chère */
+  return T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")})}
 function trouver(v){if(!v||v.k==="p")return null;var L=v.k==="l"?LIVRE:RAPIDES;for(var i=0;i<L.length;i++)if(L[i].id===v.id)return L[i];return null}
 
 /* ---------- affichage de la semaine ---------- */
@@ -196,14 +216,15 @@ function tagsDe(v,x){if(v.k==="p")return'<span class="tag perso">✏️ Plat per
   if(x&&x.vg)t+=' <span class="tag vg'+(x.vg===2?" vegan":"")+'">'+(x.vg===2?"Vegan":"Végétarien")+"</span>";return'<span style="display:flex;flex-wrap:wrap;gap:4px">'+t+"</span>"}
 function dessiner(){var box=$("semaine"),h="",n=0;
   JOURS.forEach(function(j,d){h+='<section class="card jour'+(d===auj?" auj":"")+'" aria-label="'+j+'"><h2>'+j+(d===auj?'<span class="auj">Aujourd’hui</span>':"")+"</h2>";
-    REPAS.forEach(function(R){var v=slotDe(d,R[0]),x=trouver(v);if(v)n++;
-      h+='<div class="repas '+R[0]+'"><div class="lab"><span aria-hidden="true">'+R[1]+"</span>"+R[2]+"</div>";
-      if(!v)h+='<button type="button" class="slot vide" data-d="'+d+'" data-m="'+R[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+' : choisir un plat"><span class="ph" aria-hidden="true">+</span><span class="tx"><b>Choisir un plat</b></span></button>';
-      else h+='<button type="button" class="slot" data-d="'+d+'" data-m="'+R[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+" : "+esc(v.n)+', modifier">'+vignette(x,v.k==="p"?"✏️":null)+'<span class="tx"><b>'+esc(v.n)+"</b>"+tagsDe(v,x)+'</span><span class="chev">Modifier ›</span></button>';
-      h+="</div>"});
+    REPAS.forEach(function(R){if(!repasVide(d,R[0]))n++;var ajouts="";
+      h+='<div class="repas '+R[0]+'"><div class="lab"><span aria-hidden="true">'+R[1]+"</span>"+R[2]+'</div><div class="items">';
+      PLATS.forEach(function(C){var v=slotDe(d,R[0],C[0]);
+        if(!v){ajouts+='<button type="button" class="ajout'+(C[0]==="p"?" pl":"")+'" data-d="'+d+'" data-m="'+R[0]+'" data-c="'+C[0]+'">+ Ajouter '+C[2]+"</button>";return}
+        var x=trouver(v);h+='<button type="button" class="slot" data-d="'+d+'" data-m="'+R[0]+'" data-c="'+C[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+", "+C[1].toLowerCase()+" : "+esc(v.n)+', modifier">'+vignette(x,v.k==="p"?"✏️":null)+'<span class="tx"><span class="crs">'+C[1]+"</span><b>"+esc(v.n)+"</b>"+tagsDe(v,x)+'</span><span class="chev">Modifier ›</span></button>'});
+      h+=(ajouts?'<div class="ajouts">'+ajouts+"</div>":"")+"</div></div>"});
     h+="</section>"});
   box.innerHTML=h;$("compte").textContent=n+" repas planifié"+(n>1?"s":"")+" sur 14";$("vider").hidden=!n}
-$("semaine").addEventListener("click",function(e){var b=e.target.closest(".slot");if(b)ouvrir(+b.dataset.d,b.dataset.m)});
+$("semaine").addEventListener("click",function(e){var b=e.target.closest(".slot,.ajout");if(b)ouvrir(+b.dataset.d,b.dataset.m,b.dataset.c)});
 $("vider").onclick=function(){var avant=JSON.stringify(P);P={v:1,j:{}};sauver();dessiner();toast("La semaine est vidée",function(){P=JSON.parse(avant);sauver();dessiner()})};
 
 /* ---------- fenêtre de choix d'un plat ---------- */
@@ -211,39 +232,39 @@ var CATS=[["plat","Plats"],["entree","Entrées"],["accomp","Accompagnements"],["
 var cur=null,catSel="plat",LISTE=[];
 $("cats").innerHTML=CATS.map(function(c){return'<button type="button" class="chip" data-c="'+c[0]+'">'+c[1]+"</button>"}).join("");
 $("cats").addEventListener("click",function(e){var b=e.target.closest("[data-c]");if(!b)return;catSel=b.dataset.c;resultats()});
-function ouvrir(d,m){cur={d:d,m:m};LISTE=toutes();catSel="plat";$("q").value="";
-  $("shT").textContent=JOURS[d]+" · "+(m==="midi"?"Midi":"Soir");$("sheet").hidden=false;document.body.classList.add("sheet-on");resultats();
-  setTimeout(function(){if(!slotDe(d,m))$("q").focus();else $("shX").focus()},60)}
-function fermer(){$("sheet").hidden=true;document.body.classList.remove("sheet-on");var b=cur&&document.querySelector('.slot[data-d="'+cur.d+'"][data-m="'+cur.m+'"]');cur=null;if(b)b.focus()}
+function ouvrir(d,m,c){cur={d:d,m:m,c:c};LISTE=toutes();catSel=nomPlat(c)[3];$("q").value="";
+  $("shT").textContent=JOURS[d]+" · "+(m==="midi"?"Midi":"Soir")+" · "+nomPlat(c)[1];$("sheet").hidden=false;document.body.classList.add("sheet-on");resultats();
+  setTimeout(function(){if(!slotDe(d,m,c))$("q").focus();else $("shX").focus()},60)}
+function fermer(){$("sheet").hidden=true;document.body.classList.remove("sheet-on");var b=cur&&document.querySelector('[data-d="'+cur.d+'"][data-m="'+cur.m+'"][data-c="'+cur.c+'"]');cur=null;if(b)b.focus()}
 $("shX").onclick=fermer;
 $("sheet").addEventListener("click",function(e){if(e.target===$("sheet"))fermer()});
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("sheet").hidden)fermer()});
 $("q").addEventListener("input",resultats);
 $("q").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();var t=$("q").value.trim();if(t)choisirPerso(t)}});
 function mots(t){return norm(t).split(/[^a-z0-9]+/).filter(function(w){return w.length>=4&&!/^(avec|pour|sans|sauce|maison|facon|leur|dans)$/.test(w)})}
-function ligne(x,v){var on=v&&v.k===x.k&&v.id===x.id,inf=[];if(x.min)inf.push("⏱️ "+x.min+" min");if(x.kc)inf.push("≈ "+x.kc+" kcal");inf.push(x.k==="l"?"📖 "+x.cat:"⏱️ Recette rapide");
+function ligne(x,v){var on=v&&v.k===x.k&&v.id===x.id,inf=[];if(x.min)inf.push("⏱️ "+x.min+" min");if(x.kc)inf.push("≈ "+x.kc+" kcal");if(x.bu&&x.bu.niv)inf.push(x.bu.niv.s+" "+x.bu.niv.t.toLowerCase());inf.push(x.k==="l"?"📖 "+x.cat:"⏱️ Recette rapide");
   return'<li><button type="button" data-k="'+x.k+'" data-id="'+esc(x.id)+'"'+(on?' aria-current="true"':"")+">"+vignette(x)+'<span class="tx"><b>'+esc(x.n)+(on?" ✓":"")+"</b><small>"+esc(inf.join(" · "))+"</small></span></button></li>"}
-function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m),q=$("q").value.trim(),nq=norm(q),h="";
+function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m,cur.c),q=$("q").value.trim(),nq=norm(q),h="";
   [].forEach.call($("cats").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.c===catSel))});
   if(v){var x=trouver(v);h+='<div class="cur"><span class="note">Actuellement :</span><b>'+esc(v.n)+"</b>"+(v.k==="p"?'<span class="note">C’est ton plat perso. Tu peux le garder, le renommer en écrivant un autre nom ci-dessus, ou le remplacer par une recette Cookapli ci-dessous.</span>':"")+
     '<div class="acts">'+(x?'<a class="btn alt small" href="'+esc(x.url)+'">Voir la recette</a>':"")+'<button type="button" class="btn danger small" id="retirer">Retirer ce plat</button></div></div>'}
   if(q)h+='<button type="button" class="perso-btn" id="perso"><span aria-hidden="true" style="font-size:1.4rem">✏️</span><span>Ajouter « '+esc(q)+" » comme plat perso</span></button>";
-  else if(!v)h+='<p class="note">Ton plat n’est pas dans Cookapli ? Écris son nom dans le champ ci-dessus.</p>';
+  else if(!v)h+='<p class="note">Pas dans Cookapli ? Écris son nom dans le champ ci-dessus.</p>';
   var L=LISTE.filter(function(x){return(catSel==="tout"||x.g===catSel)&&(!nq||norm(x.n+" "+x.cat).indexOf(nq)>=0)});
   /* plat perso : recettes Cookapli proches de son nom, pour le remplacer facilement */
   if(v&&v.k==="p"&&!q){var W=mots(v.n),pr=W.length?LISTE.filter(function(x){var n=norm(x.n);return W.some(function(w){return n.indexOf(w)>=0})}).slice(0,6):[];
     if(pr.length)h+='<p class="sec">Recettes Cookapli proches de « '+esc(v.n)+" »</p><ul class=\"res\">"+pr.map(function(x){return ligne(x,v)}).join("")+"</ul>"}
-  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>";
+  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>"+(PETIT_BUDGET&&L.length?'<p class="note">💶 Petit budget : de la moins chère à la plus chère</p>':"");
   h+=L.length?'<ul class="res">'+L.slice(0,80).map(function(x){return ligne(x,v)}).join("")+"</ul>":'<p class="vide">'+(LISTE.length?"Aucune recette Cookapli ne correspond."+(q?" Ajoute-le comme plat perso.":""):"Chargement des recettes…")+"</p>";
   $("sb").innerHTML=h;$("sb").scrollTop=0}
 $("sb").addEventListener("click",function(e){if(!cur)return;
   if(e.target.closest("#perso")){choisirPerso($("q").value.trim());return}
-  if(e.target.closest("#retirer")){var d=cur.d,m=cur.m,avant=slotDe(d,m);poser(d,m,null);dessiner();fermer();toast("Plat retiré",function(){poser(d,m,avant);dessiner()});return}
+  if(e.target.closest("#retirer")){var d=cur.d,m=cur.m,c=cur.c,avant=slotDe(d,m,c);poser(d,m,c,null);dessiner();fermer();toast(nomPlat(c)[1]+" retiré"+(c==="e"?"e":""),function(){poser(d,m,c,avant);dessiner()});return}
   var b=e.target.closest("[data-k]");if(!b)return;var L=b.dataset.k==="l"?LIVRE:RAPIDES,x=L.filter(function(y){return y.id===b.dataset.id})[0];if(!x)return;
   enregistrer({k:x.k,id:x.id,n:x.n})});
 function choisirPerso(t){if(!t)return;enregistrer({k:"p",n:t.slice(0,80)})}
-function enregistrer(v){var d=cur.d,m=cur.m,avant=slotDe(d,m);poser(d,m,v);dessiner();fermer();
-  toast(JOURS[d]+" "+(m==="midi"?"midi":"soir")+" : "+v.n,function(){poser(d,m,avant);dessiner()})}
+function enregistrer(v){var d=cur.d,m=cur.m,c=cur.c,avant=slotDe(d,m,c);poser(d,m,c,v);dessiner();fermer();
+  toast(JOURS[d]+" "+(m==="midi"?"midi":"soir")+" · "+nomPlat(c)[1].toLowerCase()+" : "+v.n,function(){poser(d,m,c,avant);dessiner()})}
 
 dessiner();
 /* Livre de recettes et fiches à jour (même cache que le Livre) */
@@ -252,7 +273,7 @@ if(M)Promise.all([M.csv?fetch(M.csv+"&t="+Date.now()).then(function(r){return r.
   if(res[0]){lireCsv(res[0]);try{localStorage.setItem("recettes-csv",res[0])}catch(e){}}
   if(res[1]&&res[1].fiches){FICHES=res[1].fiches;lsSet("recettes-fiches",{f:FICHES,t:Date.now()})}
   dessiner();if(cur){LISTE=toutes();resultats()}});
-if(window.CookBudget&&CookBudget.charger)CookBudget.charger();
+if(window.CookBudget&&CookBudget.charger)CookBudget.charger().then(function(){if(cur){LISTE=toutes();resultats()}});
 })();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>

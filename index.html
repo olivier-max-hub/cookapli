@@ -631,7 +631,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
           <span><b>Courses auto</b><small>Tout ce qui manque, réuni en une seule liste</small></span><span class="ill" aria-hidden="true">🛒</span>
         </a>
         <a class="tile g-equilibre" id="t-equilibre" href="../recettes/#equilibre">
-          <span><b>Calories / personne</b><small>Compose ton menu (entrée, plat, accompagnement, dessert) et estime ses calories</small></span><span class="ill" aria-hidden="true">⚖️</span>
+          <span><b>Ton menu</b><small>Compose ton menu (entrée, plat, accompagnement, dessert) et estime ses calories</small></span><span class="ill" aria-hidden="true">⚖️</span>
         </a>
         <a class="tile g-recettes" id="t-recettes" href="../recettes/">
           <span><b>Livre de recettes</b><small>Toutes tes recettes, rangées par catégorie</small></span><span class="ill" aria-hidden="true">📖</span>
@@ -698,7 +698,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 92</p>
+  <p class="legal ver">Cookapli · version 93</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -713,7 +713,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 <script src="../friscan/data.js?v=20"></script>
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
-<script src="mesoutils.js?v=6"></script>
+<script src="mesoutils.js?v=7"></script>
 <script src="../recettes/calories.js?v=2"></script>
 <script src="commentaire.js?v=6" data-context="Cookapli · Accueil" data-mode="tete" data-header=".hdr-nav" defer></script>
 <script>
@@ -950,7 +950,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
-<script src="accueil.js?v=14"></script>
+<script src="accueil.js?v=15"></script>
 <script>
 /* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
 (function(){
@@ -1037,7 +1037,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   /* la vitrine demandée par lien ne s'affiche qu'une fois : un rafraîchissement revient sur le profil */
   if(essai&&st){try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}/* ?vitrine=liste : essai de la vitrine en liste, même si un profil est déjà choisi */
   var vitrine=!!essai||!st||(st.profil==="tout"&&!st.perso);
-  var ORDRE=["famille","debutant","gourmand","antigaspi","equilibre","perso"];
+  var ORDRE=["famille","debutant","antigaspi","equilibre","perso"];
   /* la dernière page est « Mes outils » ; un accueil modifié reste sur la page de son profil de départ */
   var livePid=vitrine?"vitrine":(ORDRE.indexOf(st.profil)>=0&&st.profil!=="perso")?st.profil:"famille";
   var PAGES=vitrine?["vitrine"].concat(ORDRE):ORDRE.slice();
@@ -1070,7 +1070,7 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
   if(livePid!=="vitrine"){var d0=el("p","pdesc");d0.textContent=info(livePid).sub;live.insertBefore(d0,live.children[1])}
   boutons($("choix0"),livePid);
   if(vitrine){live.classList.add("vliste");
-    var L=[["🥕","Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["🍳","De vraies recettes testées","aucune recette inventée"],["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],["♻️","Zéro gaspi","on cuisine d'abord ce qui doit partir vite"],["🛒","Courses auto","en un clic, ce qui manque pour ta recette"],['<svg width="24" height="20" viewBox="0 0 24 20" aria-hidden="true"><g fill="#0b4f59"><rect x="1" y="1" width="2" height="18"/><rect x="5" y="1" width="1" height="18"/><rect x="8" y="1" width="3" height="18"/><rect x="12" y="1" width="1" height="18"/><rect x="15" y="1" width="2" height="18"/><rect x="19" y="1" width="1" height="18"/><rect x="21" y="1" width="2" height="18"/></g></svg>',"Scanne chez toi ou en magasin","+ d'articles en réserve = + de recettes pour toi"],["⚖️","Calories / personne","pour chaque recette"],["🥗","Équilibre alimentaire","compose ton menu équilibré"],["€","Budget / personne","€, €€ ou €€€ pour chaque recette"],["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["📅","Planifie tes menus pour la semaine","prévois à l'avance, pas de prise de tête"],["🎙️","Un chef qui te guide","les étapes lues à voix haute"],["🍂","Inspiration de saison","les bons produits du moment"]];
+    var L=[["🥕","Une recette avec ce que tu as","ton frigo et ton placard suffisent"],["🍳","De vraies recettes testées","aucune recette inventée"],["⏱️","Max 30 min","des recettes prêtes en 30 minutes"],["🗓️","Planificateur semaine","tes repas du lundi au dimanche, midi et soir"],["🛒","Courses auto","en un clic, ce qui manque pour ta recette"],['<svg width="24" height="20" viewBox="0 0 24 20" aria-hidden="true"><g fill="#0b4f59"><rect x="1" y="1" width="2" height="18"/><rect x="5" y="1" width="1" height="18"/><rect x="8" y="1" width="3" height="18"/><rect x="12" y="1" width="1" height="18"/><rect x="15" y="1" width="2" height="18"/><rect x="19" y="1" width="1" height="18"/><rect x="21" y="1" width="2" height="18"/></g></svg>',"Scanne chez toi ou en magasin","+ d'articles en réserve = + de recettes pour toi"],["⚖️","Calories / personne","pour chaque recette"],["🥗","Équilibre alimentaire","compose ton menu équilibré"],["€","Budget / personne","€, €€ ou €€€ pour chaque recette"],["🍱","Batch cooking 3 h","tes repas de la semaine prêts le week-end"],["📅","Planifie tes menus pour la semaine","prévois à l'avance, pas de prise de tête"],["🎙️","Un chef qui te guide","les étapes lues à voix haute"],["🍂","Inspiration de saison","les bons produits du moment"]];
     var ul=el("ul","vlist");ul.setAttribute("aria-label","Ce que Cookapli fait pour toi");
     L.forEach(function(x){var li=el("li",null,'<span class="vl-i" aria-hidden="true">'+x[0]+'</span><span class="vl-t"><b>'+esc(x[1])+'</b><small>'+esc(x[2])+'</small></span><span class="vl-ok" role="img" aria-label="inclus">✓</span>');ul.appendChild(li)});
     var tl=$("s-tools");tl.parentNode.insertBefore(ul,tl);

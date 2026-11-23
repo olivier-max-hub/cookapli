@@ -7,14 +7,16 @@
     planif: ['🗓️', 'Planificateur semaine', 'tes repas du lundi au dimanche, midi et soir'],
     chrono: ['⏱️', 'Max 30 min', 'des recettes prêtes en 30 minutes'],
     antigaspi: ['♻️', 'Zéro gaspi', "on cuisine d'abord ce qui doit partir vite"],
+    celebrations: ['🎉', 'Repas de fête', 'des menus pour les grandes occasions'],
     courses: ['🛒', 'Courses auto', 'en un clic, ce qui manque pour ta recette'],
-    equilibre: ['⚖️', 'Calories / personne', 'compose ton menu et estime ses calories'],
+    equilibre: ['⚖️', 'Ton menu', 'compose ton menu et estime ses calories'],
     batch: ['🍱', 'Batch cooking 3 h', 'tes repas de la semaine prêts le week-end']
   };
   var ICF = { vege: '🥕', vegan: '🌱', gluten: '🌾', coque: '🌰', arachide: '🥜', poisson: '🐟', fruitsmer: '🦐' };
   var CSS = '.mo h2{margin:0 0 4px;font-size:1.2rem;color:#0f6b78;font-weight:800}.mo section{margin:0 0 18px}' +
     '.mo-chips{display:flex;flex-wrap:wrap;gap:8px}.mo-chip{border:2px solid #0f6b78;background:#fff;color:#0f6b78;border-radius:99px;padding:8px 14px;font:inherit;font-weight:800;font-size:.95rem;cursor:pointer;min-height:44px}' +
     '.mo-chip[aria-pressed="true"]{background:#0f6b78;color:#fff}' +
+    '.mo-bientot .mo-l{cursor:default;opacity:.85}.mo-soon{flex:none;background:#0f6b78;color:#fff;border-radius:99px;padding:3px 10px;font-size:.8rem;font-weight:800}' +
     '.mo-list{list-style:none;margin:0;padding:0 2px;display:flex;flex-direction:column}.mo-list li{border-bottom:1px solid rgba(15,107,120,.14)}.mo-list li:last-child{border-bottom:0}' +
     '.mo-l{display:flex;align-items:center;gap:12px;padding:10px 2px;cursor:pointer}.mo-i{flex:none;width:28px;text-align:center;font-size:1.25rem;line-height:1}' +
     '.mo-t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.2}.mo-t b{font-size:1.05rem;font-weight:800;color:#0b4f59;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
@@ -48,9 +50,10 @@
     var sp = el('section', null, '<h2>Ton profil</h2><div class="mo-chips" role="group" aria-label="Profil"></div>'),
       so = el('section', null, '<h2>Les outils de ton profil</h2><ul class="mo-list"></ul>'),
       sa = el('section', null, '<h2>Autres outils</h2><ul class="mo-list"></ul>'),
+      sb = el('section', null, '<h2>Bientôt disponible</h2><ul class="mo-list mo-bientot"></ul>'),
       sf = el('section', null, '<h2>Régime et allergies</h2><ul class="mo-list"></ul><p class="mo-avert"><b>⚠️ Allergies :</b> Cookapli repère les ingrédients des recettes, mais ne connaît pas la composition exacte des produits que tu achètes (traces, bouillons, sauces…). Vérifie toujours les étiquettes.</p>'),
       bt = el('div', 'mo-btns');
-    [sp, so, sa, sf, bt].forEach(function (x) { box.appendChild(x); });
+    [sp, so, sa, sb, sf, bt].forEach(function (x) { box.appendChild(x); });
     function signal(k) { if (opt.change) opt.change(k); }
     function dessiner() {
       var P = sp.querySelector('.mo-chips'); P.textContent = '';
@@ -62,7 +65,12 @@
       });
       var note = sp.querySelector('.mo-note'); if (vierge && !note) { note = el('p', 'mo-note', 'Choisis le profil qui te ressemble, puis ajuste tes outils.'); sp.insertBefore(note, P); } else if (!vierge && note) note.remove();
       var prof = A.profil(s.profil).blocs, BP = so.querySelector('ul'), BA = sa.querySelector('ul'); BP.textContent = ''; BA.textContent = '';
-      s.blocs.forEach(function (x) { var o = OUTILS[x.id]; if (!o) return;
+      var BB = sb.querySelector('ul'); BB.textContent = '';
+      A.BLOCS.filter(function (b) { return b.bientot; }).forEach(function (b) { var o = OUTILS[b.id]; if (!o) return;
+        var li = el('li'), l = el('div', 'mo-l', '<span class="mo-i" aria-hidden="true"></span><span class="mo-t"><b></b><small></small></span><span class="mo-soon">Bientôt</span>');
+        l.querySelector('.mo-i').innerHTML = o[0]; l.querySelector('b').textContent = o[1]; l.querySelector('small').textContent = o[2]; li.appendChild(l); BB.appendChild(li); });
+      sb.hidden = !BB.children.length;
+      s.blocs.forEach(function (x) { var o = OUTILS[x.id], bx = A.bloc(x.id); if (!o || (bx && bx.bientot)) return;
         (prof.indexOf(x.id) >= 0 ? BP : BA).appendChild(ligne(o[0], o[1], o[2], x.on, function (v) { x.on = v; s.perso = true; vierge = false; A.ecrire(s); toast("C'est noté. Ton accueil te ressemble"); signal('outil'); }));
       });
       sa.hidden = !BA.children.length;
