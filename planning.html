@@ -63,6 +63,12 @@ p{margin:0}
 .ajout.pl{background:var(--acc);color:#fff}
 .slot{display:flex;align-items:center;gap:12px;width:100%;min-height:72px;padding:10px 12px;border:0;background:#fff;font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
 .slot:hover{background:#f6fbfc}
+.slot.rec{cursor:default;padding:0;gap:0}.slot.rec:hover{background:#fff}
+.slot .go{flex:1;min-width:0;display:flex;align-items:center;gap:12px;padding:10px 4px 10px 12px;color:inherit;text-decoration:none;min-height:72px}
+.slot .go:hover{background:#f6fbfc}
+.slot .voir{font-size:.85rem;font-weight:800;color:var(--acc-deep);text-decoration:underline;text-underline-offset:3px}
+.slot .mod{flex:none;align-self:center;margin-right:10px;display:flex;flex-direction:column;align-items:center;gap:2px;border:2px solid var(--acc);background:#fff;color:var(--acc);border-radius:14px;padding:6px 8px;font:inherit;font-size:1rem;font-weight:800;cursor:pointer;min-width:64px}
+.slot .mod span{font-size:.78rem}
 .slot .ph{flex:none;width:54px;height:54px;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:1.6rem;background:linear-gradient(135deg,#cdeccb,#bfe8ee);position:relative}
 .slot .ph img{width:100%;height:100%;object-fit:cover;display:block}
 .slot .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
@@ -125,12 +131,12 @@ p{margin:0}
 </header>
 <main class="gut"><div class="wrap stack">
   <div class="card stack">
-    <p class="lead">Pour chaque repas, ajoute une entrée, un plat et un dessert : une recette Cookapli ou ton propre plat. Touche un plat pour le changer.</p>
+    <p class="lead">Pour chaque repas, ajoute une entrée, un plat et un dessert : une recette Cookapli ou ton propre plat. Touche une recette pour l’ouvrir, «&nbsp;Modifier&nbsp;» pour la changer.</p>
     <p class="note" id="filtres" hidden></p>
     <div class="top"><span class="compte" id="compte"></span><button type="button" class="btn danger small" id="vider">Vider la semaine</button></div>
   </div>
   <div id="semaine" class="stack" aria-live="polite"></div>
-  <p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:10px">Planificateur semaine · version 2</p>
+  <p style="text-align:center;color:#5d7478;font-size:.8rem;margin-top:10px">Planificateur semaine · version 3</p>
 </div></main>
 
 <div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="shT">
@@ -220,11 +226,14 @@ function dessiner(){var box=$("semaine"),h="",n=0;
       h+='<div class="repas '+R[0]+'"><div class="lab"><span aria-hidden="true">'+R[1]+"</span>"+R[2]+'</div><div class="items">';
       PLATS.forEach(function(C){var v=slotDe(d,R[0],C[0]);
         if(!v){ajouts+='<button type="button" class="ajout'+(C[0]==="p"?" pl":"")+'" data-d="'+d+'" data-m="'+R[0]+'" data-c="'+C[0]+'">+ Ajouter '+C[2]+"</button>";return}
-        var x=trouver(v);h+='<button type="button" class="slot" data-d="'+d+'" data-m="'+R[0]+'" data-c="'+C[0]+'" aria-label="'+j+" "+R[2].toLowerCase()+", "+C[1].toLowerCase()+" : "+esc(v.n)+', modifier">'+vignette(x,v.k==="p"?"✏️":null)+'<span class="tx"><span class="crs">'+C[1]+"</span><b>"+esc(v.n)+"</b>"+tagsDe(v,x)+'</span><span class="chev">Modifier ›</span></button>'});
+        var x=trouver(v),dm=' data-d="'+d+'" data-m="'+R[0]+'" data-c="'+C[0]+'"',lib=j+" "+R[2].toLowerCase()+", "+C[1].toLowerCase()+" : "+esc(v.n);
+        /* recette Cookapli : on touche le plat pour ouvrir la recette ; « Modifier » à droite pour en choisir une autre */
+        if(x)h+='<div class="slot rec"><a class="go" href="'+esc(x.url)+'" aria-label="'+lib+', voir la recette">'+vignette(x)+'<span class="tx"><span class="crs">'+C[1]+"</span><b>"+esc(v.n)+"</b>"+tagsDe(v,x)+'<span class="voir">📖 Voir la recette ›</span></span></a><button type="button" class="mod"'+dm+' aria-label="'+lib+', modifier">✏️<span>Modifier</span></button></div>';
+        else h+='<button type="button" class="slot"'+dm+' aria-label="'+lib+', modifier">'+vignette(x,v.k==="p"?"✏️":null)+'<span class="tx"><span class="crs">'+C[1]+"</span><b>"+esc(v.n)+"</b>"+tagsDe(v,x)+'</span><span class="mod">✏️<span>Modifier</span></span></button>'});
       h+=(ajouts?'<div class="ajouts">'+ajouts+"</div>":"")+"</div></div>"});
     h+="</section>"});
   box.innerHTML=h;$("compte").textContent=n+" repas planifié"+(n>1?"s":"")+" sur 14";$("vider").hidden=!n}
-$("semaine").addEventListener("click",function(e){var b=e.target.closest(".slot,.ajout");if(b)ouvrir(+b.dataset.d,b.dataset.m,b.dataset.c)});
+$("semaine").addEventListener("click",function(e){var b=e.target.closest("button.slot,.ajout,.mod");if(b)ouvrir(+b.dataset.d,b.dataset.m,b.dataset.c)});
 $("vider").onclick=function(){var avant=JSON.stringify(P);P={v:1,j:{}};sauver();dessiner();toast("La semaine est vidée",function(){P=JSON.parse(avant);sauver();dessiner()})};
 
 /* ---------- fenêtre de choix d'un plat ---------- */
