@@ -7,7 +7,7 @@
 (function () {
   var BLOCS = [
     { id: 'reserves', href: '../friscan/#frigo', n: 'Mes réserves', sel: '#t-have', depuis: 1 },
-    { id: 'quecuisiner', href: '../friscan/#recettes', n: 'Des recettes testées', sel: '#t-cook', depuis: 1 },
+    { id: 'quecuisiner', href: '../recettes/', n: 'Des recettes pour toi', sel: '#t-cook', depuis: 1 },
     { id: 'chrono', href: '../friscan/#chrono', n: 'Max 30 min', sel: '#t-chrono', depuis: 1 },
     { id: 'antigaspi', n: 'Zéro gaspi', sel: '#t-gaspi', depuis: 1 },
     { id: 'courses', href: 'courses.html', n: 'Courses auto', sel: '#t-courses', depuis: 1 },

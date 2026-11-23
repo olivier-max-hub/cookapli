@@ -3,7 +3,7 @@
    CookMesOutils.monter(conteneur, { change: fn(type), voir: fn }) */
 (function () {
   var OUTILS = {
-    quecuisiner: ['🍳', 'Des recettes testées', 'ce que tu peux cuisiner avec tes réserves'],
+    quecuisiner: ['🍳', 'Des recettes pour toi', 'ce que tu peux cuisiner avec tes réserves'],
     chrono: ['⏱️', 'Max 30 min', 'des recettes prêtes en 30 minutes'],
     antigaspi: ['♻️', 'Zéro gaspi', "on cuisine d'abord ce qui doit partir vite"],
     courses: ['🛒', 'Courses auto', 'en un clic, ce qui manque pour ta recette'],

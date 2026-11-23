@@ -131,6 +131,9 @@ main{padding-block:18px 28px;display:grid;gap:26px}
 .tile.wide{grid-column:1/-1}
 /* « Que cuisiner avec mes réserves ? » toujours sur une seule ligne : la taille s'adapte à la largeur de la tuile */
 #t-cook{container-type:inline-size}
+/* bandeau « Bientôt disponible » en diagonale (bas-gauche → haut-droite) sur les outils pas encore prêts */
+.bientot{overflow:hidden;container-type:inline-size}
+.bientot::after{content:"Bientôt disponible";position:absolute;left:-20%;right:-20%;top:50%;transform:translateY(-50%) rotate(-12deg);background:rgba(15,107,120,.62);color:#fff;font-weight:800;font-size:clamp(.72rem,6.5cqi,1.05rem);line-height:1;padding:7px 0;text-align:center;letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 3px rgba(0,0,0,.45);pointer-events:none;z-index:3}
 #t-cook b{white-space:nowrap;font-size:min(1.6rem,calc((100cqi - 12px - 3.4rem) / 11))}
 .g-cook{background:linear-gradient(135deg,var(--c-plat-1),var(--c-plat-2))}
 @media (prefers-reduced-motion:no-preference){.tile{transition:transform .15s,box-shadow .15s}.tile:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(0,0,0,.14)}}
@@ -562,6 +565,12 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 .fvide{grid-column:1/-1;text-align:center;font-weight:700;color:#3d5559;margin:8px 0}
 .pg:not(.vitrine) .hero .lead{display:none!important}
 .pg.outils .mo-box{background:rgba(255,255,255,.9);border-radius:22px;padding:14px 14px 16px;box-shadow:var(--sh-card)}
+/* 23/11 : « Des recettes pour toi » sur une seule ligne (tuile pleine largeur) */
+#t-cook b{white-space:nowrap!important}
+/* 23/11 : champ « J'ai… » : la flèche reste dans le champ, centrée sur la hauteur (même avec la ligne « produits dans tes réserves ») */
+.hero .haveq{padding-right:6px!important}
+.hero .haveq small{grid-column:1/3!important;grid-row:2}
+.hero .haveq button{grid-column:3;grid-row:1/span 2;align-self:center}
 </style>
 </head>
 <body>
@@ -604,13 +613,13 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     <section id="s-tools" aria-label="Tes outils">
       <div class="tools">
         
-        <a class="tile g-cook" id="t-cook" href="../friscan/#recettes">
-          <span><b>Des recettes testées</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
+        <a class="tile g-cook" id="t-cook" href="../recettes/">
+          <span><b>Des recettes pour toi</b><small>Les recettes que tu peux faire avec ce que tu as, et celles où il ne manque qu'un ou deux ingrédients</small></span><span class="ill" aria-hidden="true">🍳</span>
         </a>
         <a class="tile g-chrono" id="t-chrono" href="../friscan/#chrono">
           <span><b>Max 30 min</b><small>Des recettes rapides, prêtes en 30 minutes</small></span><span class="ill" aria-hidden="true">⏱️</span>
         </a>
-        <button type="button" class="tile g-gaspi" id="t-gaspi" data-tool="gaspi">
+        <button type="button" class="tile g-gaspi bientot" id="t-gaspi" data-tool="gaspi">
           <span><b>Zéro gaspi</b><small>Des recettes pour utiliser d'abord ce qui doit être consommé vite</small></span><span class="ill" aria-hidden="true">♻️</span>
         </button>
         <a class="tile g-courses" id="t-courses" href="courses.html">
@@ -684,7 +693,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 
 <footer class="gut">
   <p class="legal">Cookapli ne propose que des recettes réelles, testées en cuisine. Aucune recette n'est inventée.</p>
-  <p class="legal ver">Cookapli · version 90</p>
+  <p class="legal ver">Cookapli · version 91</p>
 </footer>
 
 <div class="sheet" id="pSheet" hidden>
@@ -936,7 +945,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     f.classList.remove("off");void f.offsetWidth;f.classList.add("on");t=setTimeout(function(){f.classList.remove("on");f.classList.add("off")},4500)}})();
 </script>
 <script>if('serviceWorker' in navigator&&location.protocol==='https:'){navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).catch(function(){})}</script>
-<script src="accueil.js?v=12"></script>
+<script src="accueil.js?v=13"></script>
 <script>
 /* ===== Profils d'accueil : ordre et choix des blocs, changement de profil en un geste, nouveautés ===== */
 (function(){
@@ -1004,10 +1013,10 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 })();
 </script>
 <script>
-/* si le nombre de tuiles visibles est impair, la dernière prend toute la largeur */
+/* « Des recettes pour toi » prend toute la largeur (titre sur une ligne) ; parmi les autres tuiles, si leur nombre est impair, la dernière prend toute la largeur */
 (function(){var g=document.querySelector(".tools");if(!g)return;
-function maj(){var v=[].filter.call(g.querySelectorAll(".tile"),function(t){return getComputedStyle(t).display!=="none"}).map(function(t,k){return[t,k]}).sort(function(x,y){return((+x[0].style.order||0)-(+y[0].style.order||0))||x[1]-y[1]}).map(function(x){return x[0]}),last=v.length%2?v[v.length-1]:null;
-  [].forEach.call(g.querySelectorAll(".tile"),function(t){var w=t===last;if(t.classList.contains("wide")!==w)t.classList.toggle("wide",w)})}
+function maj(){var v=[].filter.call(g.querySelectorAll(".tile"),function(t){return t.id!=="t-cook"&&getComputedStyle(t).display!=="none"}).map(function(t,k){return[t,k]}).sort(function(x,y){return((+x[0].style.order||0)-(+y[0].style.order||0))||x[1]-y[1]}).map(function(x){return x[0]}),last=v.length%2?v[v.length-1]:null;
+  [].forEach.call(g.querySelectorAll(".tile"),function(t){var w=t===last||t.id==="t-cook";if(t.classList.contains("wide")!==w)t.classList.toggle("wide",w)})}
 maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attributeFilter:["hidden","style"],childList:true});addEventListener("pageshow",maj)})();
 </script>
 <script>
@@ -1079,8 +1088,8 @@ maj();new MutationObserver(maj).observe(g,{subtree:true,attributes:true,attribut
     var blocs=p.blocs;
     if(blocs.indexOf("reserves")>=0){var hr=cl(".hero");if(hr){var f=hr.querySelector("form");if(f)f.onsubmit=function(e){e.preventDefault();var src=$("t-have"),inp=$("have-input");if(!src||!inp)return;inp.value=f.querySelector("input").value;src.dispatchEvent(new Event("submit",{cancelable:true}))};pg.appendChild(hr)}}
     var sec=el("section"),grid=el("div","tools");sec.appendChild(grid);var n=0;
-    blocs.forEach(function(id){var bl=A.bloc(id);if(!bl||bl.grand||id==="reserves"||CACHE[id])return;var t=cl(bl.sel);if(t){t.classList.remove("wide");grid.appendChild(t);n++}});
-    if(n%2&&grid.lastChild)grid.lastChild.classList.add("wide");if(n)pg.appendChild(sec);
+    blocs.forEach(function(id){var bl=A.bloc(id);if(!bl||bl.grand||id==="reserves"||CACHE[id])return;var t=cl(bl.sel);if(t){t.classList.remove("wide");grid.appendChild(t);if(bl.sel==="#t-cook")t.classList.add("wide");else n++}});
+    if(n%2&&grid.lastChild&&grid.lastChild.id!=="t-cook")grid.lastChild.classList.add("wide");if(n)pg.appendChild(sec);
     if(blocs.indexOf("batch")>=0){var bt=cl("section.batch");if(bt)pg.appendChild(bt)}
     var id=cl("#s-ideas");if(id){pg.appendChild(id);carous.push(id.querySelector(".carou"))}
     var r=cl("#allRec");if(r)pg.appendChild(r);
