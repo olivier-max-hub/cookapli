@@ -155,6 +155,7 @@ p{margin:0}
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
 <script src="accueil.js?v=15"></script>
+<script src="saison.js?v=1"></script>
 <script src="../recettes/calories.js?v=4"></script>
 <script>
 (function(){
@@ -261,6 +262,8 @@ function valide(P,niv){if(!P)return false;var four=0,feux=0,poss=0,prots={};
   return true}
 function score(P){var s=0,vus={},nv=0;P.forEach(function(p){var c=p.c;if(vege(c))nv++;if(c.e.tenue==="ideale")s+=2;
     c.ing.forEach(function(x){if(!x.id)return;if(auFrigo(x.id))s+=1.5;if(vus[x.id]&&!/^(sel|poivre|huile|ail|oignon|epices|beurre|farine|sucre)$/.test(x.id))s+=1;vus[x.id]=1})});
+  /* bonus pour les plats qui contiennent un produit de saison ce mois-ci */
+  if(window.CookSaison)P.forEach(function(p){var c=p.c;if(c._s==null)c._s=CookSaison.ok(c.n+" "+c.ing.map(function(x){return(x.id||"")+" "+(x.t||x.n||"")}).join(" "));if(c._s)s+=4});
   if(nv)s+=3;s+=8*P.reduce(function(a,p){return a+p.sl.length},0);return s+Math.random()*2}
 function recents(){var h=lsGet(HIST,[]),lim=Date.now()-21*864e5,o={};(Array.isArray(h)?h:[]).forEach(function(x){if(x.t>lim)o[x.k]=1});return o}
 function composer(){

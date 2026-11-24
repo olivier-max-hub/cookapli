@@ -574,6 +574,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
 .hero .haveq small{grid-column:1/3!important;grid-row:2}
 .hero .haveq button{grid-column:3;grid-row:1/span 2;align-self:center}
 </style>
+<script src="saison.js?v=1"></script>
 </head>
 <body>
 <div id="fondProfil" aria-hidden="true"></div>
@@ -749,20 +750,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
   $("hello").textContent=h<5?"Bonne nuit":h<11?"Bonjour":h<14?"Bon appétit":h<18?"Bon après-midi":"Bonsoir";
 
   // Produits de saison (France), par mois
-  var SEASON=[
-    [["🥬","Poireau"],["🥬","Chou"],["🥦","Chou-fleur"],["🥔","Céleri"],["🥗","Endive"],["🥔","Navet"],["🥕","Panais"],["🥗","Mâche"],["🎃","Courge"],["🟣","Betterave"],["🍊","Orange"],["🍊","Clémentine"],["🥝","Kiwi"],["🍎","Pomme"],["🍐","Poire"]],
-    [["🥬","Poireau"],["🥬","Chou"],["🥦","Chou-fleur"],["🥔","Céleri"],["🥗","Endive"],["🥔","Navet"],["🥕","Panais"],["🥗","Mâche"],["🎃","Courge"],["🟣","Betterave"],["🍊","Orange"],["🍊","Clémentine"],["🥝","Kiwi"],["🍎","Pomme"],["🍐","Poire"]],
-    [["🥬","Poireau"],["🥬","Chou"],["🥦","Chou-fleur"],["🥔","Céleri"],["🥗","Endive"],["🥔","Navet"],["🌿","Épinard"],["🔴","Radis"],["🥗","Mâche"],["🟣","Betterave"],["🍊","Orange"],["🥝","Kiwi"],["🍎","Pomme"]],
-    [["🌱","Asperge"],["🔴","Radis"],["🌿","Épinard"],["🌸","Rhubarbe"],["🍓","Fraise"],["🥬","Salade"],["🥗","Endive"],["🥬","Poireau"],["🥦","Chou-fleur"],["🥝","Kiwi"],["🍎","Pomme"]],
-    [["🌱","Asperge"],["🌼","Artichaut"],["🫛","Petits pois"],["🔴","Radis"],["🌿","Épinard"],["🍓","Fraise"],["🌸","Rhubarbe"],["🍒","Cerise"],["🥒","Concombre"],["🥬","Salade"],["🍎","Pomme"]],
-    [["🥒","Courgette"],["🍅","Tomate"],["🍆","Aubergine"],["🫛","Haricot vert"],["🫛","Petits pois"],["🥒","Concombre"],["🌼","Artichaut"],["🥦","Brocoli"],["🌿","Fenouil"],["🥬","Blette"],["🍓","Fraise"],["🍒","Cerise"],["🍑","Abricot"],["🫐","Framboise"],["🍈","Melon"],["🍑","Pêche"]],
-    [["🍅","Tomate"],["🥒","Courgette"],["🍆","Aubergine"],["🫑","Poivron"],["🫛","Haricot vert"],["🥒","Concombre"],["🥦","Brocoli"],["🥬","Blette"],["🟣","Betterave"],["🍑","Abricot"],["🍑","Pêche"],["🍈","Melon"],["🫐","Framboise"],["🫐","Myrtille"],["🟣","Prune"],["🍒","Cerise"]],
-    [["🍅","Tomate"],["🥒","Courgette"],["🍆","Aubergine"],["🫑","Poivron"],["🫛","Haricot vert"],["🌽","Maïs"],["🥒","Concombre"],["🥦","Brocoli"],["🍈","Melon"],["🍑","Pêche"],["🟣","Prune"],["🟣","Figue"],["🫐","Myrtille"],["🍇","Raisin"],["🍐","Poire"],["🍎","Pomme"]],
-    [["🍅","Tomate"],["🥒","Courgette"],["🍆","Aubergine"],["🫑","Poivron"],["🎃","Courge"],["🍄","Champignons"],["🥦","Brocoli"],["🥔","Céleri"],["🥬","Chou"],["🌿","Fenouil"],["🌿","Épinard"],["🍠","Patate douce"],["🍇","Raisin"],["🟣","Figue"],["🟣","Prune"],["🍐","Poire"],["🍎","Pomme"]],
-    [["🎃","Courge"],["🎃","Potiron"],["🍄","Champignons"],["🥬","Poireau"],["🥬","Chou"],["🥦","Chou-fleur"],["🥦","Brocoli"],["🥔","Céleri"],["🌿","Épinard"],["🥗","Endive"],["🥔","Navet"],["🍠","Patate douce"],["🫑","Poivron"],["🌰","Châtaigne"],["🍎","Pomme"],["🍐","Poire"],["🍇","Raisin"],["🍐","Coing"]],
-    [["🎃","Butternut"],["🎃","Potiron"],["🥬","Poireau"],["🥬","Chou"],["🥬","Chou de Bruxelles"],["🥦","Chou-fleur"],["🥔","Céleri"],["🥗","Endive"],["🌿","Épinard"],["🥔","Navet"],["🥕","Panais"],["🍠","Patate douce"],["🌰","Châtaigne"],["🍎","Pomme"],["🍐","Poire"],["🍊","Clémentine"],["🥝","Kiwi"]],
-    [["🥬","Chou"],["🥬","Chou de Bruxelles"],["🥦","Chou-fleur"],["🥬","Poireau"],["🥔","Céleri"],["🥗","Endive"],["🥔","Navet"],["🥕","Panais"],["🎃","Courge"],["🍠","Patate douce"],["🥗","Mâche"],["🌰","Châtaigne"],["🍊","Clémentine"],["🍊","Orange"],["🥝","Kiwi"],["🍎","Pomme"],["🍐","Poire"]]
-  ];
+  var SEASON=window.CookSaison.SEASON;
   var MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
   var m=new Date().getMonth();window.COOK_SAISON=SEASON[m].map(function(p){return p[1]});window.COOK_MOIS=MONTHS[m];
   $("month").textContent=MONTHS[m];
@@ -889,13 +877,8 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
       '<div class="t"><b>'+esc(r.n)+'</b><div class="cinfo lite">'+h+'</div></div></a>'}
   /* uniquement les recettes qui contiennent un produit de saison */
   function nrm(x){return String(x||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[_-]+/g," ")}
-  var SYN={courge:["courge(?!tte)","butternut","potiron","potimarron"],potiron:["potiron","potimarron","courge(?!tte)"],butternut:["butternut","courge(?!tte)"],champignons:["champignon","cepe","girolle"],"petits pois":["petits pois","petit pois"],"haricot vert":["haricots verts","haricot vert"],chou:["chou(?! fleur| de bruxelles)\\b","choux(?! de bruxelles)"],"chou fleur":["chou fleur"],"chou de bruxelles":["bruxelles"],pomme:["pommes?\\b(?! de terre)"],poire:["poires?\\b"],salade:["laitue","salade verte","roquette","batavia","feuilles? de salade","jeunes pousses"],tomate:["tomates?(?! sech)(?! conc)"],prune:["prunes?\\b","mirabelle","quetsche"],framboise:["framboise","fruits rouges","mures?\\b"],mais:["mais (en grains|doux)","grains de mais"],orange:["oranges?(?!r)"],mache:["mache\\b"],blette:["blettes?","bettes?\\b"],fenouil:["(?<!graines de )fenouil"],endive:["endive","chicon"],cerise:["(?<!tomates? )cerise"],raisin:["raisins?(?! sec)"],clementine:["clementine","mandarine"],chataigne:["chataigne","marron"],"patate douce":["patates? douces?"],myrtille:["myrtille","cassis"],peche:["peche","nectarine"],celeri:["celeri"],epinard:["epinard"],navet:["navet","topinambour"]};
-  function motsSaison(){return (window.COOK_SAISON||[]).map(function(n){var k=nrm(n);return SYN[k]||[k.replace(/s$/,"")]})}
-  function deSaison(r){var M=motsSaison();if(!M.length)return true;var txt;
-    if(r.rap)txt=nrm(r.rap.n+" "+(r.rap.ing||[]).map(function(i){return i[0]+" "+(i[3]||"")}).join(" "));
-    else txt=nrm(r.n+" "+(r.t||"")+" "+(r.f&&r.f.ing?r.f.ing.map(function(i){return i.t}).join(" "):""));
-    txt=" "+txt+" ";
-    return M.some(function(ws){return ws.some(function(w){return w.slice(-1)==="$"?new RegExp("\\b"+w.slice(0,-1)+"$").test(txt.trim()):new RegExp("\\b"+w).test(txt)})})}
+  function deSaison(r){if(!window.CookSaison)return true;
+    return CookSaison.ok(r.rap?CookSaison.texteRapide(r.rap,typeof ING!=="undefined"?ING:null):(r.n+" "+(r.t||"")+" "+(r.f&&r.f.ing?r.f.ing.map(function(i){return i.t}).join(" "):"")))}
   function render(list){
     list=(list||[]).concat(rapides());
     /* préférences alimentaires du profil (végétarien, sans gluten…) */

@@ -155,6 +155,7 @@ p{margin:0}
 <script src="budget.js?v=3"></script>
 <script src="filtres.js?v=3"></script>
 <script src="accueil.js?v=15"></script>
+<script src="saison.js?v=1"></script>
 <script src="../recettes/calories.js?v=4"></script>
 <script>
 (function(){
@@ -212,7 +213,10 @@ function toutes(){var L=LIVRE.map(infosLivre).filter(okLivre),R=RAPIDES.filter(o
   var T=L.concat(R).filter(function(x){var k=norm(x.n);if(vus[k])return false;vus[k]=1;return true});
   T.forEach(function(x){x.bu=budgetDe(x);x.pp=x.bu&&x.bu.pp?x.bu.pp:Infinity});
   /* profil « Petit budget » : de la moins chère à la plus chère */
-  return T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")})}
+  T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")});
+  /* recettes de saison d'abord (l'ordre ci-dessus est gardé dans chaque groupe) */
+  if(window.CookSaison){T.forEach(function(x){x.sais=CookSaison.ok(x.k==="r"?CookSaison.texteRapide(x.src,ING):CookSaison.texteFiche(x.n,x.f))});T=T.filter(function(x){return x.sais}).concat(T.filter(function(x){return !x.sais}))}
+  return T}
 function trouver(v){if(!v||v.k==="p")return null;var L=v.k==="l"?LIVRE:RAPIDES;for(var i=0;i<L.length;i++)if(L[i].id===v.id)return L[i];return null}
 
 /* ---------- affichage de la semaine ---------- */
@@ -252,7 +256,7 @@ $("q").addEventListener("input",resultats);
 $("q").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();var t=$("q").value.trim();if(t)choisirPerso(t)}});
 function mots(t){return norm(t).split(/[^a-z0-9]+/).filter(function(w){return w.length>=4&&!/^(avec|pour|sans|sauce|maison|facon|leur|dans)$/.test(w)})}
 function ligne(x,v){var on=v&&v.k===x.k&&v.id===x.id,inf=[];if(x.min)inf.push("⏱️ "+x.min+" min");if(x.kc)inf.push("≈ "+x.kc+" kcal");if(x.bu&&x.bu.niv)inf.push(x.bu.niv.s+" "+x.bu.niv.t.toLowerCase());inf.push(x.k==="l"?"📖 "+x.cat:"⏱️ Recette rapide");
-  return'<li><button type="button" data-k="'+x.k+'" data-id="'+esc(x.id)+'"'+(on?' aria-current="true"':"")+">"+vignette(x)+'<span class="tx"><b>'+esc(x.n)+(on?" ✓":"")+"</b><small>"+esc(inf.join(" · "))+"</small></span></button></li>"}
+  return'<li><button type="button" data-k="'+x.k+'" data-id="'+esc(x.id)+'"'+(on?' aria-current="true"':"")+">"+vignette(x)+'<span class="tx"><b>'+esc(x.n)+(on?" ✓":"")+"</b>"+(x.sais?" "+CookSaison.BADGE:"")+"<small>"+esc(inf.join(" · "))+"</small></span></button></li>"}
 function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m,cur.c),q=$("q").value.trim(),nq=norm(q),h="";
   [].forEach.call($("cats").children,function(b){b.setAttribute("aria-pressed",String(b.dataset.c===catSel))});
   if(v){var x=trouver(v);h+='<div class="cur"><span class="note">Actuellement :</span><b>'+esc(v.n)+"</b>"+(v.k==="p"?'<span class="note">C’est ton plat perso. Tu peux le garder, le renommer en écrivant un autre nom ci-dessus, ou le remplacer par une recette Cookapli ci-dessous.</span>':"")+
