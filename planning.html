@@ -216,7 +216,7 @@ function toutes(){var L=LIVRE.map(infosLivre).filter(okLivre),R=RAPIDES.filter(o
   /* profil « Petit budget » : de la moins chère à la plus chère */
   T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:EQUILIBRE?function(a,b){return (a.kc||Infinity)-(b.kc||Infinity)||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")});
   /* recettes de saison d'abord (l'ordre ci-dessus est gardé dans chaque groupe) */
-  if(window.CookSaison&&!EQUILIBRE){T.forEach(function(x){x.sais=CookSaison.ok(x.k==="r"?CookSaison.texteRapide(x.src,ING):CookSaison.texteFiche(x.n,x.f))});T=T.filter(function(x){return x.sais}).concat(T.filter(function(x){return !x.sais}))}
+  if(window.CookSaison){T.forEach(function(x){x.sais=CookSaison.ok(x.k==="r"?CookSaison.texteRapide(x.src,ING):CookSaison.texteFiche(x.n,x.f))});T=T.filter(function(x){return x.sais}).concat(T.filter(function(x){return !x.sais}))}
   return T}
 function trouver(v){if(!v||v.k==="p")return null;var L=v.k==="l"?LIVRE:RAPIDES;for(var i=0;i<L.length;i++)if(L[i].id===v.id)return L[i];return null}
 
@@ -268,7 +268,7 @@ function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m,cur.c),q=$("q").val
   /* plat perso : recettes Cookapli proches de son nom, pour le remplacer facilement */
   if(v&&v.k==="p"&&!q){var W=mots(v.n),pr=W.length?LISTE.filter(function(x){var n=norm(x.n);return W.some(function(w){return n.indexOf(w)>=0})}).slice(0,6):[];
     if(pr.length)h+='<p class="sec">Recettes Cookapli proches de « '+esc(v.n)+" »</p><ul class=\"res\">"+pr.map(function(x){return ligne(x,v)}).join("")+"</ul>"}
-  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>"+(PETIT_BUDGET&&L.length?'<p class="note">💶 Petit budget : de la moins chère à la plus chère</p>':EQUILIBRE&&L.length?'<p class="note">⚖️ Classées de la moins à la plus calorique</p>':"");
+  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>"+(PETIT_BUDGET&&L.length?'<p class="note">💶 Petit budget : de la moins chère à la plus chère</p>':EQUILIBRE&&L.length?'<p class="note">⚖️ De saison d’abord, puis de la moins à la plus calorique</p>':"");
   h+=L.length?'<ul class="res">'+L.slice(0,80).map(function(x){return ligne(x,v)}).join("")+"</ul>":'<p class="vide">'+(LISTE.length?"Aucune recette Cookapli ne correspond."+(q?" Ajoute-le comme plat perso.":""):"Chargement des recettes…")+"</p>";
   $("sb").innerHTML=h;$("sb").scrollTop=0}
 $("sb").addEventListener("click",function(e){if(!cur)return;
