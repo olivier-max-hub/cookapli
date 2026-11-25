@@ -204,6 +204,7 @@ function guess(t){if(!HAS)return null;var txt=nrm(t),best=null,bi=1e9,bl=0;Objec
 function prixPret(){return!!(window.CookBudget&&CookBudget.pret())}
 function budgetDe(x){try{if(!prixPret())return null;if(x.k==="l")return x.f&&window.CookCalc?CookCalc.budget(x.f,guess):null;return CookBudget.recetteFriscan(x.src,ING)}catch(e){return null}}
 var PETIT_BUDGET=!!(prof&&prof.profil==="antigaspi");
+var EQUILIBRE=!!(prof&&prof.profil==="equilibre");
 function okLivre(r){if(DEBUTANT&&r.f&&r.f.m&&/difficile/i.test(r.f.m.diff||""))return false;if(!FA.length)return true;if(!window.CookFiltres)return true;return CookFiltres.okTexte(r.f?CookFiltres.texteFiche(r.n,r.f,r.t):null,FA)}
 var RAPIDES=(HAS&&typeof RECETTES!=="undefined"?RECETTES:[]).filter(function(r){return r.ok}).map(function(r){var g=groupe(r.cat)||"plat",kc=0;
   try{if(window.CookBudget&&CookBudget.kcalFriscan)kc=CookBudget.kcalFriscan(r,ING)||0}catch(e){}
@@ -213,9 +214,9 @@ function toutes(){var L=LIVRE.map(infosLivre).filter(okLivre),R=RAPIDES.filter(o
   var T=L.concat(R).filter(function(x){var k=norm(x.n);if(vus[k])return false;vus[k]=1;return true});
   T.forEach(function(x){x.bu=budgetDe(x);x.pp=x.bu&&x.bu.pp?x.bu.pp:Infinity});
   /* profil « Petit budget » : de la moins chère à la plus chère */
-  T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")});
+  T.sort(PETIT_BUDGET?function(a,b){return a.pp-b.pp||a.n.localeCompare(b.n,"fr")}:EQUILIBRE?function(a,b){return (a.kc||Infinity)-(b.kc||Infinity)||a.n.localeCompare(b.n,"fr")}:function(a,b){return a.n.localeCompare(b.n,"fr")});
   /* recettes de saison d'abord (l'ordre ci-dessus est gardé dans chaque groupe) */
-  if(window.CookSaison){T.forEach(function(x){x.sais=CookSaison.ok(x.k==="r"?CookSaison.texteRapide(x.src,ING):CookSaison.texteFiche(x.n,x.f))});T=T.filter(function(x){return x.sais}).concat(T.filter(function(x){return !x.sais}))}
+  if(window.CookSaison&&!EQUILIBRE){T.forEach(function(x){x.sais=CookSaison.ok(x.k==="r"?CookSaison.texteRapide(x.src,ING):CookSaison.texteFiche(x.n,x.f))});T=T.filter(function(x){return x.sais}).concat(T.filter(function(x){return !x.sais}))}
   return T}
 function trouver(v){if(!v||v.k==="p")return null;var L=v.k==="l"?LIVRE:RAPIDES;for(var i=0;i<L.length;i++)if(L[i].id===v.id)return L[i];return null}
 
@@ -267,7 +268,7 @@ function resultats(){if(!cur)return;var v=slotDe(cur.d,cur.m,cur.c),q=$("q").val
   /* plat perso : recettes Cookapli proches de son nom, pour le remplacer facilement */
   if(v&&v.k==="p"&&!q){var W=mots(v.n),pr=W.length?LISTE.filter(function(x){var n=norm(x.n);return W.some(function(w){return n.indexOf(w)>=0})}).slice(0,6):[];
     if(pr.length)h+='<p class="sec">Recettes Cookapli proches de « '+esc(v.n)+" »</p><ul class=\"res\">"+pr.map(function(x){return ligne(x,v)}).join("")+"</ul>"}
-  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>"+(PETIT_BUDGET&&L.length?'<p class="note">💶 Petit budget : de la moins chère à la plus chère</p>':"");
+  h+='<p class="sec">'+(q?"Recettes Cookapli":"Recettes Cookapli · "+CATS.filter(function(c){return c[0]===catSel})[0][1])+(L.length?" ("+L.length+")":"")+"</p>"+(PETIT_BUDGET&&L.length?'<p class="note">💶 Petit budget : de la moins chère à la plus chère</p>':EQUILIBRE&&L.length?'<p class="note">⚖️ Classées de la moins à la plus calorique</p>':"");
   h+=L.length?'<ul class="res">'+L.slice(0,80).map(function(x){return ligne(x,v)}).join("")+"</ul>":'<p class="vide">'+(LISTE.length?"Aucune recette Cookapli ne correspond."+(q?" Ajoute-le comme plat perso.":""):"Chargement des recettes…")+"</p>";
   $("sb").innerHTML=h;$("sb").scrollTop=0}
 $("sb").addEventListener("click",function(e){if(!cur)return;

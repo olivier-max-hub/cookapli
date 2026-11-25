@@ -889,6 +889,9 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
     var PR=window.CookAccueil&&CookAccueil.lire?CookAccueil.lire():null,PID=PR&&PR.profil,TRI=null;
     function ppDe(r){var b=null;try{b=r.rap?(window.CookBudget&&CookBudget.pret()&&typeof ING!=="undefined"?CookBudget.recetteFriscan(r.rap,ING):null):(r.f&&window.CookCalc?CookCalc.budget(r.f,window.cookGuess):null)}catch(e){}return b&&b.pp?b.pp:Infinity}
     if(PID==="antigaspi"){list=list.map(function(r){return{r:r,p:ppDe(r)}}).sort(function(a,b){return a.p-b.p}).map(function(x){return x.r});TRI=1}
+    /* Équilibre alimentaire = les moins caloriques d'abord */
+    if(PID==="equilibre"){var kcDe=function(r){var k=null;try{k=r.rap?(window.CookBudget&&CookBudget.kcalFriscan&&typeof ING!=="undefined"?CookBudget.kcalFriscan(r.rap,ING):null):(r.f&&window.CookCalc?CookCalc.kcal(r.f):null)}catch(e){}return k||Infinity};
+      list=list.map(function(r){return{r:r,k:kcDe(r)}}).sort(function(a,b){return a.k-b.k}).map(function(x){return x.r});TRI=1}
     if(PID==="debutant"){var fac=list.filter(function(r){if(r.rap)return r.rap.min<=30;var m=r.m||{};return (!m.diff||/facile/i.test(m.diff))&&(minutes(m.prep)+minutes(m.cuisson))<=45});if(fac.length>=2)list=fac}
     var mo=document.getElementById("mois2");if(mo&&window.COOK_MOIS)mo.textContent=window.COOK_MOIS;
     if(!list.length){if(fa.length)box.innerHTML='<p class="fvide">Pas encore de recette de saison qui respecte tes préférences.</p>';return}
