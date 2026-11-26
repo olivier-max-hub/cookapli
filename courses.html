@@ -466,11 +466,11 @@ const VEGAN = '<span class="vegrow"><span class="vegtag vegan">Vegan</span></spa
 function carteLivre(r, extra) {
   const [c1, c2] = (typeof MINE_COLORS !== 'undefined' && MINE_COLORS[r.cat]) || ['#d6f0e6', '#8fd6bd'];
   const img = r.img ? `<img src="${esc(SITE_LIVRE + encodeURI(r.img))}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">` : '';
-  return `${r.veg ? (r.vegan ? VEGAN : VEG) : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}${img && r.ia ? `<i class="iamini" title="${r.ia === 'rl' ? 'L’image du plat est réelle, l’environnement est créé par l’IA.' : 'Photo d’illustration créée par IA'}">image IA?</i>` : ''}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
+  return `${r.veg ? (r.vegan ? VEGAN : VEG) : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img || '📖'}${img && r.ia ? `<i class="iamini" title="${r.ia === 'rl' ? 'L’image du plat est réelle, l’environnement est créé par l’IA.' : 'Photo d’illustration créée avec l’aide de l’IA'}">image IA?</i>` : ''}</span><span class="ctxt"><b>${esc(r.n)}</b><small>📖 ${esc(r.cat)}</small>${liteLivre(r)}${extra || ''}</span>`;
 }
 function carteRapide(r, extra) {
   const [c1, c2] = (typeof CATS !== 'undefined' && CATS[r.cat]) || ['#d9d0f5', '#b9a8ee'];
-  const img = r.img ? `<img src="../friscan/${esc(r.img)}" alt="" loading="lazy" width="720" height="720">${r.ia ? '<i class="iamini" title="Photo d’illustration créée par IA">image IA?</i>' : ''}` : r.e;
+  const img = r.img ? `<img src="../friscan/${esc(r.img)}" alt="" loading="lazy" width="720" height="720">${r.ia ? '<i class="iamini" title="Photo d’illustration créée avec l’aide de l’IA">image IA?</i>' : ''}` : r.e;
   return `${/vegetarien/.test(slugify(r.cat || '')) ? VEG : ''}<span class="cimg" style="--c1:${c1};--c2:${c2}">${img}</span><span class="ctxt"><b>${esc(r.n)}</b><small>⏱️ Recette rapide</small>${liteRapide(r)}${extra || ''}</span>`;
 }
 if (window.CookBudget) CookBudget.charger().then(d => { if (d) { renderRecettes(); renderPresque(); } });

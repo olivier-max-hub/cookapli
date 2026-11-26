@@ -322,7 +322,7 @@ function nomCr(x){return JOURS[x.d]+(S.repas==="dejdin"?(x.m==="midi"?" midi":" 
 function stock(c,x){return x.d<=1||!c.e.congele?"frigo":"cong"}
 function carte(p,i,estSoupe){var c=p.c,e=c.e,port=S.pers*p.sl.length,kc=kcal(c),bu=budget(c);
   var cong=p.sl.some(function(x){return stock(c,x)==="cong"}),fr=p.sl.some(function(x){return stock(c,x)==="frigo"});
-  var h='<article class="card plat'+(PLAN.marque===c.k?' neuf':'')+'"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">'+(c.ia?'<span class="iamini" title="'+(c.ia==="rl"?"L’image du plat est réelle, l’environnement est créé par l’IA.":"Photo d’illustration créée par IA, en attendant une vraie photo du plat.")+'">image IA?</span>':''):esc(c.emo||"🍲"))+'</div><div>'+
+  var h='<article class="card plat'+(PLAN.marque===c.k?' neuf':'')+'"><div class="ph">'+(c.img?'<img src="'+esc(c.img)+'" alt="" loading="lazy" onerror="this.remove()">'+(c.ia?'<span class="iamini" title="'+(c.ia==="rl"?"L’image du plat est réelle, l’environnement est créé par l’IA.":"Photo d’illustration créée avec l’aide de l’IA, en attendant une vraie photo du plat.")+'">image IA?</span>':''):esc(c.emo||"🍲"))+'</div><div>'+
     '<h3><a href="'+esc(c.url)+'">'+esc(c.n)+'</a></h3>'+
     '<p class="jours">'+(estSoupe?"En entrée · ":"")+p.sl.map(nomCr).join(" et ")+' · '+port+' portion'+(port>1?"s":"")+'</p><div class="tags">'+
     (fr?'<span class="tag frigo">🧊 Frigo</span>':'')+(cong?'<span class="tag cong">❄️ Congélateur'+(fr?" ensuite":"")+'</span>':'')+

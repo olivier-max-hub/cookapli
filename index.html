@@ -863,7 +863,7 @@ body.fond-profil .pg .pdesc{text-shadow:0 0 6px #fff,0 0 2px #fff}
   /* recettes rapides « 30 minutes chrono » de Friscan, seulement celles qui ont une photo (pas de photo, pas d'inspiration) */
   function rapides(){if(typeof RECETTES==="undefined")return [];
     return RECETTES.filter(function(r){return r.ok&&r.min<=30&&r.img}).map(function(r){return{rap:r}})}
-  var IA_TXT="Photo d’illustration créée par IA, en attendant une vraie photo du plat. La recette, elle, est bien réelle.";
+  var IA_TXT="Photo d’illustration créée avec l’aide de l’IA, en attendant une vraie photo du plat. La recette, elle, est bien réelle.";
   function carteRapide(r){var c=FRI_COUL[r.cat]||["#c9e1fb","#9cc6f2"],veg=/vegetarien|vegan/.test(slug(r.cat||""));
     var h='<div class="ci" style="background:#bfe8ee"><span class="k">Durée</span><span class="v">'+r.min+' min</span></div>'+
       '<div class="ci" style="background:#cdeccb"><span class="k">Personnes</span><span class="v">'+r.pers+'</span></div>'+
